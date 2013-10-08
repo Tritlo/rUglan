@@ -120,7 +120,7 @@ public class CalEvent {
     
     /**
      * @use s = e.toString();
-     * @pre Nothing;
+     * @pre Nothing
      * @post s is a string that represents this event
      *
      * @return A string representation of the event.
@@ -128,5 +128,20 @@ public class CalEvent {
     public String toString(){
         return this.getName() + " " + this.getDescription() + " "
             + this.getLocation() + " " + this.getStart() + " " + this.getEnd();
+    }
+
+    /**
+     * @use s = e.getDurationString();
+     * @pre e is an instance of CalEvent
+     * @post s is a string on the form "HH:MM - HH:MM" describing the duration of the event.
+     *
+     * @return A string on the form "HH:MM - HH:MM" describing the duration of the event.
+     */
+    public String getDurationString(){
+        return
+                this.getStart().getHours() + ":"
+                + String.format("%02d", this.getStart().getMinutes())
+                + " - " + this.getEnd().getHours() + ":"
+                + String.format("%02d", this.getEnd().getMinutes());
     }
 }
