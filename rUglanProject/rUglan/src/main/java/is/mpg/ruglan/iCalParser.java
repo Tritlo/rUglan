@@ -8,21 +8,17 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.text.ParseException;
 import java.lang.IllegalArgumentException;
-import is.mpg.ruglan.CalEvent;
-//import java.util.regex.Pattern;
 
 /**
  * Parser for iCalendars.
+ * @author Matti
  */
 public class iCalParser {
 
     /**
-     * Use: events = urlToCalEvents(url)
-     * Pre: url is a valid url pointing to a iCalendar file
-     * 	where the first event starts on line 8,
-     * 	each event is 10 lines,
-     * 	and the last line is not part of an event
-     * Post: events is the list of the events in the calendar cal,
+     * @use events = urlToCalEvents(url)
+     * @pre url is a valid url pointing to a iCalendar file
+     * @post events is the list of the events in the calendar cal,
      *  null where parsing or arguments were wrong
      *
      * @param url The url to the iCal calendar
@@ -33,9 +29,11 @@ public class iCalParser {
     }
 
     /**
-     * Use: s = urlToString(url)
-     * Pre: url is a valid url
-     * Post: s is the string that the url contained if
+     * Takes an url and fetches its contents into a string
+     *
+     * @use s = urlToString(url)
+     * @pre url is a valid url
+     * @post s is the string that the url contained if
      *  successful, empty string otherwise.
      *
      * @param url the url of the website to be downloaded
@@ -52,9 +50,11 @@ public class iCalParser {
     }
 
     /**
-     * Use: events = parseCalendar(cal)
-     * Pre: cal is a calendar on the ical format,
-     * Post: events is the list of the events in the calendar cal,
+     * Takes a string containing an iCal calendar and returns a list of the events in the calendar
+     *
+     * @use events = parseCalendar(cal)
+     * @pre cal is a calendar on the ical format,
+     * @post events is the list of the events in the calendar cal,
      *  null where parsing or arguments were wrong
      *
      * @param calendar A string of an iCal calendar
@@ -71,7 +71,7 @@ public class iCalParser {
             String st   = getICalValue(events[i], "DTSTART");
             String en   = getICalValue(events[i], "DTEND");
             //Could be a single block, but android studio warns that
-            //Multi catch catch expressions are not available at this language level.
+            //
             try {
                 Date start = format.parse(st);
                 Date end = format.parse(en);
@@ -91,9 +91,12 @@ public class iCalParser {
     }
 
     /**
-     * Use: val = getICalValue(e,t)
-     * Pre: e is a iCal event
-     * Post: the value of the type t of the iCal event e.
+     * Takes an string array containing an iCal event, and returns the
+     *  value of the type
+     *
+     * @use val = getICalValue(e,t)
+     * @pre e is a iCal event
+     * @post the value of the type t of the iCal event e.
      *
      * @param event the event to be parsed
      * @param type the type of the value to be fished out
@@ -110,13 +113,16 @@ public class iCalParser {
     }
 
     /**
-     * Use: l = removeCR(ls)
-     * Pre: ls is a array of strings
-     * Post: l is the same array of strings with all CR removed
+     * Removes carriage returns in all string in an array of strings
+     *
+     * @use l = removeCR(ls)
+     * @pre ls is a array of strings
+     * @post l is the same array of strings with all CR removed
      *
      * @param lines the lines for which the carriage return is to be removed from
      * @return
      */
+
     public static String [] removeCR(String [] lines){
         String [] ret = new String[lines.length];
         for(int i = 0; i < lines.length; i++){
@@ -126,9 +132,12 @@ public class iCalParser {
     }
 
     /**
-     * Use: calE = calendarToEvenList(cal)
-     * Pre: cal is a string that contains an iCal calendar
-     * Post: calE is an array of array of strings, where each entry is an string array of an iCal
+     * Takes an iCal calendar string, and returns an array of string arrays each
+     *  containing an event
+     *
+     * @use calE = calendarToEvenList(cal)
+     * @pre cal is a string that contains an iCal calendar
+     * @post calE is an array of array of strings, where each entry is an string array of an iCal
      *  of the events in the calendar cal
      *
      * @param calendar a string that contains an iCal calendar
