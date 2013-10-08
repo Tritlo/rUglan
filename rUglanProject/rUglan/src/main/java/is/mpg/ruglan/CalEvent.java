@@ -8,7 +8,7 @@ public class CalEvent {
 
     private String name, description, location;
     private Date start, end;
-    /*
+    /**
     *   CalEvent has the following attributes:
     *       - name:
     *           A string holding the name of the event.
@@ -23,7 +23,7 @@ public class CalEvent {
     */
 
 
-    /*
+    /**
     *   Usage:  CalEvent e = new CalEvent("A", "B", "C", s, e);
     *   Before: s and e have the same date and s < e.
     *   After:  e is a new instance of type CalEvent. e has the
@@ -53,7 +53,7 @@ public class CalEvent {
 
     }
 
-    /*
+    /**
     *   Usage:  String s = e.getName();
     *   Before: e is an instance of CalEvent.
     *   After:  s is the name of the CalEvent e.
@@ -62,7 +62,7 @@ public class CalEvent {
         return this.name;
     }
 
-    /*
+    /**
     *   Usage:  String s = e.getDescription();
     *   Before: e is an instance of CalEvent.
     *   After:  s is the description of the CalEvent e.
@@ -71,7 +71,7 @@ public class CalEvent {
         return this.description;
     }
 
-    /*
+    /**
     *   Usage:  String s = e.getLocation();
     *   Before: e is an instance of CalEvent.
     *   After:  s is the location of the CalEvent e.
@@ -80,7 +80,7 @@ public class CalEvent {
         return this.location;
     }
 
-    /*
+    /**
     *   Usage:  Date d = e.getStart();
     *   Before: e is an instance of CalEvent.
     *   After:  d is the start time of the CalEvent e.
@@ -89,12 +89,22 @@ public class CalEvent {
         return this.start;
     }
 
-    /*
+    /**
     *   Usage:  Date d = e.getEnd();
     *   Before: e is an instance of CalEvent.
     *   After:  d is the end time of the CalEvent e.
     */
     public Date getEnd() {
         return this.end;
+    }
+    
+    /**
+     * Usage: s = e.toString();
+     * Pre: Nothing;
+     * Post: s is a string that represents this event
+     */
+    public String toString(){
+        return this.getName() + "" + this.getDescription() + " "
+            + this.getLocation() + " " + this.getStart() + " " + this.getEnd();
     }
 }
