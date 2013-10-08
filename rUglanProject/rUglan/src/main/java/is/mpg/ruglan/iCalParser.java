@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.ArrayList;
 import java.text.ParseException;
 import java.lang.IllegalArgumentException;
 import is.mpg.ruglan.CalEvent;
@@ -16,24 +17,30 @@ import is.mpg.ruglan.CalEvent;
 public class iCalParser {
 
     /**
-    * Use: events = urlToCalEvents(url)
-    * Pre: url is a valid url pointing to a iCalendar file
-    * 	where the first event starts on line 8,
-    * 	each event is 10 lines,
-    * 	and the last line is not part of an event
-    * Post: events is the list of the events in the calendar cal,
-    *  null where parsing or arguments were wrong
-    */
+     * Use: events = urlToCalEvents(url)
+     * Pre: url is a valid url pointing to a iCalendar file
+     * 	where the first event starts on line 8,
+     * 	each event is 10 lines,
+     * 	and the last line is not part of an event
+     * Post: events is the list of the events in the calendar cal,
+     *  null where parsing or arguments were wrong
+     *
+     * @param url The url to the iCal calendar
+     * @return a list of the events in the calendar located at the url
+     */
     public static CalEvent [] urlToCalEvents(String url){
         return parseCalendar(urlToString(url));
     }
 
     /**
-    * Use: s = urlToString(url)
-    * Pre: url is a valid url
-    * Post: s is the string that the url contained if
-    *  successful, empty string otherwise.
-    */
+     * Use: s = urlToString(url)
+     * Pre: url is a valid url
+     * Post: s is the string that the url contained if
+     *  successful, empty string otherwise.
+     *
+     * @param url the url of the website to be downloaded
+     * @return the string with the content of the url
+     */
     public static String urlToString(String url){
         try {
             String ofTheKing = new Scanner(new URL(url).openStream(), "UTF-8").useDelimiter("\\A").next();
@@ -47,41 +54,101 @@ public class iCalParser {
     /**
      * Use: events = parseCalendar(cal)
      * Pre: cal is a calendar on the ical format,
-     * 	where the first event starts on line 8,
-     * 	each event is 10 lines,
-     * 	and the last line is not part of an event
      * Post: events is the list of the events in the calendar cal,
      *  null where parsing or arguments were wrong
+     *
+     * @param calendar A string of an iCal calendar
+     * @return a list of the events in the calendar cal
      */
     public static CalEvent [] parseCalendar(String calendar){
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
-        String [] lines = calendar.split("\n");
-		/*Each event takes 10 lines, 7 lines at start and
-		 * 1 line at finish define the calendar. */
-        int numEvents = (lines.length - 8)/10;
-        CalEvent [] calEvents = new CalEvent[numEvents];
-        for(int i = 7; i < lines.length - 1; i+= 10){
-            String name = lines[i+7].split(":")[1].replaceAll("\r","");
-            String desc = lines[i+1].split(":")[1].replaceAll("\r","");
-            String loc = lines[i+5].split(":")[1].replaceAll("\r","");
-            String st = lines[i+4].split(":")[1].replaceAll("\r","");
-            String en = lines[i+2].split(":")[1].replaceAll("\r","");
+        String [][] events = calendarToEventList(calendar);
+        CalEvent [] calEvents = new CalEvent[events.length-1];//The first in events is calendar info.
+        for(int i = 1; i < events.length; i++){
+            String name = getICalValue(events[i], "SUMMARY");
+            String desc = getICalValue(events[i], "DESCRIPTION");
+            String loc  = getICalValue(events[i], "LOCATION");
+            String st   = getICalValue(events[i], "DTSTART");
+            String en   = getICalValue(events[i], "DTEND");
+            //Could be a single block, but android studio warns that
+            //Multi catch catch expressions are not available at this language level.
             try {
                 Date start = format.parse(st);
                 Date end = format.parse(en);
-                try{
-                    calEvents[(i-7)/10] = new CalEvent(name,desc,loc,start,end);
-                }
-                catch (IllegalArgumentException e) {
-                    calEvents[(i-7)/10]  = null;
+                try {
+                calEvents[i-1] = new CalEvent(name,desc,loc,start,end);
+                } catch (IllegalArgumentException ex)
+                {
+                    calEvents[i-1] = null;
                 }
             }
-            catch (ParseException ex) {
-                calEvents[(i-7)/10] = null;
+            catch (ParseException  ex) {
+                calEvents[i-1] = null;
             }
         }
         return calEvents;
 
     }
+
+    /**
+     * Use: val = getICalValue(e,t)
+     * Pre: e is a iCal event
+     * Post: the value of the type t of the iCal event e.
+     *
+     * @param event the event to be parsed
+     * @param type the type of the value to be fished out
+     * @return the value of the type type in the event
+     */
+    public static String getICalValue(String [] event, String type){
+        for(int i = 0; i < event.length;i++) {
+            if (event[i].startsWith(type)) {
+                String[] spli = event[i].split(":");
+                return spli.length == 2 ? spli[1] : "";
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Use: l = removeCR(ls)
+     * Pre: ls is a array of strings
+     * Post: l is the same array of strings with all CR removed
+     *
+     * @param lines the lines for which the carriage return is to be removed from
+     * @return
+     */
+    public static String [] removeCR(String [] lines){
+        String [] ret = new String[lines.length];
+        for(int i = 0; i < lines.length; i++){
+            ret[i] = lines[i].replaceAll("\r","");
+        }
+        return ret;
+    }
+
+    /**
+     * Use: calE = calendarToEvenList(cal)
+     * Pre: cal is a string that contains an iCal calendar
+     * Post: calE is an array of array of strings, where each entry is an string array of an iCal
+     *  of the events in the calendar cal
+     *
+     * @param calendar a string that contains an iCal calendar
+     * @return an array of the events in the iCal calendar calendar.
+     */
+
+    public static String [][] calendarToEventList(String calendar){
+        int i = -1, j = 0;
+        String [][] ret = new String[1][1];
+        ArrayList<String []> events = new ArrayList<String []>();
+        while(calendar.indexOf("BEGIN:VEVENT",i+1) >= 0){
+            i = calendar.indexOf("BEGIN:VEVENT",i+1);
+            j = calendar.indexOf("END:VEVENT",i);
+            String substr = calendar.substring(i,j);
+            events.add(removeCR(substr.split("\n")));
+        }
+        return events.toArray(ret);
+    }
+	
+	    
+	
 
 }
