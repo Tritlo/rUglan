@@ -1,4 +1,6 @@
 package is.mpg.ruglan;
+import android.os.AsyncTask;
+
 import java.util.Scanner;
 import java.net.URL;
 import java.io.IOException;
@@ -13,7 +15,11 @@ import java.lang.IllegalArgumentException;
  * Parser for iCalendars.
  * @author Matti
  */
-public class iCalParser {
+public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
+
+    public CalEvent [] doInBackground(String... url){
+        return urlToCalEvents(url[0]);
+    }
 
     /**
      * @use events = urlToCalEvents(url)
