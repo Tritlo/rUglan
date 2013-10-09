@@ -23,10 +23,15 @@ public class HomeActivity extends Activity {
         Date d2 = new Date(113, 9, 15, 13, 0);
         Date d3 = new Date(113, 9, 15, 14, 0);
         Date d4 = new Date(113, 9, 15, 15, 0);
-        CalEvent[] events = new CalEvent[] {
-                new CalEvent("A", "d1", "VR-II", d1, d2),
-                new CalEvent("B", "f", "HT-104", d3, d4)
-        };
+        CalEvent [] events = new CalEvent[0];
+        try{
+            events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
+        } catch (Exception ex) {
+            events = new CalEvent[] {
+                    new CalEvent("A", "d1", "VR-II", d1, d2),
+                    new CalEvent("B", "f", "HT-104", d3, d4)
+            };
+        }
 
         String[] eventStrings = new String[events.length];
         for (int i=0; i<eventStrings.length; i++) {
