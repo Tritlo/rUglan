@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
@@ -8,7 +9,7 @@ import java.lang.IllegalArgumentException;
  * Class representing Calendar Event for the project.
  * @author Siggi
  */
-public class CalEvent {
+public class CalEvent implements Serializable {
 
     private String name, description, location;
     private Date start, end;
@@ -37,7 +38,6 @@ public class CalEvent {
      * @param location Location of the event.
      * @param start Start date of the event.
      * @param end End date of the event.
-     * @return A object of type CalEvent
      */
     public CalEvent(String name, String description, String location, Date start, Date end) {
         Calendar cal1 = Calendar.getInstance();

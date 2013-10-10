@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.widget.TextView;
 
 public class CalEventActivity extends Activity {
 
@@ -16,6 +17,13 @@ public class CalEventActivity extends Activity {
         setContentView(R.layout.activity_cal_event);
         // Show the Up button in the action bar.
         setupActionBar();
+
+
+        CalEvent e = (CalEvent) getIntent().getSerializableExtra("CAL_EVENT");
+        if (e != null) {
+            TextView l = (TextView) findViewById(R.id.label);
+            l.setText(e.getName());
+        }
     }
 
     /**
@@ -24,7 +32,7 @@ public class CalEventActivity extends Activity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

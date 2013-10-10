@@ -25,6 +25,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="is.mpg.ruglan.CalEventActivity"
+            android:label="@string/title_activity_cal_event"
+            android:parentActivityName="is.mpg.ruglan.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="is.mpg.ruglan.HomeActivity" />
+        </activity>
+        <activity
             android:name="is.mpg.ruglan.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="is.mpg.ruglan.HomeActivity" >
