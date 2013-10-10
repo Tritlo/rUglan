@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -12,10 +13,15 @@ import is.mpg.ruglan.CalEvent;
 
 public class HomeActivity extends Activity {
 
+
+    private static Context sContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        sContext = getApplicationContext();
 
         ListView eventsListView = (ListView) findViewById(R.id.events_list);
 
@@ -45,8 +51,28 @@ public class HomeActivity extends Activity {
 
         eventsListView.setAdapter(adapter);
 
-    }
 
+
+
+
+
+
+
+
+        Date startDate0 = new Date(999999998);
+        Date endDate0 = new Date(999999999);
+        Date startDate1 = new Date(99999912);
+        Date endDate1 = new Date(99999919);
+        CalEvent[] calEvents = new CalEvent[2];
+        calEvents[0] = new CalEvent("test_timi1","Prufu timi sem er ekki til","Neshagi", startDate0, endDate0);
+        calEvents[1] = new CalEvent("test_timi2","Prufu timi sem er heldur ekki til","Laugarvatn", startDate1, endDate1);
+        Dabbi dabbi = new Dabbi();
+        dabbi.addCalEvents(calEvents);
+
+    }
+    public static Context getContext() {
+        return sContext;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,14 +21,25 @@ public class Dabbi {
      *
      * @param events An array of CalEvents to be added.
      */
-    public static void addCalEvents(CalEvent[] calEvents)
+    public void addCalEvents(CalEvent[] calEvents)
     {
-        rDataBase DB = new rDataBase(null);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        if(qdb == null)
+        System.out.println("test1");
+        rDataBase DB;
+        if(HomeActivity.getContext() == null)
         {
+            System.out.println("\n\n\n\n Null context\n\n\n\n\n");
             return;
         }
+        DB = new rDataBase(HomeActivity.getContext());
+        System.out.println("test1");
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        System.out.println("test3");
+        if(qdb == null)
+        {
+            System.out.println("\n\n\n\n Null database pointer\n\n\n\n\n");
+            return;
+        }
+        System.out.println("test4");
         for(CalEvent event: calEvents)
         {
             qdb.rawQuery("INSERT INTO CalEvents VALUE(?,?,?,?,?)",
@@ -53,7 +65,7 @@ public class Dabbi {
      */
     public static CalEvent[] getCalEvents(Date start, Date end)
     {
-        rDataBase DB = new rDataBase(null);
+        rDataBase DB = new rDataBase(HomeActivity.getContext());
         SQLiteDatabase qdb = DB.getWritableDatabase();
         if(qdb == null)
         {
