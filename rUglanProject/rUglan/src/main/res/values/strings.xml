@@ -4,5 +4,8 @@
     <string name="app_name">rUglan</string>
     <string name="action_settings">Settings</string>
     <string name="events">Events</string>
+    <string name="title_activity_cal_event">Calendar Event</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
