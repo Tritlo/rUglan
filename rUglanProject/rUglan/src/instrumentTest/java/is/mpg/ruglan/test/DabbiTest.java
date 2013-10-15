@@ -17,22 +17,40 @@ public class DabbiTest extends AndroidTestCase {
         super.setUp();
     }
 
+    /**
+     * Tries to add events to the database
+     * @throws Exception
+     */
     public void testAddCalEvents() throws Exception {
 
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntest1");
-        Date startDate0 = new Date(999999998);
-        Date endDate0 = new Date(999999999);
-        Date startDate1 = new Date(99999912);
-        Date endDate1 = new Date(99999919);
+        Date startDate0 = new Date(999999998000L);
+        Date endDate0 = new Date(999999999000L);
+        Date startDate1 = new Date(99999912000L);
+        Date endDate1 = new Date(99999919000L);
         CalEvent[] calEvents = new CalEvent[2];
         calEvents[0] = new CalEvent("test_timi1","Prufu timi sem er ekki til","Neshagi", startDate0, endDate0);
         calEvents[1] = new CalEvent("test_timi2","Prufu timi sem er heldur ekki til","Laugarvatn", startDate1, endDate1);
-        Dabbi dabbi = new Dabbi();
+        Dabbi dabbi = new Dabbi(this.getContext());
         dabbi.addCalEvents(calEvents);
 
     }
 
+    /**
+     * Tries to add an event to the database and then extract
+     * it back from the database and compare it with the original.
+     * @throws Exception
+     */
     public void testGetCalEvents() throws Exception {
+        Dabbi dabbi = new Dabbi(this.getContext());
+
+        Date startDate = new Date(99977000L);
+        Date endDate = new Date(99999000L);
+        CalEvent[] calEvents = new CalEvent[1];
+        calEvents[0] = new CalEvent("test_timi3","Prufu timi sem er ekki til","Neshagi", startDate, endDate);
+        dabbi.addCalEvents(calEvents);
+
+        CalEvent[] events = dabbi.getCalEvents(startDate,endDate);
+        assertEquals(events[0].toString(), calEvents[0].toString());
 
     }
 }

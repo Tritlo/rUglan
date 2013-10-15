@@ -33,6 +33,7 @@ public class rDataBase extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase database) {
+        System.out.println("test database running schema");
         executeSQLScript(database, "create.sql");
     }
 
@@ -61,8 +62,10 @@ public class rDataBase extends SQLiteOpenHelper {
             }
         } catch (IOException e){
             // TODO Handle Script Failed to Load
+            System.out.println("test failed to load schema");
         } catch (SQLException e) {
             // TODO Handle Script Failed to Execute
+            System.out.println("test failed to run schema");
         }
     }
 }
