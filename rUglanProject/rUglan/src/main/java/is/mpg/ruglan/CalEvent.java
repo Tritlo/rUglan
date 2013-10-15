@@ -138,10 +138,13 @@ public class CalEvent implements Serializable {
      * @return A string on the form "HH:MM - HH:MM" describing the duration of the event.
      */
     public String getDurationString(){
-        return
-                this.getStart().getHours() + ":"
-                + String.format("%02d", this.getStart().getMinutes())
-                + " - " + this.getEnd().getHours() + ":"
-                + String.format("%02d", this.getEnd().getMinutes());
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        startCal.setTime(this.getStart());
+        endCal.setTime(this.getEnd());
+        return startCal.get(Calendar.HOUR_OF_DAY) + ":"
+                + String.format("%02d", startCal.get(Calendar.MINUTE))
+                + " - " + endCal.get(Calendar.HOUR_OF_DAY) + ":"
+                + String.format("%02d", endCal.get(Calendar.MINUTE));
     }
 }
