@@ -22,7 +22,7 @@ public class CalEventActivity extends Activity {
         CalEvent e = (CalEvent) getIntent().getSerializableExtra("CAL_EVENT");
         if (e != null) {
             TextView l = (TextView) findViewById(R.id.label);
-            l.setText(e.getName());
+            l.setText(e.toString());
         }
     }
 
