@@ -25,7 +25,6 @@ public class HomeActivity extends Activity {
 
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadUrl("file:///android_asset/WebViewBase.html");
         wv.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -43,6 +42,20 @@ public class HomeActivity extends Activity {
                 wv.loadUrl("javascript: $('#loading').hide();");
             }
         });
+        wv.loadUrl("file:///android_asset/WebViewBase.html");
+        Date d1 = new Date(113, 9, 15, 12, 0);
+        Date d2 = new Date(113, 9, 15, 13, 0);
+        Date d3 = new Date(113, 9, 15, 14, 0);
+        Date d4 = new Date(113, 9, 15, 15, 0);
+        CalEvent [] events = new CalEvent[0];
+        try{
+            this.events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
+        } catch (Exception ex) {
+            this.events = new CalEvent[] {
+                    new CalEvent("A", "d1", "VR-II", d1, d2),
+                    new CalEvent("B", "f", "HT-104", d3, d4)
+            };
+        }
     }
 
     protected boolean isURLMatching(String url) {
@@ -64,15 +77,6 @@ public class HomeActivity extends Activity {
     }
 
     private String getJavascriptForCalEvents() {
-        Date d1 = new Date(113, 9, 15, 12, 0);
-        Date d2 = new Date(113, 9, 15, 13, 0);
-        Date d3 = new Date(113, 9, 15, 14, 0);
-        Date d4 = new Date(113, 9, 15, 15, 0);
-        this.events = new CalEvent[] {
-                new CalEvent("A", "d1", "VR-II", d1, d2),
-                new CalEvent("B", "f", "HT-104", d3, d4)
-        };
-
         String javascriptEvents = "events: [";
         for(int i=0; i<this.events.length; i++) {
             if (i!=0) {
@@ -80,11 +84,11 @@ public class HomeActivity extends Activity {
             }
             javascriptEvents += "{"
                     + "title: '" + this.events[i].getName() + "',"
-                    + "start: new Date(y, m, d, 7, 0),"
-                    + "end: new Date(y, m, d, 8, 0),"
-                    + "allDay: false,"
+                    + "start: " +this.events[i].getFullCalendarStartDateString() +","
+                    + "end: " +this.events[i].getFullCalendarEndDateString() +","
                     + "allDay: false,"
                     + "backgroundColor: 'green',"
+                    + "borderColor: 'black',"
                     + "url: '" + i + "'"
                     + "}";
         }

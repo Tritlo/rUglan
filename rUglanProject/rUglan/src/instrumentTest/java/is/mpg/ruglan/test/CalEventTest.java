@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 public class CalEventTest extends AndroidTestCase {
     private CalEvent event;
-    private String name, description, location, durationString;
+    private String name, description, location, durationString, fullCalStartString, fullCalEndString;
     private Date start, end;
     private SimpleDateFormat format;
 
@@ -24,6 +24,8 @@ public class CalEventTest extends AndroidTestCase {
         this.start = this.format.parse("20130515T132000");
         this.end = this.format.parse("20130515T140000");
         this.durationString = "13:20 - 14:00";
+        this.fullCalStartString = "new Date(2013, 4, 15, 13, 20)";
+        this.fullCalEndString = "new Date(2013, 4, 15, 14, 0)";
         this.event = new CalEvent(this.name, this.description, this.location, this.start, this.end);
         super.setUp();
     }
@@ -127,5 +129,23 @@ public class CalEventTest extends AndroidTestCase {
      */
     public void testGetDurationString() throws Exception {
         assertEquals(this.durationString, this.event.getDurationString());
+    }
+
+    /**
+     * Checks if getFullCalendarStartDateString returns the correct string of the event;
+     * a string that can be used as a parameter in FullCalendar.
+     * @throws Exception
+     */
+    public void testGetFullCalendarStartDateString() throws Exception {
+        assertEquals(this.fullCalStartString, this.event.getFullCalendarStartDateString());
+    }
+
+    /**
+     * Checks if getFullCalendarEndDateString returns the correct string of the event;
+     * a string that can be used as a parameter in FullCalendar.
+     * @throws Exception
+     */
+    public void testGetFullCalendarEndDateString() throws Exception {
+        assertEquals(this.fullCalEndString, this.event.getFullCalendarEndDateString());
     }
 }

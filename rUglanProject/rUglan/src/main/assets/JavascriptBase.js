@@ -6,9 +6,11 @@ $(document).ready(function() {
 
 	$('#calendar').fullCalendar({
 		height: 850,
-		minTime: '4',
+		minTime: 7,
 		axisFormat: 'HH:mm',
+		timeFormat: 'HH:mm',
 		allDaySlot: false,
+		slotEventOverlap: false,
 		header:
 		{
 			left: 'prev,next today',
