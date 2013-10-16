@@ -2,6 +2,7 @@ package is.mpg.ruglan;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -17,6 +18,9 @@ import java.util.Date;
 
 public class HomeActivity extends Activity {
     CalEvent[] events;
+
+
+    private static Context sContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class HomeActivity extends Activity {
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
+        sContext = getApplicationContext();
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -97,7 +102,6 @@ public class HomeActivity extends Activity {
         return getTextFromAssetsTextFile("JavascriptBase.js").replace("%%%EVENTS%%%",
                                                                         javascriptEvents);
     }
-
     private String getTextFromAssetsTextFile(String filename) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte buf[] = new byte[1024];
@@ -120,6 +124,10 @@ public class HomeActivity extends Activity {
             System.out.println("test failed to load file");
             return "Failed to load file";
         }
+    }
+
+    public static Context getContext() {
+        return sContext;
     }
 
     @Override
