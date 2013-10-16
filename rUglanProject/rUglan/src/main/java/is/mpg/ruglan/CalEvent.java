@@ -163,7 +163,7 @@ public class CalEvent implements Serializable {
               a.start.equals(this.start)  &&
               a.end.equals(this.end);
     }
-    
+
     /**
      * @use s = e.getFullCalendarStartDateString();
      * @pre e is an instance of CalEvent

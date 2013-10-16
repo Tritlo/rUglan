@@ -150,8 +150,8 @@ public class CalEventTest extends AndroidTestCase {
         new CalEvent("A", "B", "C", d1, d3),
         new CalEvent("A", "B", "C", d4, d2)};
         assertTrue(a.equals(b));
-        for(int i = 0; i<wrong.length; i++){
-            assertFalse(a.equals(wrong[i]));
+        for (CalEvent aWrong : wrong) {
+            assertFalse(a.equals(aWrong));
         }
     }
 
