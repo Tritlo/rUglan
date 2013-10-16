@@ -69,8 +69,8 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
     public static CalEvent [] parseCalendar(String calendar){
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
         String [][] events = calendarToEventList(calendar);
-        CalEvent [] calEvents = new CalEvent[events.length-1];//The first in events is calendar info.
-        for(int i = 1; i < events.length; i++){
+        CalEvent [] calEvents = new CalEvent[events.length];
+        for(int i = 0; i < events.length; i++){
             String name = getICalValue(events[i], "SUMMARY");
             String desc = getICalValue(events[i], "DESCRIPTION");
             String loc  = getICalValue(events[i], "LOCATION");
@@ -82,14 +82,14 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
                 Date start = format.parse(st);
                 Date end = format.parse(en);
                 try {
-                calEvents[i-1] = new CalEvent(name,desc,loc,start,end);
+                calEvents[i] = new CalEvent(name,desc,loc,start,end);
                 } catch (IllegalArgumentException ex)
                 {
-                    calEvents[i-1] = null;
+                    calEvents[i] = null;
                 }
             }
             catch (ParseException  ex) {
-                calEvents[i-1] = null;
+                calEvents[i] = null;
             }
         }
         return calEvents;
@@ -160,7 +160,7 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
             String substr = calendar.substring(i,j);
             events.add(removeCR(substr.split("\n")));
         }
-        return events.toArray(ret);
+        return  events.toArray(ret);
     }
 	
 	    

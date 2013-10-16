@@ -132,6 +132,28 @@ public class CalEventTest extends AndroidTestCase {
     }
 
     /**
+     * Checks if equals does correct checks
+     * @throws Exception
+     */
+    public void testEquals() throws Exception {
+        Date d4 = this.format.parse("20130515T131000");
+        Date d1 = this.format.parse("20130515T132000");
+        Date d2 = this.format.parse("20130515T133000");
+        Date d3 = this.format.parse("20130515T134000");
+
+        CalEvent a = new CalEvent("A", "B", "C", d1, d2);
+        CalEvent b = new CalEvent("A", "B", "C", d1, d2);
+        CalEvent [] wrong = {
+        new CalEvent("B", "B", "C", d1, d2),
+        new CalEvent("A", "A", "C", d1, d2),
+        new CalEvent("A", "B", "D", d1, d2),
+        new CalEvent("A", "B", "C", d1, d3),
+        new CalEvent("A", "B", "C", d4, d2)};
+        assertTrue(a.equals(b));
+        for(int i = 0; i<wrong.length; i++){
+            assertFalse(a.equals(wrong[i]));
+        }
+
      * Checks if getFullCalendarStartDateString returns the correct string of the event;
      * a string that can be used as a parameter in FullCalendar.
      * @throws Exception
