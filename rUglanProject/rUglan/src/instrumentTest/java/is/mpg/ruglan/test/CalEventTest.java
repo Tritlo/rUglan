@@ -153,7 +153,9 @@ public class CalEventTest extends AndroidTestCase {
         for(int i = 0; i<wrong.length; i++){
             assertFalse(a.equals(wrong[i]));
         }
+    }
 
+    /**
      * Checks if getFullCalendarStartDateString returns the correct string of the event;
      * a string that can be used as a parameter in FullCalendar.
      * @throws Exception
