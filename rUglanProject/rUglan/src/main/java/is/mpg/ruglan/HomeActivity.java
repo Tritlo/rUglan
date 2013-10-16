@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -12,10 +13,15 @@ import is.mpg.ruglan.CalEvent;
 
 public class HomeActivity extends Activity {
 
+
+    private static Context sContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        sContext = getApplicationContext();
 
         ListView eventsListView = (ListView) findViewById(R.id.events_list);
 
@@ -46,7 +52,9 @@ public class HomeActivity extends Activity {
         eventsListView.setAdapter(adapter);
 
     }
-
+    public static Context getContext() {
+        return sContext;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
