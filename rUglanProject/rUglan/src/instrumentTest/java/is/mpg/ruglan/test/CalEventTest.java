@@ -148,4 +148,13 @@ public class CalEventTest extends AndroidTestCase {
     public void testGetFullCalendarEndDateString() throws Exception {
         assertEquals(this.fullCalEndString, this.event.getFullCalendarEndDateString());
     }
+
+    /**
+     * Checks if getColor returns the correct color for a CalEvent.
+     * @throws Exception
+     */
+    public void testGetColor() throws Exception {
+        // TODO: Write this test when getColor has been implemented using rules with Dabbi.
+        assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
+    }
 }
