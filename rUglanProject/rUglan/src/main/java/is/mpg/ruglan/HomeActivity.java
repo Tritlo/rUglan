@@ -38,7 +38,7 @@ public class HomeActivity extends Activity {
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
-        sContext = getApplicationContext();
+        Context sContext = getApplicationContext();
 
             @Override
             public void onPageFinished(WebView view, String url) {
