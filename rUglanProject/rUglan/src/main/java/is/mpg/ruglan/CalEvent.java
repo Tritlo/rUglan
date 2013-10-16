@@ -149,6 +149,20 @@ public class CalEvent implements Serializable {
     }
 
     /**
+     * @use s = a.equals(b)
+     * @pre a,b is an instance of CalEvent
+     * @post s is true if a and b have the same properties, false otherwise
+     *
+     * @return true if a and b have the same properties, false otherwise
+     */
+    public boolean equals(CalEvent a)
+    {
+       return a.name.equals(this.name)  &&
+              a.location.equals(this.location)  &&
+              a.description.equals(this.description)  &&
+              a.start.equals(this.start)  &&
+              a.end.equals(this.end);
+    /**
      * @use s = e.getFullCalendarStartDateString();
      * @pre e is an instance of CalEvent
      * @return  s is a string on the form "new Date(y, m, d, H, M)" that can be used
