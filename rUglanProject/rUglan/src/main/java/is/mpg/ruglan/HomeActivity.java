@@ -92,7 +92,7 @@ public class HomeActivity extends Activity {
                     + "start: " +this.events[i].getFullCalendarStartDateString() +","
                     + "end: " +this.events[i].getFullCalendarEndDateString() +","
                     + "allDay: false,"
-                    + "backgroundColor: 'green',"
+                    + "backgroundColor: '" +this.events[i].getColor() + "',"
                     + "borderColor: 'black',"
                     + "url: '" + i + "'"
                     + "}";
