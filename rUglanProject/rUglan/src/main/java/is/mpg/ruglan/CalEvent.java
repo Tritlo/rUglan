@@ -146,4 +146,20 @@ public class CalEvent {
                 + " - " + endCal.get(Calendar.HOUR_OF_DAY) + ":"
                 + String.format("%02d", endCal.get(Calendar.MINUTE));
     }
+
+    /**
+     * @use s = a.equals(b)
+     * @pre a,b is an instance of CalEvent
+     * @post s is true if a and b have the same properties, false otherwise
+     *
+     * @return true if a and b have the same properties, false otherwise
+     */
+    public boolean equals(CalEvent a)
+    {
+       return a.name.equals(this.name)  &&
+              a.location.equals(this.location)  &&
+              a.description.equals(this.description)  &&
+              a.start.equals(this.start)  &&
+              a.end.equals(this.end);
+    }
 }
