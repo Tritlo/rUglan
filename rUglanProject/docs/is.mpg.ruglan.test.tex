@@ -1,0 +1,519 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{makeidx}
+\usepackage{ifpdf}
+\usepackage[headings]{fullpage}
+\ifpdf \usepackage[pdftex, pdfpagemode={UseOutlines},bookmarks,colorlinks,linkcolor={blue},plainpages=false,pdfpagelabels,citecolor={red},breaklinks=true]{hyperref}
+  \usepackage[pdftex]{graphicx}
+  \pdfcompresslevel=9
+  \DeclareGraphicsRule{*}{mps}{*}{}
+\else
+  \usepackage[dvips]{graphicx}
+\fi
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\date{\today}
+\title{rUglan documentation}
+\author{Jon Arnar Tomasson, Matthias Pall Gissurarson and Sigurdur Fannar Vilhelmsson}
+\chardef\textbackslash=`\\
+\makeindex
+\begin{document}
+\maketitle
+\sloppy
+\addtocontents{toc}{\protect\markboth{Contents}{Contents}}
+\tableofcontents
+\chapter*{Class Hierarchy}{
+\thispagestyle{empty}
+\markboth{Class Hierarchy}{Class Hierarchy}
+\addcontentsline{toc}{chapter}{Class Hierarchy}
+\section*{Classes}
+{\raggedright
+\hspace{0.0cm} $\bullet$ java.lang.Object {\tiny \refdefined{java.lang.Object}} \\
+\hspace{1.0cm} $\bullet$ AndroidTestCase {\tiny } \\
+\hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.CalEventTest {\tiny \refdefined{is.mpg.ruglan.test.CalEventTest}} \\
+\hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.DabbiTest {\tiny \refdefined{is.mpg.ruglan.test.DabbiTest}} \\
+\hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.iCalParserTest {\tiny \refdefined{is.mpg.ruglan.test.iCalParserTest}} \\
+}
+}
+\chapter{Package is.mpg.ruglan.test}{
+\label{is.mpg.ruglan.test}\hypertarget{is.mpg.ruglan.test}{}
+\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{CalEventTest}{is.mpg.ruglan.test.CalEventTest}{Unittests for the CalEvent class}
+\entityintro{DabbiTest}{is.mpg.ruglan.test.DabbiTest}{Created by jon on 9.10.2013.}
+\entityintro{iCalParserTest}{is.mpg.ruglan.test.iCalParserTest}{Created by tritlo on 10/8/13.}
+\vskip .1in
+\vskip .1in
+\section{\label{is.mpg.ruglan.test.CalEventTest}\index{CalEventTest}Class CalEventTest}{
+\hypertarget{is.mpg.ruglan.test.CalEventTest}{}\vskip .1in 
+Unittests for the CalEvent class\vskip .1in 
+\subsection{Declaration}{
+\small public class CalEventTest
+\\ {\bf  extends} AndroidTestCase
+\refdefined{.AndroidTestCase}}
+\subsection{Constructor summary}{
+\begin{verse}
+\hyperlink{is.mpg.ruglan.test.CalEventTest()}{{\bf CalEventTest()}} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+\hyperlink{is.mpg.ruglan.test.CalEventTest.setUp()}{{\bf setUp()}} \\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testCalEventDatesNotSameDay()}{{\bf testCalEventDatesNotSameDay()}} Creates a CalEvent with dates not on the same day.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testCalEventEndBeforeStart()}{{\bf testCalEventEndBeforeStart()}} Creates a CalEvent with end date before start date.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testCalEventStartSameAsEnd()}{{\bf testCalEventStartSameAsEnd()}} Creates a CalEvent with start date same as end date.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testEquals()}{{\bf testEquals()}} Checks if equals does correct checks\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetColor()}{{\bf testGetColor()}} Checks if getColor returns the correct color for a CalEvent.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetDescription()}{{\bf testGetDescription()}} Checks if getDescription returns the correct description.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetDurationString()}{{\bf testGetDurationString()}} Checks if getDurationString returns the correct string describing duration of the event.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetEnd()}{{\bf testGetEnd()}} Checks if getEnd returns the correct date.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetFullCalendarEndDateString()}{{\bf testGetFullCalendarEndDateString()}} Checks if getFullCalendarEndDateString returns the correct string of the event; a string that can be used as a parameter in FullCalendar.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetFullCalendarStartDateString()}{{\bf testGetFullCalendarStartDateString()}} Checks if getFullCalendarStartDateString returns the correct string of the event; a string that can be used as a parameter in FullCalendar.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetLocation()}{{\bf testGetLocation()}} Checks if getLocation returns the correct location.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetName()}{{\bf testGetName()}} Checks if getName returns the correct name.\\
+\hyperlink{is.mpg.ruglan.test.CalEventTest.testGetStart()}{{\bf testGetStart()}} Checks if getStart returns the correct date.\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{CalEventTest()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest()}{{\bf  CalEventTest}\\}
+\texttt{public\ {\bf  CalEventTest}()
+\label{is.mpg.ruglan.test.CalEventTest()}}%end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{setUp()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.setUp()}{{\bf  setUp}\\}
+\texttt{public void\ {\bf  setUp}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.setUp()}}%end signature
+}%end item
+\item{ 
+\index{testCalEventDatesNotSameDay()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testCalEventDatesNotSameDay()}{{\bf  testCalEventDatesNotSameDay}\\}
+\texttt{public void\ {\bf  testCalEventDatesNotSameDay}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testCalEventDatesNotSameDay()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a CalEvent with dates not on the same day. Expects IllegalArgumentException.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testCalEventEndBeforeStart()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testCalEventEndBeforeStart()}{{\bf  testCalEventEndBeforeStart}\\}
+\texttt{public void\ {\bf  testCalEventEndBeforeStart}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testCalEventEndBeforeStart()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a CalEvent with end date before start date. Expects IllegalArgumentException.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testCalEventStartSameAsEnd()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testCalEventStartSameAsEnd()}{{\bf  testCalEventStartSameAsEnd}\\}
+\texttt{public void\ {\bf  testCalEventStartSameAsEnd}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testCalEventStartSameAsEnd()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a CalEvent with start date same as end date. Expects IllegalArgumentException.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testEquals()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testEquals()}{{\bf  testEquals}\\}
+\texttt{public void\ {\bf  testEquals}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testEquals()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if equals does correct checks
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetColor()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetColor()}{{\bf  testGetColor}\\}
+\texttt{public void\ {\bf  testGetColor}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetColor()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getColor returns the correct color for a CalEvent.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetDescription()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetDescription()}{{\bf  testGetDescription}\\}
+\texttt{public void\ {\bf  testGetDescription}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetDescription()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getDescription returns the correct description.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetDurationString()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetDurationString()}{{\bf  testGetDurationString}\\}
+\texttt{public void\ {\bf  testGetDurationString}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetDurationString()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getDurationString returns the correct string describing duration of the event.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetEnd()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetEnd()}{{\bf  testGetEnd}\\}
+\texttt{public void\ {\bf  testGetEnd}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetEnd()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getEnd returns the correct date.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetFullCalendarEndDateString()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetFullCalendarEndDateString()}{{\bf  testGetFullCalendarEndDateString}\\}
+\texttt{public void\ {\bf  testGetFullCalendarEndDateString}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetFullCalendarEndDateString()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getFullCalendarEndDateString returns the correct string of the event; a string that can be used as a parameter in FullCalendar.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetFullCalendarStartDateString()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetFullCalendarStartDateString()}{{\bf  testGetFullCalendarStartDateString}\\}
+\texttt{public void\ {\bf  testGetFullCalendarStartDateString}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetFullCalendarStartDateString()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getFullCalendarStartDateString returns the correct string of the event; a string that can be used as a parameter in FullCalendar.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetLocation()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetLocation()}{{\bf  testGetLocation}\\}
+\texttt{public void\ {\bf  testGetLocation}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetLocation()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getLocation returns the correct location.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetName()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetName()}{{\bf  testGetName}\\}
+\texttt{public void\ {\bf  testGetName}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetName()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getName returns the correct name.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetStart()}
+\hypertarget{is.mpg.ruglan.test.CalEventTest.testGetStart()}{{\bf  testGetStart}\\}
+\texttt{public void\ {\bf  testGetStart}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetStart()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getStart returns the correct date.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{is.mpg.ruglan.test.DabbiTest}\index{DabbiTest}Class DabbiTest}{
+\hypertarget{is.mpg.ruglan.test.DabbiTest}{}\vskip .1in 
+Created by jon on 9.10.2013.\vskip .1in 
+\subsection{Declaration}{
+\small public class DabbiTest
+\\ {\bf  extends} AndroidTestCase
+\refdefined{.AndroidTestCase}}
+\subsection{Constructor summary}{
+\begin{verse}
+\hyperlink{is.mpg.ruglan.test.DabbiTest()}{{\bf DabbiTest()}} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+\hyperlink{is.mpg.ruglan.test.DabbiTest.setUp()}{{\bf setUp()}} \\
+\hyperlink{is.mpg.ruglan.test.DabbiTest.testAddCalEvents()}{{\bf testAddCalEvents()}} Tries to add events to the database\\
+\hyperlink{is.mpg.ruglan.test.DabbiTest.testGetCalEvents()}{{\bf testGetCalEvents()}} Tries to add an event to the database and then extract it back from the database and compare it with the original.\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{DabbiTest()}
+\hypertarget{is.mpg.ruglan.test.DabbiTest()}{{\bf  DabbiTest}\\}
+\texttt{public\ {\bf  DabbiTest}()
+\label{is.mpg.ruglan.test.DabbiTest()}}%end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{setUp()}
+\hypertarget{is.mpg.ruglan.test.DabbiTest.setUp()}{{\bf  setUp}\\}
+\texttt{public void\ {\bf  setUp}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.setUp()}}%end signature
+}%end item
+\item{ 
+\index{testAddCalEvents()}
+\hypertarget{is.mpg.ruglan.test.DabbiTest.testAddCalEvents()}{{\bf  testAddCalEvents}\\}
+\texttt{public void\ {\bf  testAddCalEvents}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testAddCalEvents()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tries to add events to the database
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetCalEvents()}
+\hypertarget{is.mpg.ruglan.test.DabbiTest.testGetCalEvents()}{{\bf  testGetCalEvents}\\}
+\texttt{public void\ {\bf  testGetCalEvents}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testGetCalEvents()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tries to add an event to the database and then extract it back from the database and compare it with the original.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{is.mpg.ruglan.test.iCalParserTest}\index{iCalParserTest}Class iCalParserTest}{
+\hypertarget{is.mpg.ruglan.test.iCalParserTest}{}\vskip .1in 
+Created by tritlo on 10/8/13.\vskip .1in 
+\subsection{Declaration}{
+\small public class iCalParserTest
+\\ {\bf  extends} AndroidTestCase
+\refdefined{.AndroidTestCase}}
+\subsection{Constructor summary}{
+\begin{verse}
+\hyperlink{is.mpg.ruglan.test.iCalParserTest()}{{\bf iCalParserTest()}} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.setUp()}{{\bf setUp()}} \\
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.testCalendarToEventList()}{{\bf testCalendarToEventList()}} \\
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.testGetICalValue()}{{\bf testGetICalValue()}} \\
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.testParseCalendar()}{{\bf testParseCalendar()}} \\
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.testRemoveCR()}{{\bf testRemoveCR()}} \\
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.testUrlToCalEvents()}{{\bf testUrlToCalEvents()}} \\
+\hyperlink{is.mpg.ruglan.test.iCalParserTest.testUrlToString()}{{\bf testUrlToString()}} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{iCalParserTest()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest()}{{\bf  iCalParserTest}\\}
+\texttt{public\ {\bf  iCalParserTest}()
+\label{is.mpg.ruglan.test.iCalParserTest()}}%end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{setUp()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.setUp()}{{\bf  setUp}\\}
+\texttt{public void\ {\bf  setUp}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.setUp()}}%end signature
+}%end item
+\item{ 
+\index{testCalendarToEventList()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.testCalendarToEventList()}{{\bf  testCalendarToEventList}\\}
+\texttt{public void\ {\bf  testCalendarToEventList}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.testCalendarToEventList()}}%end signature
+}%end item
+\item{ 
+\index{testGetICalValue()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.testGetICalValue()}{{\bf  testGetICalValue}\\}
+\texttt{public void\ {\bf  testGetICalValue}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.testGetICalValue()}}%end signature
+}%end item
+\item{ 
+\index{testParseCalendar()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.testParseCalendar()}{{\bf  testParseCalendar}\\}
+\texttt{public void\ {\bf  testParseCalendar}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.testParseCalendar()}}%end signature
+}%end item
+\item{ 
+\index{testRemoveCR()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.testRemoveCR()}{{\bf  testRemoveCR}\\}
+\texttt{public void\ {\bf  testRemoveCR}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.testRemoveCR()}}%end signature
+}%end item
+\item{ 
+\index{testUrlToCalEvents()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.testUrlToCalEvents()}{{\bf  testUrlToCalEvents}\\}
+\texttt{public void\ {\bf  testUrlToCalEvents}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.testUrlToCalEvents()}}%end signature
+}%end item
+\item{ 
+\index{testUrlToString()}
+\hypertarget{is.mpg.ruglan.test.iCalParserTest.testUrlToString()}{{\bf  testUrlToString}\\}
+\texttt{public void\ {\bf  testUrlToString}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.iCalParserTest.testUrlToString()}}%end signature
+}%end item
+\end{itemize}
+}
+}
+}
+\printindex
+\end{document}
