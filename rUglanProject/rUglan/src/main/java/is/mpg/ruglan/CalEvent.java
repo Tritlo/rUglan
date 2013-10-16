@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
@@ -8,7 +9,7 @@ import java.lang.IllegalArgumentException;
  * Class representing Calendar Event for the project.
  * @author Siggi
  */
-public class CalEvent {
+public class CalEvent implements Serializable {
 
     private String name, description, location;
     private Date start, end;
@@ -161,5 +162,42 @@ public class CalEvent {
               a.description.equals(this.description)  &&
               a.start.equals(this.start)  &&
               a.end.equals(this.end);
+    /**
+     * @use s = e.getFullCalendarStartDateString();
+     * @pre e is an instance of CalEvent
+     * @return  s is a string on the form "new Date(y, m, d, H, M)" that can be used
+     *          as a parameter for date in FullCalendar
+     */
+    public String getFullCalendarStartDateString() {
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(this.getStart());
+        return getFullCalendarDateString(startCal);
+    }
+
+    /**
+     * @use s = e.getFullCalendarEndDateString();
+     * @pre e is an instance of CalEvent
+     * @return  s is a string on the form "new Date(y, m, d, H, M)" that can be used
+     *          as a parameter for date in FullCalendar
+     */
+    public String getFullCalendarEndDateString() {
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(this.getEnd());
+        return getFullCalendarDateString(endCal);
+    }
+
+    /**
+     * @use s = getFullCalendarEndDateString();
+     * @return  s is a string on the form "new Date(y, m, d, H, M)" that can be used
+     *          as a parameter for date in FullCalendar
+     */
+    private String getFullCalendarDateString(Calendar cal) {
+        return "new Date("
+                + cal.get(Calendar.YEAR) +", "
+                + cal.get(Calendar.MONTH) +", "
+                + cal.get(Calendar.DAY_OF_MONTH) +", "
+                + cal.get(Calendar.HOUR_OF_DAY) +", "
+                + cal.get(Calendar.MINUTE)
+                + ")";
     }
 }
