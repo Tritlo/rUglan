@@ -202,4 +202,30 @@ public class CalEvent implements Serializable {
                 + cal.get(Calendar.MINUTE)
                 + ")";
     }
+
+    /**
+     * @use s = getColor();
+     * @return  s is a string representing a color that can be used
+     *          as a parameter for backgroundColor in FullCalendar
+     */
+    public String getColor() {
+        if (this.name.startsWith("TOL301G-20136")) {
+            return "brown";
+        }
+        else if (this.name.startsWith("TOL304G-20136")) {
+            return "red";
+        }
+        else if (this.name.startsWith("HBV501G-20136")) {
+            return "green";
+        }
+        else if (this.name.startsWith("TOL306G-20136")) {
+            return "#BA55D3";
+        }
+        else if (this.name.startsWith("TOL308G-20136")) {
+            return "#D2691E";
+        }
+        else {
+            return "grey";
+        }
+    }
 }
