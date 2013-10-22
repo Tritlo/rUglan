@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.view.View;
 
 public class SettingsActivity extends Activity {
 
@@ -51,6 +53,26 @@ public class SettingsActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveSettings(View view) {
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.show();
+        new Thread() {
+            public void run() {
+                try{
+                    // Do some work here
+                    sleep(3000);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                progress.dismiss();
+                finish();
+            }
+        }.start();
+
     }
 
 }
