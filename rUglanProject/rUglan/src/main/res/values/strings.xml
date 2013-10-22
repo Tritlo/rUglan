@@ -6,6 +6,7 @@
     <string name="events">Events</string>
     <string name="title_activity_cal_event">Calendar Event</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="refresh">Refresh</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>

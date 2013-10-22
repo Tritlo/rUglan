@@ -1,11 +1,13 @@
 package is.mpg.ruglan;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -135,6 +137,40 @@ public class HomeActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refresh();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * @use refresh();
+     * @post The calendar content is refreshed.
+     */
+    private void refresh() {
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.show();
+        new Thread() {
+            public void run() {
+                try{
+                    // Do some work here
+                    sleep(3000);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                progress.dismiss();
+            }
+        }.start();
     }
     
 }
