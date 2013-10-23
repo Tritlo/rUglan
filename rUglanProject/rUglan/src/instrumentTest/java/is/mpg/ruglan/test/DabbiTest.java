@@ -53,4 +53,33 @@ public class DabbiTest extends AndroidTestCase {
         assertEquals(events[0].toString(), calEvents[0].toString());
 
     }
+
+    /**
+     *Tries to empty the event table in the database
+     *@throws java.lang.Exception
+     */
+     public void testClearEventsTable() throws Exception
+     {
+         Dabbi dabbi = new Dabbi(this.getContext());
+
+         Date startDate = new Date(999977000L);
+         Date endDate = new Date(999999000L);
+         CalEvent[] calEvents = new CalEvent[1];
+         calEvents[0] = new CalEvent("test_timi4","Prufu timi sem er ekki til","Neshagi", startDate, endDate);
+         dabbi.addCalEvents(calEvents);
+
+         System.out.println(dabbi.getCalEvents(new Date(0),new Date(((long)Integer.MAX_VALUE)*1000))[0].toString());
+         boolean success = dabbi.runPrivateMethod("there is no cow level");
+         if(success)
+         {
+             System.out.println("test droped the table");
+         }
+         else
+         {
+             System.out.println("test failed to drop the table");
+         }
+
+         assertEquals(0,dabbi.getCalEvents(new Date(0),new Date(((long)Integer.MAX_VALUE)*1000)).length);
+     }
+
 }

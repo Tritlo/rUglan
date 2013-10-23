@@ -1,0 +1,4 @@
+CREATE TABLE CALEVENTS (
+ ical_url TEXT NOT NULL,
+ PRIMARY KEY(ical_url)
+);

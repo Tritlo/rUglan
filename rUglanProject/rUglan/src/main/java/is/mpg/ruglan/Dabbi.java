@@ -113,4 +113,46 @@ public class Dabbi {
 
         return events;
     }
+    
+    /**
+     * Deletes all the events in the events table of the database.
+     * @use a = clearEventsTable();
+     * @pre
+     * @post The events table in the database is now empty if a is true else
+     * something failed.
+     */
+    boolean clearEventsTable()
+    {
+        try
+        {
+            rDataBase DB = new rDataBase(context);
+            SQLiteDatabase qdb = DB.getWritableDatabase();
+            qdb.rawQuery("DROP TABLE CALEVENTS",null);
+            DB.executeSQLScript(qdb, "create.sql");
+            qdb.close();
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Runs a private method of the class if with the correct
+     * password.
+     * @use a = runPrivateMethod(password);
+     * @pre
+     * @post a is true if a method matched the password and it was run
+     * else a is false
+     */
+    public boolean runPrivateMethod(String password)
+    {
+        if(password.equals("there is no cow level"))
+        {
+            return clearEventsTable();
+        }
+        return false;
+    }
+
 }
