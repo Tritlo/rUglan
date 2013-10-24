@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,7 +76,8 @@ public class HomeActivity extends Activity {
         String index = "asdf";
         try {
             URL u = new URL(url);
-            index = u.getFile().substring(u.getFile().lastIndexOf('/')+1, u.getFile().length());
+            index = u.getFile().substring(u.getFile().lastIndexOf('/')+1,
+                                            u.getFile().length());
         } catch (MalformedURLException e) {
             System.out.println("test failed to load url");
         }
@@ -90,26 +92,27 @@ public class HomeActivity extends Activity {
                 javascriptEvents += ",";
             }
             javascriptEvents += "{"
-                    + "title: '" + this.events[i].getName() + "',"
-                    + "start: " +this.events[i].getFullCalendarStartDateString() +","
-                    + "end: " +this.events[i].getFullCalendarEndDateString() +","
-                    + "allDay: false,"
-                    + "backgroundColor: '" +this.events[i].getColor() + "',"
-                    + "borderColor: 'black',"
-                    + "url: '" + i + "'"
-                    + "}";
+                + "title: '" + this.events[i].getName() + "',"
+                + "start: " +this.events[i].getFullCalendarStartDateString()+","
+                + "end: " +this.events[i].getFullCalendarEndDateString() +","
+                + "allDay: false,"
+                + "backgroundColor: '" +this.events[i].getColor() + "',"
+                + "borderColor: 'black',"
+                + "url: '" + i + "'"
+                + "}";
         }
         javascriptEvents += "]";
 
-        return getTextFromAssetsTextFile("JavascriptBase.js").replace("%%%EVENTS%%%",
-                                                                        javascriptEvents);
+        return getTextFromAssetsTextFile("JavascriptBase.js")
+                .replace("%%%EVENTS%%%", javascriptEvents);
     }
     private String getTextFromAssetsTextFile(String filename) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte buf[] = new byte[1024];
         int len;
         AssetManager assetManager = getApplicationContext().getAssets();
-        // TODO: Replace getApplicationContext with this.getContext after merging dabbi branch.
+        // TODO: Replace getApplicationContext with this.getContext
+        // after merging dabbi branch.
         InputStream inputStream = null;
 
         try{
@@ -152,6 +155,18 @@ public class HomeActivity extends Activity {
     }
 
     /**
+     * @use updateLastUpdatedLabel();
+     * @post The timestamp in lastUpdatedLabel has been
+     * updated with info from Dabbi.
+     */
+    private void updateLastUpdatedLabel() {
+        // TODO: Use Dabbi to get lastUpdated string.
+        String dabbiLastUpdated = "Unable to refresh!";
+        TextView t= (TextView)findViewById(R.id.lastUpdatedLabel);
+        t.setText(getString(R.string.lastUpdated) + dabbiLastUpdated);
+    }
+
+    /**
      * @use refresh();
      * @post The calendar content is refreshed.
      */
@@ -160,17 +175,26 @@ public class HomeActivity extends Activity {
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
         progress.show();
-        new Thread() {
+        Thread refreshTread = new Thread() {
             public void run() {
                 try{
-                    // Do some work here
-                    sleep(3000);
+                    //TODO: update Dabbi.
+                    sleep(5000);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 progress.dismiss();
             }
-        }.start();
+        };
+        refreshTread.start();
+        try {
+            refreshTread.join();
+            updateLastUpdatedLabel();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
     
 }
