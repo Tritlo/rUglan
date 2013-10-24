@@ -82,4 +82,20 @@ public class DabbiTest extends AndroidTestCase {
          assertEquals(0,dabbi.getCalEvents(new Date(0),new Date(((long)Integer.MAX_VALUE)*1000)).length);
      }
 
+    public void testSetiCalUrl() throws Exception
+    {
+
+        Dabbi dabbi = new Dabbi(this.getContext());
+
+        dabbi.setiCalUrl("ekkiUrl");
+    }
+    public void testGetiCalUrl() throws Exception
+    {
+
+        Dabbi dabbi = new Dabbi(this.getContext());
+
+        dabbi.setiCalUrl("ekkiUrl");
+        assertEquals("ekkiUrl", dabbi.getiCalUrl());
+    }
+
 }

@@ -35,6 +35,7 @@ public class rDataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         System.out.println("test database running schema");
         executeSQLScript(database, "create.sql");
+        executeSQLScript(database, "create_settings.sql");
     }
 
     public void executeSQLScript(SQLiteDatabase database, String dbname) {
