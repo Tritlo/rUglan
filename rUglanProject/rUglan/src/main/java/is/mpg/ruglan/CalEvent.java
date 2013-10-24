@@ -1,6 +1,7 @@
 package is.mpg.ruglan;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
@@ -146,6 +147,21 @@ public class CalEvent implements Serializable {
                 + String.format("%02d", startCal.get(Calendar.MINUTE))
                 + " - " + endCal.get(Calendar.HOUR_OF_DAY) + ":"
                 + String.format("%02d", endCal.get(Calendar.MINUTE));
+    }
+
+    /**
+     * @use s = e.getDateString();
+     * @pre e is an instance of CalEvent
+     * @post s is a string on the form "d. M Y"
+     *          describing the date of the event.
+     *
+     * @return A string on the form "d. M Y" describing the date of the event.
+     */
+    public String getDateString(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(this.getStart());
+        SimpleDateFormat sdf = new SimpleDateFormat("d. MMM yyyy");
+        return sdf.format(cal.getTime());
     }
 
     /**
