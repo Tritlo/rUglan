@@ -18,7 +18,13 @@ import java.lang.IllegalArgumentException;
 public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
 
     public CalEvent [] doInBackground(String... url){
-        return urlToCalEvents(url[0]);
+        try {
+            return urlToCalEvents(url[0]);
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     /**

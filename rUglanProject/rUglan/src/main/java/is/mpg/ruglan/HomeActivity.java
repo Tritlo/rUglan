@@ -1,5 +1,7 @@
 package is.mpg.ruglan;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -61,11 +63,32 @@ public class HomeActivity extends Activity {
         try{
             //this.events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
             this.events = new iCalParser().execute(iCalUrl).get();
+
         } catch (Exception ex) {
+            this.events = null;
+        }
+        //To do: Error handling, dialog or otherwise
+        if (this.events == null){
+            /* TODO: Handle more gracefully (design question) */
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getString(R.string.Invalid_iCal_alert))
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                           dialog.dismiss();
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+            /*
             this.events = new CalEvent[] {
                     new CalEvent("A", "d1", "VR-II", d1, d2),
                     new CalEvent("B", "f", "HT-104", d3, d4)
             };
+            */
+            this.events = new CalEvent[0];
         }
     }
 

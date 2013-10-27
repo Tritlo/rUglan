@@ -10,6 +10,7 @@
     <string name="save">Save</string>
     <string name="desc_header">Lýsing</string>
     <string name="loc_header">Staðsetning</string>
-    <string name="iCalUrlSettingText">iCal url:</string>
+    <string name="iCalUrlSettingText">iCal URL:</string>
+    <string name="Invalid_iCal_alert">There was an error with your iCal URL. Please go to settings and change it to a valid URL to a valid iCal.</string>
 
 </resources>

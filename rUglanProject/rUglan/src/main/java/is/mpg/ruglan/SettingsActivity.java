@@ -77,6 +77,7 @@ public class SettingsActivity extends Activity {
                 try{
                     editor.putString("iCalUrl",iCalInput.getText().toString());
                     editor.commit();
+                    /* TODO: Refresh calendar if changed, when implemented. */
                     sleep(3000);
                 } catch (Exception e) {
                     Log.e("iCalUrl", e.getMessage());
