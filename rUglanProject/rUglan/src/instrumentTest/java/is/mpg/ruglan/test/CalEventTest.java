@@ -12,7 +12,8 @@ import java.util.Locale;
  */
 public class CalEventTest extends AndroidTestCase {
     private CalEvent event;
-    private String name, description, location, durationString, fullCalStartString, fullCalEndString;
+    private String name, description, location, dateString,
+            durationString, fullCalStartString, fullCalEndString;
     private Date start, end;
     private SimpleDateFormat format;
 
@@ -23,6 +24,7 @@ public class CalEventTest extends AndroidTestCase {
         this.format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
         this.start = this.format.parse("20130515T132000");
         this.end = this.format.parse("20130515T140000");
+        this.dateString = "15. May 2013";
         this.durationString = "13:20 - 14:00";
         this.fullCalStartString = "new Date(2013, 4, 15, 13, 20)";
         this.fullCalEndString = "new Date(2013, 4, 15, 14, 0)";
@@ -121,6 +123,15 @@ public class CalEventTest extends AndroidTestCase {
      */
     public void testGetEnd() throws Exception {
         assertEquals(this.end, this.event.getEnd());
+    }
+
+    /**
+     * Checks if getDateString returns the correct string describing date
+     * of the event.
+     * @throws Exception
+     */
+    public void testGetDateString() throws Exception {
+        assertEquals(this.dateString, this.event.getDateString());
     }
 
     /**
