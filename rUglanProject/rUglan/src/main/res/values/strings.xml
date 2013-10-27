@@ -10,5 +10,6 @@
     <string name="save">Save</string>
     <string name="desc_header">Lýsing</string>
     <string name="loc_header">Staðsetning</string>
+    <string name="iCalUrlSettingText">iCal url:</string>
 
 </resources>

@@ -1,21 +1,33 @@
 package is.mpg.ruglan;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
+import android.widget.TextView;
 
 public class SettingsActivity extends Activity {
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    public static final String PREFS_NAME = "rUglanSettings";
+    TextView iCalInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        prefs = getSharedPreferences(this.PREFS_NAME, 0);
+        editor = this.prefs.edit();
+        String iCalUrl = prefs.getString("iCalUrl","http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
+        iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
+        iCalInput.setText(iCalUrl);
         // Show the Up button in the action bar.
         setupActionBar();
     }
@@ -63,10 +75,11 @@ public class SettingsActivity extends Activity {
         new Thread() {
             public void run() {
                 try{
-                    // Do some work here
+                    editor.putString("iCalUrl",iCalInput.getText().toString());
+                    editor.commit();
                     sleep(3000);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    Log.e("iCalUrl", e.getMessage());
                 }
                 progress.dismiss();
                 finish();

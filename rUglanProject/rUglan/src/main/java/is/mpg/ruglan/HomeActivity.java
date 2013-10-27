@@ -1,6 +1,7 @@
 package is.mpg.ruglan;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import java.util.Date;
 
 public class HomeActivity extends Activity {
     CalEvent[] events;
+    SharedPreferences prefs;
+    public static final String PREFS_NAME = "rUglanSettings";
 
 
     private static Context sContext;
@@ -27,7 +30,8 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        prefs = getSharedPreferences(this.PREFS_NAME, 0);
+        String iCalUrl = prefs.getString("iCalUrl","http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
         wv.setWebViewClient(new WebViewClient(){
@@ -55,7 +59,8 @@ public class HomeActivity extends Activity {
         Date d4 = new Date(113, 9, 15, 15, 0);
         CalEvent [] events = new CalEvent[0];
         try{
-            this.events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
+            //this.events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
+            this.events = new iCalParser().execute(iCalUrl).get();
         } catch (Exception ex) {
             this.events = new CalEvent[] {
                     new CalEvent("A", "d1", "VR-II", d1, d2),
