@@ -21,8 +21,17 @@ public class CalEventActivity extends Activity {
 
         CalEvent e = (CalEvent) getIntent().getSerializableExtra("CAL_EVENT");
         if (e != null) {
-            TextView l = (TextView) findViewById(R.id.label);
-            l.setText(e.toString());
+            TextView name = (TextView) findViewById(R.id.name_label);
+            TextView date = (TextView) findViewById(R.id.date_label);
+            TextView time = (TextView) findViewById(R.id.time_label);
+            TextView desc = (TextView) findViewById(R.id.desc_label);
+            TextView loc = (TextView) findViewById(R.id.loc_label);
+
+            name.setText(e.getName().replaceFirst(" ", "\n"));
+            date.setText(e.getDateString());
+            time.setText(e.getDurationString());
+            desc.setText(e.getDescription());
+            loc.setText(e.getLocation());
         }
     }
 
