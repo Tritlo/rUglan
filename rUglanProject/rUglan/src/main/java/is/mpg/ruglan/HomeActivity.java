@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -18,6 +20,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 
 public class HomeActivity extends Activity {
     CalEvent[] events;
@@ -79,6 +82,7 @@ public class HomeActivity extends Activity {
             index = u.getFile().substring(u.getFile().lastIndexOf('/')+1,
                                             u.getFile().length());
         } catch (MalformedURLException e) {
+            // TODO: Log the error
             System.out.println("test failed to load url");
         }
         intent.putExtra("CAL_EVENT", this.events[Integer.parseInt(index)]);
@@ -106,6 +110,7 @@ public class HomeActivity extends Activity {
         return getTextFromAssetsTextFile("JavascriptBase.js")
                 .replace("%%%EVENTS%%%", javascriptEvents);
     }
+
     private String getTextFromAssetsTextFile(String filename) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte buf[] = new byte[1024];
@@ -125,7 +130,7 @@ public class HomeActivity extends Activity {
 
             return outputStream.toString();
         } catch (IOException e){
-            // TODO: Handle file failed to Load
+            // TODO: Log the error
             System.out.println("test failed to load file");
             return "Failed to load file";
         }
@@ -148,6 +153,7 @@ public class HomeActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 refresh();
+                return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -163,8 +169,8 @@ public class HomeActivity extends Activity {
      * updated with info from Dabbi.
      */
     private void updateLastUpdatedLabel() {
-        // TODO: Use Dabbi to get lastUpdated string.
-        String dabbiLastUpdated = "Unable to refresh!";
+        // TODO: Use Shared preferences to get lastUpdated string.
+        String dabbiLastUpdated = "Label updated!!!!";
         TextView t= (TextView)findViewById(R.id.lastUpdatedLabel);
         t.setText(getString(R.string.lastUpdated) + dabbiLastUpdated);
     }
@@ -177,24 +183,45 @@ public class HomeActivity extends Activity {
         final ProgressDialog progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
-        progress.show();
-        Thread refreshTread = new Thread() {
-            public void run() {
-                try{
-                    //TODO: update Dabbi.
-                    sleep(5000);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-                progress.dismiss();
+        new refreshData(progress).execute();
+    }
+
+    private class refreshData extends AsyncTask<Void, Void, Void> {
+
+        private Boolean success = false;
+        private ProgressDialog progress;
+
+        public refreshData(ProgressDialog progress) {
+            this.progress = progress;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                // TODO: renvew data in Dabbi.
+                Thread.sleep(1000);
+                this.success = true;
+            } catch (Exception e) {
+                Log.e("Dabbi failed renew data.", e.getMessage());
+                this.progress.dismiss();
             }
-        };
-        refreshTread.start();
-        try {
-            refreshTread.join();
-            updateLastUpdatedLabel();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return null;
+        }
+
+        @Override
+        public void onPreExecute() {
+            this.progress.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            if (this.success) {
+                updateLastUpdatedLabel();
+            }
+            else {
+                // TODO: show an error alert message.
+            }
+            this.progress.dismiss();
         }
     }
 }
