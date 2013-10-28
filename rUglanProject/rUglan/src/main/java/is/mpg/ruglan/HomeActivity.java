@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -19,14 +20,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
-import java.util.List;
 
 public class HomeActivity extends Activity {
-    CalEvent[] events;
-
-
     private static Context sContext;
+    private CalEvent[] events = {};
+    private Dabbi dabbi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +46,19 @@ public class HomeActivity extends Activity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                updateCalEventsInFullCalendar();
                 WebView wv = (WebView) findViewById(R.id.webView);
-                wv.loadUrl("javascript:" + getJavascriptForCalEvents());
                 wv.loadUrl("javascript: $('#loading').hide();");
             }
         });
         wv.loadUrl("file:///android_asset/WebViewBase.html");
-        Date d1 = new Date(113, 9, 15, 12, 0);
-        Date d2 = new Date(113, 9, 15, 13, 0);
-        Date d3 = new Date(113, 9, 15, 14, 0);
-        Date d4 = new Date(113, 9, 15, 15, 0);
-        CalEvent [] events = new CalEvent[0];
+
         try{
-            this.events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
+            dabbi = new Dabbi(this);
+            this.events = dabbi.getAllCalEvents();
         } catch (Exception ex) {
-            this.events = new CalEvent[] {
-                    new CalEvent("A", "d1", "VR-II", d1, d2),
-                    new CalEvent("B", "f", "HT-104", d3, d4)
-            };
+            this.displayErrorMessage("Failed to load events.");
+            Log.e("Dabbi failed to load data.", ex.getMessage());
         }
     }
 
@@ -76,17 +69,15 @@ public class HomeActivity extends Activity {
 
     protected void openCalEventActivity(String url) {
         Intent intent = new Intent(this, CalEventActivity.class);
-        String index = "asdf";
         try {
             URL u = new URL(url);
-            index = u.getFile().substring(u.getFile().lastIndexOf('/')+1,
+            String index = u.getFile().substring(u.getFile().lastIndexOf('/')+1,
                                             u.getFile().length());
+            intent.putExtra("CAL_EVENT", this.events[Integer.parseInt(index)]);
+            startActivity(intent);
         } catch (MalformedURLException e) {
-            // TODO: Log the error
-            System.out.println("test failed to load url");
+            Log.e("MalformedURLException", e.getMessage());
         }
-        intent.putExtra("CAL_EVENT", this.events[Integer.parseInt(index)]);
-        startActivity(intent);
     }
 
     private String getJavascriptForCalEvents() {
@@ -115,12 +106,11 @@ public class HomeActivity extends Activity {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte buf[] = new byte[1024];
         int len;
-        AssetManager assetManager = getApplicationContext().getAssets();
-        // TODO: Replace getApplicationContext with this.getContext
-        // after merging dabbi branch.
         InputStream inputStream = null;
 
         try{
+            Context applicationContext = getApplicationContext();
+            AssetManager assetManager = applicationContext.getAssets();
             inputStream = assetManager.open(filename);
             while ((len = inputStream.read(buf)) != -1) {
                 outputStream.write(buf, 0, len);
@@ -130,10 +120,11 @@ public class HomeActivity extends Activity {
 
             return outputStream.toString();
         } catch (IOException e){
-            // TODO: Log the error
-            System.out.println("test failed to load file");
-            return "Failed to load file";
+            Log.e("TextFromAssets failed", e.getMessage());
+        } catch (NullPointerException e){
+            Log.e("NullPointerException in getApplicationContext", e.getMessage());
         }
+        return "Failed to load file";
     }
 
     public static Context getContext() {
@@ -161,6 +152,11 @@ public class HomeActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void updateCalEventsInFullCalendar() {
+        WebView wv = (WebView) findViewById(R.id.webView);
+        wv.loadUrl("javascript:" + getJavascriptForCalEvents());
     }
 
     /**
@@ -198,12 +194,15 @@ public class HomeActivity extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                // TODO: renvew data in Dabbi.
-                Thread.sleep(1000);
-                this.success = true;
+                dabbi.refreshEventsTable();
+                events = dabbi.getAllCalEvents();
+                WebView wv = (WebView) findViewById(R.id.webView);
+                wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+                success = true;
             } catch (Exception e) {
-                Log.e("Dabbi failed renew data.", e.getMessage());
+                Log.e("Failed renew data.", e.getMessage());
                 this.progress.dismiss();
+                // In onPostExecute an error alert message will be sent.
             }
             return null;
         }
@@ -219,9 +218,22 @@ public class HomeActivity extends Activity {
                 updateLastUpdatedLabel();
             }
             else {
-                // TODO: show an error alert message.
+                displayErrorMessage("Failed to load new data.");
             }
             this.progress.dismiss();
         }
+    }
+
+    private void displayErrorMessage(String errorMessage) {
+        System.out.println("test display");
+        AlertDialog.Builder alertDialogBuilder =
+                new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Error");
+        alertDialogBuilder
+                .setMessage(errorMessage)
+                .setCancelable(false)
+                .setPositiveButton("Ok",null);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
