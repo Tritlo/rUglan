@@ -1,13 +1,15 @@
 package is.mpg.ruglan;
 
-import android.app.AlertDialog;
+import is.mpg.ruglan.Utils;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,15 +24,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HomeActivity extends Activity {
+    //CalEvent[] events;
+    SharedPreferences prefs;
     private static Context sContext;
     private CalEvent[] events = {};
+    static final int SETTINGSREQUEST = 0;
     private Dabbi dabbi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        updateLastUpdatedLabel();
+        sContext = this;
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
         wv.setWebViewClient(new WebViewClient(){
@@ -57,8 +64,15 @@ public class HomeActivity extends Activity {
             dabbi = new Dabbi(this);
             this.events = dabbi.getAllCalEvents();
         } catch (Exception ex) {
-            this.displayErrorMessage("Failed to load events.");
+            this.events = null;
+            Utils.displayErrorMessage("Failed to load events.", getApplicationContext());
             Log.e("Dabbi failed to load data.", ex.getMessage());
+        }
+        //To do: Error handling, dialog or otherwise
+        if (this.events == null){
+            /* TODO: Handle more gracefully (design question) */
+            Utils.displayErrorMessage(getString(R.string.Invalid_iCal_alert), this);
+            this.events = new CalEvent[0];
         }
     }
 
@@ -147,7 +161,7 @@ public class HomeActivity extends Activity {
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,SETTINGSREQUEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -165,10 +179,9 @@ public class HomeActivity extends Activity {
      * updated with info from Dabbi.
      */
     private void updateLastUpdatedLabel() {
-        // TODO: Use Shared preferences to get lastUpdated string.
-        String dabbiLastUpdated = "Label updated!!!!";
+        String dabbiLastUpdated = prefs.getString("lastUpdate","");
         TextView t= (TextView)findViewById(R.id.lastUpdatedLabel);
-        t.setText(getString(R.string.lastUpdated) + dabbiLastUpdated);
+        t.setText(getString(R.string.lastUpdated) + " " + dabbiLastUpdated);
     }
 
     /**
@@ -218,22 +231,26 @@ public class HomeActivity extends Activity {
                 updateLastUpdatedLabel();
             }
             else {
-                displayErrorMessage("Failed to load new data.");
+                Utils.displayErrorMessage("Failed to load new data. Check your iCal URL in settings", sContext);
             }
             this.progress.dismiss();
         }
     }
 
-    private void displayErrorMessage(String errorMessage) {
-        System.out.println("test display");
-        AlertDialog.Builder alertDialogBuilder =
-                new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Error");
-        alertDialogBuilder
-                .setMessage(errorMessage)
-                .setCancelable(false)
-                .setPositiveButton("Ok",null);
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == SETTINGSREQUEST){
+            if (resultCode == RESULT_OK){
+                Boolean eventsChanged = data.getBooleanExtra("eventsChanged", false);
+                if (eventsChanged)
+                {
+                    //Have to refresh screen after return from
+                    //settings, as view might have been updated
+                    events = dabbi.getAllCalEvents();
+                    updateLastUpdatedLabel();
+                    updateCalEventsInFullCalendar();
+                }
+            }
+        }
     }
+
 }

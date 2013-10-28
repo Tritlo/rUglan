@@ -1,20 +1,25 @@
 package is.mpg.ruglan;
 
-import android.app.Application;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.text.format.Time;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An interface for the database backend.
  * @author Jón
  */
 public class Dabbi {
-
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     private Context context;
 
     /**
@@ -27,6 +32,8 @@ public class Dabbi {
     public Dabbi(Context context)
     {
         this.context = context;
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
     }
 
     /**
@@ -36,7 +43,7 @@ public class Dabbi {
      */
     public Dabbi()
     {
-        this.context = HomeActivity.getContext();
+        this(HomeActivity.getContext());
     }
 
     /**
@@ -198,20 +205,39 @@ public class Dabbi {
 
     /**
      * Refreshes the events in the CALEVENTS table.
-     * @use refreshEventsTable();
-     * @pre
+     * @use refreshEventsTable(iCalUrl);
+     * @pre iCalUrl is a path to a valid URL to a valid iCal
      * @post The CALEVENTS table in the database contains fresh data
      * from the iCal url in the iCalUrl setting in the SETTINGS table.
      */
-    public void refreshEventsTable() throws Exception
-    {
-        // TODO: Get iCalUrl from shared preferences
-        String iCalUrl = "http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics"; //Matti
-        //String iCalUrl = "http://uc-media.rhi.hi.is/HTSProxies/6566792f322d33362d2f2e3236.ics"; //Siggi
-        CalEvent[] calEvents = new iCalParser().execute(iCalUrl).get();
-
+    public void refreshEventsTable(String iCalUrl) throws Exception{
+        CalEvent [] calEvents;
+        try{
+            calEvents = new iCalParser().execute(iCalUrl).get();
+        } catch (Exception ex) {
+            calEvents = null;
+        }
+        if (calEvents == null){
+            Exception e = new Exception("iCal Parsing error");
+            throw e;
+        }
         clearEventsTable();
         addCalEvents(calEvents);
+        Time now = new Time();
+        now.setToNow();
+        String t = now.format3339(false);
+        String[] ts = t.split("T");
+        String [] ts1 = ts[1].split(":");
+        String tim = ts[0] + " " + ts1[0] + ":" + ts1[1];
+        editor.putString("lastUpdate", tim);
+        editor.commit();
+
+    }
+
+    public void refreshEventsTable() throws Exception
+    {
+        String iCalUrl = prefs.getString("iCalUrl","");
+        refreshEventsTable(iCalUrl);
     }
 
 }

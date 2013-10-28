@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 import android.os.AsyncTask;
+import android.text.format.Time;
 
 import java.util.Scanner;
 import java.net.URL;
@@ -18,7 +19,13 @@ import java.lang.IllegalArgumentException;
 public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
 
     public CalEvent [] doInBackground(String... url){
-        return urlToCalEvents(url[0]);
+        try {
+            return urlToCalEvents(url[0]);
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     /**
@@ -68,6 +75,7 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
      */
     public static CalEvent [] parseCalendar(String calendar){
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
+
         String [][] events = calendarToEventList(calendar);
         CalEvent [] calEvents = new CalEvent[events.length];
         for(int i = 0; i < events.length; i++){
