@@ -1,6 +1,7 @@
 package is.mpg.ruglan;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
@@ -17,6 +18,7 @@ public class SettingsActivity extends Activity {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     public static final String PREFS_NAME = "rUglanSettings";
+    static final int GETURLREQUEST = 0;
     TextView iCalInput;
 
     @Override
@@ -25,7 +27,7 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
         prefs = getSharedPreferences(this.PREFS_NAME, 0);
         editor = this.prefs.edit();
-        String iCalUrl = prefs.getString("iCalUrl","http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
+        String iCalUrl = prefs.getString("iCalUrl","");//"http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
         iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
         iCalInput.setText(iCalUrl);
         // Show the Up button in the action bar.
@@ -67,6 +69,12 @@ public class SettingsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void getIcalUrl(View view)
+    {
+        Intent intent = new Intent(this, GetiCalUrlActivity.class);
+        startActivityForResult(intent, GETURLREQUEST);
+    }
+
     public void saveSettings(View view) {
         final ProgressDialog progress = new ProgressDialog(this);
         progress.setTitle("Loading");
@@ -87,6 +95,16 @@ public class SettingsActivity extends Activity {
             }
         }.start();
 
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+       if (requestCode == GETURLREQUEST){
+           if (resultCode == RESULT_OK){
+               String iCalUrl = data.getStringExtra("iCalUrl");
+               Log.e("res", iCalUrl);
+               iCalInput.setText(iCalUrl);
+           }
+       }
     }
 
 }

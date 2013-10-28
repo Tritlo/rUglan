@@ -40,6 +40,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="is.mpg.ruglan.HomeActivity" />
         </activity>
+        <activity
+            android:name="is.mpg.ruglan.GetiCalUrlActivity"
+            android:label="@string/title_activity_geti_cal_url" >
+        </activity>
     </application>
 
 </manifest>

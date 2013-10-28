@@ -33,7 +33,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         prefs = getSharedPreferences(this.PREFS_NAME, 0);
-        String iCalUrl = prefs.getString("iCalUrl","http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
+        String iCalUrl = prefs.getString("iCalUrl","");//http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
         wv.setWebViewClient(new WebViewClient(){
