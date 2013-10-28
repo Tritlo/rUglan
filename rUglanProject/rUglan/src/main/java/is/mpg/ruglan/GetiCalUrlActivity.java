@@ -38,15 +38,15 @@ public class GetiCalUrlActivity extends Activity {
                 WebView wv = (WebView) findViewById(R.id.iCalUrlWebView);
                 wv.loadUrl(javascr);
                 String title = wv.getTitle();
-                Log.e("title", title);
-                while (!(title.contains(".ics"))){
-                    if (title.contains(".ics")){
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("iCalUrl",title);
-                        finish();
-                    }
-                    title = wv.getTitle();
-                    sleep(2000);
+                if (title.contains("tafla")){
+                    sleep(1000);
+                }
+                title = wv.getTitle();
+                if (title.contains(".ics")){
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("iCalUrl",title);
+                    setResult(RESULT_OK,resultIntent);
+                    finish();
                 }
             }
         });

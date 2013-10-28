@@ -27,7 +27,7 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
         prefs = getSharedPreferences(this.PREFS_NAME, 0);
         editor = this.prefs.edit();
-        String iCalUrl = prefs.getString("iCalUrl","http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
+        String iCalUrl = prefs.getString("iCalUrl","");//"http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics");
         iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
         iCalInput.setText(iCalUrl);
         // Show the Up button in the action bar.
@@ -98,10 +98,10 @@ public class SettingsActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        Log.d("onar", "got result");
        if (requestCode == GETURLREQUEST){
            if (resultCode == RESULT_OK){
                String iCalUrl = data.getStringExtra("iCalUrl");
+               Log.e("res", iCalUrl);
                iCalInput.setText(iCalUrl);
            }
        }
