@@ -148,6 +148,9 @@ public class HomeActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 refresh();
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -193,8 +196,5 @@ public class HomeActivity extends Activity {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-
     }
-    
 }

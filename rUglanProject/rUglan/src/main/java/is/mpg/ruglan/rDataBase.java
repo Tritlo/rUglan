@@ -35,9 +35,10 @@ public class rDataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         System.out.println("test database running schema");
         executeSQLScript(database, "create.sql");
+        executeSQLScript(database, "create_settings.sql");
     }
 
-    private void executeSQLScript(SQLiteDatabase database, String dbname) {
+    public void executeSQLScript(SQLiteDatabase database, String dbname) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte buf[] = new byte[1024];
         int len;

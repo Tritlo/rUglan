@@ -1,0 +1,5 @@
+CREATE TABLE SETTINGS (
+ setting TEXT NOT NULL,
+ val TEXT NOT NULL,
+ PRIMARY KEY(setting)
+);

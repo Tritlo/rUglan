@@ -113,4 +113,117 @@ public class Dabbi {
 
         return events;
     }
+    
+    /**
+     * Deletes all the events in the events table of the database.
+     * @use a = clearEventsTable();
+     * @pre
+     * @post The events table in the database is now empty if a is true else
+     * something failed.
+     */
+    boolean clearEventsTable()
+    {
+        try
+        {
+            rDataBase DB = new rDataBase(context);
+            SQLiteDatabase qdb = DB.getWritableDatabase();
+            qdb.execSQL("DROP TABLE CALEVENTS");
+            DB.executeSQLScript(qdb, "create.sql");
+            qdb.close();
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Runs a private method of the class if with the correct
+     * password.
+     * @use a = runPrivateMethod(password);
+     * @pre
+     * @post a is true if a method matched the password and it was run
+     * else a is false
+     */
+    public boolean runPrivateMethod(String password)
+    {
+        if(password.equals("there is no cow level"))
+        {
+            return clearEventsTable();
+        }
+        return false;
+    }
+
+    /**
+     * Sets the current iCal url and resets the database
+     * if it is different from the old url.
+     * @use setiCalUrl(url);
+     * @pre
+     * @post url is the the database now has only events from
+     * the url iCal url.
+     */
+    public void setiCalUrl(String url)
+    {
+        rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        Cursor result = qdb.rawQuery("SELECT val FROM SETTINGS "
+                +"WHERE setting = 'iCalUrl'" ,null);
+        if(result.getCount() == 1)
+        {
+            result.moveToFirst();
+            if(result.getString(0).equals(url))
+            {
+                return;
+            }
+        }
+        else if(result.getCount() == 0)
+        {
+            ContentValues values = new ContentValues();
+            values.put("setting", "iCalUrl");
+            values.put("val", url);
+            qdb.insert("SETTINGS",null,values);
+        }
+        else
+        {
+            ContentValues values = new ContentValues();
+            values.put("val", url);
+            qdb.update("SETTINGS",values,"setting = 'iCalUrl'",null);
+        }
+        refreshEventsTable();
+    }
+
+    /**
+     * Gets the iCal url that is currently beeing used from the database
+     * @use a = getiCalUrl();
+     * @pre
+     * @post a is the current iCal url.
+     */
+    public String getiCalUrl()
+    {
+        rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        Cursor result = qdb.rawQuery("SELECT val FROM SETTINGS "
+                +"WHERE setting = 'iCalUrl'" ,null);
+        if(result.getCount() == 0)
+        {
+            return null;
+        }
+
+        result.moveToFirst();
+        return result.getString(0);
+    }
+
+    /**
+     * Refreshes the events in the CALEVENTS table.
+     * @use refreshEventsTable();
+     * @pre
+     * @post The CALEVENTS table in the database contains fresh data
+     * from the iCal url in the iCalUrl setting in the SETTINGS table.
+     */
+    public void refreshEventsTable()
+    {
+
+    }
+
 }

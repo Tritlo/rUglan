@@ -9,5 +9,8 @@
     <string name="refresh">Refresh</string>
     <string name="lastUpdated">Last updated: </string>
     <string name="hello_world">Hello world!</string>
+    <string name="save">Save</string>
+    <string name="desc_header">Lýsing</string>
+    <string name="loc_header">Staðsetning</string>
 
 </resources>
