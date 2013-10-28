@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -21,17 +22,20 @@ public class GetiCalUrlActivity extends Activity {
         final String javascr = "javascript: function getIcal() {" +
                 " if ($(':contains(.ics)').length > 0){ " +
                 "var str =  $(':contains(.ics)').last().text().split('. ')[1]; " +
-                "$('html').empty().html(str); " +
+                " /*$('html').empty().html(str);*/ " +
                 " $(document).attr('title',str);" +
                 "} else {" +
                 " $(document).attr('title','waiting');" +
-                "setTimeout(getIcal,1000);" +
+                "setTimeout(getIcal,500);" +
                 "}" +
                 "}" +
                 " $(getIcal());";
         WebView wv = (WebView) findViewById(R.id.iCalUrlWebView);
+        CookieManager.getInstance().removeAllCookie();
         wv.getSettings().setJavaScriptEnabled(true);
+        wv.clearHistory();
         wv.clearCache(true);
+
         wv.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -39,11 +43,12 @@ public class GetiCalUrlActivity extends Activity {
                 wv.loadUrl(javascr);
                 String title = wv.getTitle();
                 if (title.contains("tafla")){
-                    sleep(1000);
+                    sleep(500);
                 }
                 title = wv.getTitle();
                 if (title.contains(".ics")){
                     Intent resultIntent = new Intent();
+                    wv.loadUrl("https://ugla.hi.is/vk/logout.php");
                     resultIntent.putExtra("iCalUrl",title);
                     setResult(RESULT_OK,resultIntent);
                     finish();
