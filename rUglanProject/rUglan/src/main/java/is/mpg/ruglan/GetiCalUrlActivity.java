@@ -7,9 +7,13 @@ import android.app.Activity;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import static android.os.SystemClock.sleep;
 
@@ -52,6 +56,18 @@ public class GetiCalUrlActivity extends Activity {
                     resultIntent.putExtra("iCalUrl",title);
                     setResult(RESULT_OK,resultIntent);
                     finish();
+                }
+            }
+        });
+        wv.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                ProgressBar pBar = (ProgressBar) findViewById(R.id.progressBariCal);
+                pBar.setProgress(progress);
+                if (progress == 100){
+                    pBar.setVisibility(View.GONE);
+                }
+                else {
+                    pBar.setVisibility(View.VISIBLE);
                 }
             }
         });
