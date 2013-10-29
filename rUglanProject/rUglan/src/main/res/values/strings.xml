@@ -6,9 +6,14 @@
     <string name="events">Events</string>
     <string name="title_activity_cal_event">Calendar Event</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="refresh">Refresh</string>
+    <string name="lastUpdated">Last updated: </string>
     <string name="hello_world">Hello world!</string>
     <string name="save">Save</string>
     <string name="desc_header">Lýsing</string>
     <string name="loc_header">Staðsetning</string>
+    <string name="iCalUrlSettingText">iCal URL:</string>
+    <string name="Invalid_iCal_alert">There was an error with your iCal URL. Please go to settings and change it to a valid URL to a valid iCal.</string>
+    <string name="title_activity_geti_cal_url">Get iCal url</string>
 
 </resources>

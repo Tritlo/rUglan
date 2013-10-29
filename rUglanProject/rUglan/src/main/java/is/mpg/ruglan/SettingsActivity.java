@@ -1,21 +1,39 @@
 package is.mpg.ruglan;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
+import android.widget.TextView;
 
 public class SettingsActivity extends Activity {
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    static final int GETURLREQUEST = 0;
+    private static Context sContext;
+    TextView iCalInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sContext = this;
         setContentView(R.layout.activity_settings);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = this.prefs.edit();
+        String iCalUrl = prefs.getString("iCalUrl","");
+        iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
+        iCalInput.setText(iCalUrl);
         // Show the Up button in the action bar.
         setupActionBar();
     }
@@ -55,24 +73,78 @@ public class SettingsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void getIcalUrl(View view)
+    {
+        Intent intent = new Intent(this, GetiCalUrlActivity.class);
+        startActivityForResult(intent, GETURLREQUEST);
+    }
+
     public void saveSettings(View view) {
         final ProgressDialog progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
         progress.show();
-        new Thread() {
-            public void run() {
-                try{
-                    // Do some work here
-                    sleep(3000);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-                progress.dismiss();
-                finish();
-            }
-        }.start();
+        new saveSettings(progress).execute();
+    }
 
+    private class saveSettings extends AsyncTask<Void, Void, Void> {
+
+        private Boolean success = false;
+        private ProgressDialog progress;
+
+        public saveSettings(ProgressDialog progress) {
+            this.progress = progress;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                String current = prefs.getString("iCalUrl","");
+                String iCalInputText = iCalInput.getText().toString();
+                Boolean changed = !(current.equals(iCalInputText));
+                if (changed){
+                    editor.putString("iCalUrl", iCalInputText);
+                    //editor.commit();
+                    Dabbi dabbi = new Dabbi(sContext);
+                    dabbi.refreshEventsTable(iCalInputText);
+                }
+                editor.commit();
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("eventsChanged",changed);
+                setResult(RESULT_OK,resultIntent);
+                success = true;
+            } catch (Exception e) {
+                Log.e("Failed renew data.", e.getMessage());
+                this.progress.dismiss();
+                // In onPostExecute an error alert message will be sent.
+            }
+            return null;
+        }
+
+        @Override
+        public void onPreExecute() {
+            this.progress.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            if (this.success) {
+                finish();
+            } else {
+                Utils.displayErrorMessage("Failed to load new data.", sContext);
+            }
+            this.progress.dismiss();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+       if (requestCode == GETURLREQUEST){
+           if (resultCode == RESULT_OK){
+               String iCalUrl = data.getStringExtra("iCalUrl");
+               Log.e("res", iCalUrl);
+               iCalInput.setText(iCalUrl);
+           }
+       }
     }
 
 }
