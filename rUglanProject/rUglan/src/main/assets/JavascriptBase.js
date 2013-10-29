@@ -11,6 +11,7 @@ $(document).ready(function() {
 		timeFormat: 'HH:mm',
 		allDaySlot: false,
 		slotEventOverlap: false,
+		firstDay: 1,
 		header:
 		{
 			left: 'month,agendaWeek,agendaDay',
