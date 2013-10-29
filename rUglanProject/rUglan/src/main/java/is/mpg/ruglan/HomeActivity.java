@@ -33,10 +33,10 @@ public class HomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Setting variables and other settings
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        updateLastUpdatedLabel();
         sContext = this;
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
@@ -49,17 +49,16 @@ public class HomeActivity extends Activity {
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
-        Context sContext = getApplicationContext();
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                updateCalEventsInFullCalendar();
                 WebView wv = (WebView) findViewById(R.id.webView);
+                wv.loadUrl("javascript:" + getJavascriptForCalEvents());
                 wv.loadUrl("javascript: $('#loading').hide();");
             }
         });
-        wv.loadUrl("file:///android_asset/WebViewBase.html");
 
+        // Load data from Dabbi
         try{
             dabbi = new Dabbi(this);
             this.events = dabbi.getAllCalEvents();
@@ -74,6 +73,10 @@ public class HomeActivity extends Activity {
             Utils.displayErrorMessage(getString(R.string.Invalid_iCal_alert), this);
             this.events = new CalEvent[0];
         }
+
+        // Display initial data
+        updateCalEventsInFullCalendar();
+        updateLastUpdatedLabel();
     }
 
     protected boolean isURLMatching(String url) {
@@ -170,7 +173,7 @@ public class HomeActivity extends Activity {
 
     private void updateCalEventsInFullCalendar() {
         WebView wv = (WebView) findViewById(R.id.webView);
-        wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+        wv.loadUrl("file:///android_asset/WebViewBase.html");
     }
 
     /**
@@ -209,8 +212,7 @@ public class HomeActivity extends Activity {
             try {
                 dabbi.refreshEventsTable();
                 events = dabbi.getAllCalEvents();
-                WebView wv = (WebView) findViewById(R.id.webView);
-                wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+                updateCalEventsInFullCalendar();
                 success = true;
             } catch (Exception e) {
                 Log.e("Failed renew data.", e.getMessage());
