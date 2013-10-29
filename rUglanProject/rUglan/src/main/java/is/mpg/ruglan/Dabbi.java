@@ -1,19 +1,25 @@
 package is.mpg.ruglan;
 
-import android.app.Application;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.content.SharedPreferences;
+import android.text.format.Time;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An interface for the database backend.
  * @author Jón
  */
 public class Dabbi {
-
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     private Context context;
 
     /**
@@ -26,6 +32,8 @@ public class Dabbi {
     public Dabbi(Context context)
     {
         this.context = context;
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
     }
 
     /**
@@ -35,7 +43,7 @@ public class Dabbi {
      */
     public Dabbi()
     {
-        this.context = HomeActivity.getContext();
+        this(HomeActivity.getContext());
     }
 
     /**
@@ -94,8 +102,9 @@ public class Dabbi {
             return new CalEvent[0];
         }
         Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS "
-        +"WHERE start BETWEEN ? AND ?" ,new String[]{Long.toString(start.getTime()/1000),
-                    Long.toString(end.getTime()/1000)});
+        +"WHERE start BETWEEN ? AND ?" ,new String[]{
+                Long.toString(start.getTime()/1000),
+                Long.toString(end.getTime()/1000)});
 
         //Iterate over the result.
         CalEvent[] events = new CalEvent[result.getCount()];
@@ -103,14 +112,47 @@ public class Dabbi {
         int i = 0;
         while(!result.isAfterLast())
         {
-            CalEvent event = new CalEvent(result.getString(0),result.getString(1),result.getString(2)
+            CalEvent event = new CalEvent(result.getString(0),
+                                        result.getString(1),result.getString(2)
                     ,new Date(Long.parseLong(result.getString(3))*1000)
                     ,new Date(Long.parseLong(result.getString(4))*1000));
             events[i] = event;
             i++;
             result.moveToNext();
         }
+        qdb.close();
+        return events;
+    }
 
+    /**
+     * @use events = getAllCalEvents()
+     * @post events contains all the CalEvents contained in the database
+     */
+    public CalEvent[] getAllCalEvents()
+    {
+        rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        if(qdb == null)
+        {
+            return new CalEvent[0];
+        }
+        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS ", null);
+
+        //Iterate over the result.
+        CalEvent[] events = new CalEvent[result.getCount()];
+        result.moveToFirst();
+        int i = 0;
+        while(!result.isAfterLast())
+        {
+            CalEvent event = new CalEvent(result.getString(0),
+                                        result.getString(1),result.getString(2)
+                    ,new Date(Long.parseLong(result.getString(3))*1000)
+                    ,new Date(Long.parseLong(result.getString(4))*1000));
+            events[i] = event;
+            i++;
+            result.moveToNext();
+        }
+        qdb.close();
         return events;
     }
     
@@ -127,7 +169,13 @@ public class Dabbi {
         {
             rDataBase DB = new rDataBase(context);
             SQLiteDatabase qdb = DB.getWritableDatabase();
-            qdb.execSQL("DROP TABLE CALEVENTS");
+            try {
+                qdb.execSQL("DROP TABLE CALEVENTS");
+            } catch (Exception ex) {
+                Log.e("Failed to drop table CALEVENTS. " +
+                        "Does the table even exist", ex.getMessage());
+            }
+
             DB.executeSQLScript(qdb, "create.sql");
             qdb.close();
             return true;
@@ -156,74 +204,40 @@ public class Dabbi {
     }
 
     /**
-     * Sets the current iCal url and resets the database
-     * if it is different from the old url.
-     * @use setiCalUrl(url);
-     * @pre
-     * @post url is the the database now has only events from
-     * the url iCal url.
-     */
-    public void setiCalUrl(String url)
-    {
-        rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        Cursor result = qdb.rawQuery("SELECT val FROM SETTINGS "
-                +"WHERE setting = 'iCalUrl'" ,null);
-        if(result.getCount() == 1)
-        {
-            result.moveToFirst();
-            if(result.getString(0).equals(url))
-            {
-                return;
-            }
-        }
-        else if(result.getCount() == 0)
-        {
-            ContentValues values = new ContentValues();
-            values.put("setting", "iCalUrl");
-            values.put("val", url);
-            qdb.insert("SETTINGS",null,values);
-        }
-        else
-        {
-            ContentValues values = new ContentValues();
-            values.put("val", url);
-            qdb.update("SETTINGS",values,"setting = 'iCalUrl'",null);
-        }
-        refreshEventsTable();
-    }
-
-    /**
-     * Gets the iCal url that is currently beeing used from the database
-     * @use a = getiCalUrl();
-     * @pre
-     * @post a is the current iCal url.
-     */
-    public String getiCalUrl()
-    {
-        rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        Cursor result = qdb.rawQuery("SELECT val FROM SETTINGS "
-                +"WHERE setting = 'iCalUrl'" ,null);
-        if(result.getCount() == 0)
-        {
-            return null;
-        }
-
-        result.moveToFirst();
-        return result.getString(0);
-    }
-
-    /**
      * Refreshes the events in the CALEVENTS table.
-     * @use refreshEventsTable();
-     * @pre
+     * @use refreshEventsTable(iCalUrl);
+     * @pre iCalUrl is a path to a valid URL to a valid iCal
      * @post The CALEVENTS table in the database contains fresh data
      * from the iCal url in the iCalUrl setting in the SETTINGS table.
      */
-    public void refreshEventsTable()
-    {
+    public void refreshEventsTable(String iCalUrl) throws Exception{
+        CalEvent [] calEvents;
+        try{
+            calEvents = new iCalParser().execute(iCalUrl).get();
+        } catch (Exception ex) {
+            calEvents = null;
+        }
+        if (calEvents == null){
+            Exception e = new Exception("iCal Parsing error");
+            throw e;
+        }
+        clearEventsTable();
+        addCalEvents(calEvents);
+        Time now = new Time();
+        now.setToNow();
+        String t = now.format3339(false);
+        String[] ts = t.split("T");
+        String [] ts1 = ts[1].split(":");
+        String tim = ts[0] + " " + ts1[0] + ":" + ts1[1];
+        editor.putString("lastUpdate", tim);
+        editor.commit();
 
+    }
+
+    public void refreshEventsTable() throws Exception
+    {
+        String iCalUrl = prefs.getString("iCalUrl","");
+        refreshEventsTable(iCalUrl);
     }
 
 }

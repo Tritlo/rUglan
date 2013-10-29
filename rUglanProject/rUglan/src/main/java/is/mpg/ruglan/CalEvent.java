@@ -171,13 +171,17 @@ public class CalEvent implements Serializable {
      *
      * @return true if a and b have the same properties, false otherwise
      */
-    public boolean equals(CalEvent a)
+    @Override
+    public boolean equals(Object aThat)
     {
-       return a.name.equals(this.name)  &&
-              a.location.equals(this.location)  &&
-              a.description.equals(this.description)  &&
-              a.start.equals(this.start)  &&
-              a.end.equals(this.end);
+        if ( this == aThat ) return true;
+        if ( !(aThat instanceof CalEvent) ) return false;
+        CalEvent that = (CalEvent) aThat;
+        return  that.name.equals(this.name)  &&
+                that.location.equals(this.location)  &&
+                that.description.equals(this.description)  &&
+                that.start.equals(this.start)  &&
+                that.end.equals(this.end);
     }
 
     /**

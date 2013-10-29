@@ -1,33 +1,43 @@
 package is.mpg.ruglan;
 
+import is.mpg.ruglan.Utils;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 
 public class HomeActivity extends Activity {
-    CalEvent[] events;
-
-
+    //CalEvent[] events;
+    SharedPreferences prefs;
     private static Context sContext;
+    private CalEvent[] events = {};
+    static final int SETTINGSREQUEST = 0;
+    private Dabbi dabbi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Setting variables and other settings
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        sContext = this;
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
         wv.setWebViewClient(new WebViewClient(){
@@ -39,7 +49,6 @@ public class HomeActivity extends Activity {
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
-        Context sContext = getApplicationContext();
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -48,20 +57,26 @@ public class HomeActivity extends Activity {
                 wv.loadUrl("javascript: $('#loading').hide();");
             }
         });
-        wv.loadUrl("file:///android_asset/WebViewBase.html");
-        Date d1 = new Date(113, 9, 15, 12, 0);
-        Date d2 = new Date(113, 9, 15, 13, 0);
-        Date d3 = new Date(113, 9, 15, 14, 0);
-        Date d4 = new Date(113, 9, 15, 15, 0);
-        CalEvent [] events = new CalEvent[0];
+
+        // Load data from Dabbi
         try{
-            this.events = new iCalParser().execute("http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics").get();
+            dabbi = new Dabbi(this);
+            this.events = dabbi.getAllCalEvents();
         } catch (Exception ex) {
-            this.events = new CalEvent[] {
-                    new CalEvent("A", "d1", "VR-II", d1, d2),
-                    new CalEvent("B", "f", "HT-104", d3, d4)
-            };
+            this.events = null;
+            Utils.displayErrorMessage("Failed to load events.", getApplicationContext());
+            Log.e("Dabbi failed to load data.", ex.getMessage());
         }
+        //To do: Error handling, dialog or otherwise
+        if (this.events == null){
+            /* TODO: Handle more gracefully (design question) */
+            Utils.displayErrorMessage(getString(R.string.Invalid_iCal_alert), this);
+            this.events = new CalEvent[0];
+        }
+
+        // Display initial data
+        updateCalEventsInFullCalendar();
+        updateLastUpdatedLabel();
     }
 
     protected boolean isURLMatching(String url) {
@@ -71,15 +86,15 @@ public class HomeActivity extends Activity {
 
     protected void openCalEventActivity(String url) {
         Intent intent = new Intent(this, CalEventActivity.class);
-        String index = "asdf";
         try {
             URL u = new URL(url);
-            index = u.getFile().substring(u.getFile().lastIndexOf('/')+1, u.getFile().length());
+            String index = u.getFile().substring(u.getFile().lastIndexOf('/')+1,
+                                            u.getFile().length());
+            intent.putExtra("CAL_EVENT", this.events[Integer.parseInt(index)]);
+            startActivity(intent);
         } catch (MalformedURLException e) {
-            System.out.println("test failed to load url");
+            Log.e("MalformedURLException", e.getMessage());
         }
-        intent.putExtra("CAL_EVENT", this.events[Integer.parseInt(index)]);
-        startActivity(intent);
     }
 
     private String getJavascriptForCalEvents() {
@@ -89,29 +104,30 @@ public class HomeActivity extends Activity {
                 javascriptEvents += ",";
             }
             javascriptEvents += "{"
-                    + "title: '" + this.events[i].getName() + "',"
-                    + "start: " +this.events[i].getFullCalendarStartDateString() +","
-                    + "end: " +this.events[i].getFullCalendarEndDateString() +","
-                    + "allDay: false,"
-                    + "backgroundColor: '" +this.events[i].getColor() + "',"
-                    + "borderColor: 'black',"
-                    + "url: '" + i + "'"
-                    + "}";
+                + "title: '" + this.events[i].getName() + "',"
+                + "start: " +this.events[i].getFullCalendarStartDateString()+","
+                + "end: " +this.events[i].getFullCalendarEndDateString() +","
+                + "allDay: false,"
+                + "backgroundColor: '" +this.events[i].getColor() + "',"
+                + "borderColor: 'black',"
+                + "url: '" + i + "'"
+                + "}";
         }
         javascriptEvents += "]";
 
-        return getTextFromAssetsTextFile("JavascriptBase.js").replace("%%%EVENTS%%%",
-                                                                        javascriptEvents);
+        return getTextFromAssetsTextFile("JavascriptBase.js")
+                .replace("%%%EVENTS%%%", javascriptEvents);
     }
+
     private String getTextFromAssetsTextFile(String filename) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte buf[] = new byte[1024];
         int len;
-        AssetManager assetManager = getApplicationContext().getAssets();
-        // TODO: Replace getApplicationContext with this.getContext after merging dabbi branch.
         InputStream inputStream = null;
 
         try{
+            Context applicationContext = getApplicationContext();
+            AssetManager assetManager = applicationContext.getAssets();
             inputStream = assetManager.open(filename);
             while ((len = inputStream.read(buf)) != -1) {
                 outputStream.write(buf, 0, len);
@@ -121,10 +137,11 @@ public class HomeActivity extends Activity {
 
             return outputStream.toString();
         } catch (IOException e){
-            // TODO: Handle file failed to Load
-            System.out.println("test failed to load file");
-            return "Failed to load file";
+            Log.e("TextFromAssets failed", e.getMessage());
+        } catch (NullPointerException e){
+            Log.e("NullPointerException in getApplicationContext", e.getMessage());
         }
+        return "Failed to load file";
     }
 
     public static Context getContext() {
@@ -142,13 +159,100 @@ public class HomeActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refresh();
+                return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,SETTINGSREQUEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    
+
+    private void updateCalEventsInFullCalendar() {
+        WebView wv = (WebView) findViewById(R.id.webView);
+        wv.loadUrl("file:///android_asset/WebViewBase.html");
+    }
+
+    /**
+     * @use updateLastUpdatedLabel();
+     * @post The timestamp in lastUpdatedLabel has been
+     * updated with info from Dabbi.
+     */
+    private void updateLastUpdatedLabel() {
+        String dabbiLastUpdated = prefs.getString("lastUpdate","");
+        TextView t= (TextView)findViewById(R.id.lastUpdatedLabel);
+        t.setText(getString(R.string.lastUpdated) + " " + dabbiLastUpdated);
+    }
+
+    /**
+     * @use refresh();
+     * @post The calendar content is refreshed.
+     */
+    private void refresh() {
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        new refreshData(progress).execute();
+    }
+
+    private class refreshData extends AsyncTask<Void, Void, Void> {
+
+        private Boolean success = false;
+        private ProgressDialog progress;
+
+        public refreshData(ProgressDialog progress) {
+            this.progress = progress;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                dabbi.refreshEventsTable();
+                events = dabbi.getAllCalEvents();
+                updateCalEventsInFullCalendar();
+                success = true;
+            } catch (Exception e) {
+                Log.e("Failed renew data.", e.getMessage());
+                this.progress.dismiss();
+                // In onPostExecute an error alert message will be sent.
+            }
+            return null;
+        }
+
+        @Override
+        public void onPreExecute() {
+            this.progress.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            if (this.success) {
+                updateLastUpdatedLabel();
+            }
+            else {
+                Utils.displayErrorMessage("Failed to load new data. Check your iCal URL in settings", sContext);
+            }
+            this.progress.dismiss();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == SETTINGSREQUEST){
+            if (resultCode == RESULT_OK){
+                Boolean eventsChanged = data.getBooleanExtra("eventsChanged", false);
+                if (eventsChanged)
+                {
+                    //Have to refresh screen after return from
+                    //settings, as view might have been updated
+                    events = dabbi.getAllCalEvents();
+                    updateLastUpdatedLabel();
+                    updateCalEventsInFullCalendar();
+                }
+            }
+        }
+    }
+
 }
