@@ -22,10 +22,10 @@ $(document).ready(function() {
 		    week: "d. MMM[ yyyy]{ '&#8212;'[ d. MMM] yyyy}",
 		    day: 'dddd<br>d. MMM yyyy'
 		},
-		monthNames: ['Janúar', 'Febrúar', 'Mars', 'Apríl', 'Maí', 'Júní', 'Júlí', 'Ágúst', 'September', 'Október', 'Nóvember', 'Desember'],
-		monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maí', 'Jún', 'Júl', 'Ágú', 'Sep', 'Okt', 'Nóv', 'Des'],
-		dayNames: ['Sunnudagur', 'Mánudagur', 'Þriðjudagur', 'Miðvikudagur', 'Fimmtudagur', 'Föstudagur', 'Laugardagur'],
-		dayNamesShort: ['Sun', 'Mán', 'Þri', 'Mið', 'Fim', 'Fös', 'Lau'],
+		monthNames: ['janúar', 'febrúar', 'mars', 'apríl', 'maí', 'júní', 'júlí', 'ágúst', 'september', 'október', 'nóvember', 'desember'],
+		monthNamesShort: ['jan', 'feb', 'mar', 'apr', 'maí', 'jún', 'júl', 'ágú', 'sep', 'okt', 'nóv', 'des'],
+		dayNames: ['sunnudagur', 'mánudagur', 'þriðjudagur', 'miðvikudagur', 'fimmtudagur', 'föstudagur', 'laugardagur'],
+		dayNamesShort: ['sun', 'mán', 'þri', 'mið', 'fim', 'fös', 'lau'],
 		buttonText: {
 		    prev:     '&lsaquo;',
 		    next:     '&rsaquo;',
