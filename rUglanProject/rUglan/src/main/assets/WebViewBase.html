@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang=\"is\">
+<html lang="is">
 <head>
-<meta charset=\"utf-8\">
+<meta charset="utf-8">
 <title>Events</title>
 <style>
-	#loading { background: lightgreen;}
+	#loading { text-align: center }
+	#last-updated-label { display: none; text-align: center}
 </style>
 <link href='fullcalendar.css' rel='stylesheet' />
 <script type='text/javascript' src='jquery-2.0.3.min.js'></script>
@@ -12,7 +13,11 @@
 <script type="text/javascript">
 </script>
 </head>
-<p id="loading">Loading...</p>
+<div id="loading">
+	<img src="ajax-wheel.gif" alt="Loading wheel"/>
+	<p>Hleð stundatöflu...</p>
+</div>
 <div id="calendar"></div>
+<p id="last-updated-label"></p>
 </body>
 </html>
