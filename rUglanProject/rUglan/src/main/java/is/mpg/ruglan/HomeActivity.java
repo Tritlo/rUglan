@@ -1,6 +1,5 @@
 package is.mpg.ruglan;
 
-import is.mpg.ruglan.Utils;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,8 +12,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -40,21 +42,24 @@ public class HomeActivity extends Activity {
         sContext = this;
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
-        wv.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if(isURLMatching(url)) {
-                    openCalEventActivity(url);
-                    return true;
-                }
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
+        wv.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
                 WebView wv = (WebView) findViewById(R.id.webView);
-                wv.loadUrl("javascript:" + getJavascriptForCalEvents());
-                wv.loadUrl("javascript: $('#loading').hide();");
+                TextView loadingText = (TextView)
+                        findViewById(R.id.loadingCalendarView);
+                ProgressBar pBar = (ProgressBar)
+                        findViewById(R.id.progressBarCalendarView);
+                pBar.setProgress(progress);
+                if (progress == 100){
+                    wv.setVisibility(View.VISIBLE);
+                    pBar.setVisibility(View.GONE);
+                    loadingText.setVisibility(View.GONE);
+                }
+                else {
+                    wv.setVisibility(View.GONE);
+                    pBar.setVisibility(View.VISIBLE);
+                    loadingText.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -64,24 +69,42 @@ public class HomeActivity extends Activity {
             this.events = dabbi.getAllCalEvents();
         } catch (Exception ex) {
             this.events = null;
-            Utils.displayErrorMessage("Failed to load events.", getApplicationContext());
+            Utils.displayMessage("Error", "Failed to load events.", getApplicationContext());
             Log.e("Dabbi failed to load data.", ex.getMessage());
         }
         //To do: Error handling, dialog or otherwise
         if (this.events == null){
             /* TODO: Handle more gracefully (design question) */
-            Utils.displayErrorMessage(getString(R.string.Invalid_iCal_alert), this);
+            Utils.displayMessage("Error", getString(R.string.Invalid_iCal_alert), this);
             this.events = new CalEvent[0];
         }
-
-        // Display initial data
         updateCalEventsInFullCalendar();
-        updateLastUpdatedLabel();
-    }
 
-    protected boolean isURLMatching(String url) {
-        // some logic to match the URL
-        return true;
+
+        // After loading is done, handle events in WebView
+        wv.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                openCalEventActivity(url);
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                WebView wv = (WebView) findViewById(R.id.webView);
+                wv.loadUrl("javascript: $('#loading').hide();");
+                if (!prefs.contains(Utils.lastUpdateKey)) {
+                    wv.loadUrl("javascript: $('#no-ical').show();");
+                    Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                    startActivityForResult(intent,SETTINGSREQUEST);
+                }
+                else {
+                    wv.loadUrl("javascript: $('#no-ical').hide();");
+                    wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+                    updateLastUpdatedLabel();
+                }
+            }
+        });
     }
 
     protected void openCalEventActivity(String url) {
@@ -182,9 +205,11 @@ public class HomeActivity extends Activity {
      * updated with info from Dabbi.
      */
     private void updateLastUpdatedLabel() {
-        String dabbiLastUpdated = prefs.getString("lastUpdate","");
-        TextView t= (TextView)findViewById(R.id.lastUpdatedLabel);
-        t.setText(getString(R.string.lastUpdated) + " " + dabbiLastUpdated);
+        String dabbiLastUpdated = prefs.getString(Utils.lastUpdateKey,"");
+        WebView wv = (WebView) findViewById(R.id.webView);
+        wv.loadUrl("javascript: $('#last-updated-label').html('"
+                + getString(R.string.lastUpdated) + " " + dabbiLastUpdated
+                + "');");
     }
 
     /**
@@ -229,11 +254,10 @@ public class HomeActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void v) {
-            if (this.success) {
-                updateLastUpdatedLabel();
-            }
-            else {
-                Utils.displayErrorMessage("Failed to load new data. Check your iCal URL in settings", sContext);
+            if (!this.success) {
+                Utils.displayMessage("Error",
+                        "Failed to load new data. " +
+                                "Check your iCal URL in settings", sContext);
             }
             this.progress.dismiss();
         }
@@ -248,7 +272,6 @@ public class HomeActivity extends Activity {
                     //Have to refresh screen after return from
                     //settings, as view might have been updated
                     events = dabbi.getAllCalEvents();
-                    updateLastUpdatedLabel();
                     updateCalEventsInFullCalendar();
                 }
             }

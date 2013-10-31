@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,15 +9,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/lastUpdatedLabel"
-        android:text="@string/lastUpdated"
+        android:id="@+id/loadingCalendarView"
+        android:text="@string/loadingCalendarView"
         android:layout_margin="0dp"
-        android:padding="0dp" />
+        android:padding="0dp"
+        android:layout_centerHorizontal="true"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loadingCalendarView"
+        android:id="@+id/progressBarCalendarView"
+        android:layout_centerHorizontal="true"/>
+
     <WebView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/progressBarCalendarView"
         android:id="@+id/webView"
         android:layout_margin="0dp"
-        android:padding="0dp" />
+        android:padding="0dp"
+        android:layout_alignParentLeft="false"/>
 
-</LinearLayout>
+</RelativeLayout>

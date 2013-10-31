@@ -8,12 +8,15 @@ import android.content.Context;
  */
 public class Utils {
 
-    public static void displayErrorMessage(String errorMessage, Context ctx) {
+    public static String lastUpdateKey = "lastUpdate";
+    public static String iCalURLKey = "iCalUrl";
+
+    public static void displayMessage(String messageHeader, String messageBody, Context ctx) {
         AlertDialog.Builder alertDialogBuilder =
                 new AlertDialog.Builder(ctx);
-        alertDialogBuilder.setTitle("Error");
+        alertDialogBuilder.setTitle(messageHeader);
         alertDialogBuilder
-                .setMessage(errorMessage)
+                .setMessage(messageBody)
                 .setCancelable(false)
                 .setPositiveButton("Ok",null);
         AlertDialog alertDialog = alertDialogBuilder.create();

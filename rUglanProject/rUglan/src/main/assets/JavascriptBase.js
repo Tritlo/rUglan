@@ -47,4 +47,5 @@ $(document).ready(function() {
 	})
 	$(".fc-header").css("width", "auto");
 	$(".fc-header").css("margin", "auto");
+	$('#last-updated-label').show();
 });

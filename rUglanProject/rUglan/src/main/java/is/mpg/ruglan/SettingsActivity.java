@@ -31,11 +31,15 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         editor = this.prefs.edit();
-        String iCalUrl = prefs.getString("iCalUrl","");
+        String iCalUrl = prefs.getString(Utils.iCalURLKey,"");
         iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
         iCalInput.setText(iCalUrl);
         // Show the Up button in the action bar.
         setupActionBar();
+        if (!prefs.contains(Utils.iCalURLKey)) {
+            Utils.displayMessage("Athugaðu",
+                    "Hér þarft þú að fylla út dagatalsslóð.", this);
+        }
     }
 
     /**
@@ -80,11 +84,17 @@ public class SettingsActivity extends Activity {
     }
 
     public void saveSettings(View view) {
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.show();
-        new saveSettings(progress).execute();
+        if (iCalInput.getText().toString().equals("")) {
+            Utils.displayMessage("Villa",
+                    "Þú verður að fylla út dagatalsslóð.", this);
+        }
+        else {
+            final ProgressDialog progress = new ProgressDialog(this);
+            progress.setTitle("Loading");
+            progress.setMessage("Wait while loading...");
+            progress.show();
+            new saveSettings(progress).execute();
+        }
     }
 
     private class saveSettings extends AsyncTask<Void, Void, Void> {
@@ -99,11 +109,11 @@ public class SettingsActivity extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                String current = prefs.getString("iCalUrl","");
+                String current = prefs.getString(Utils.iCalURLKey,"");
                 String iCalInputText = iCalInput.getText().toString();
                 Boolean changed = !(current.equals(iCalInputText));
                 if (changed){
-                    editor.putString("iCalUrl", iCalInputText);
+                    editor.putString(Utils.iCalURLKey, iCalInputText);
                     //editor.commit();
                     Dabbi dabbi = new Dabbi(sContext);
                     dabbi.refreshEventsTable(iCalInputText);
@@ -131,7 +141,7 @@ public class SettingsActivity extends Activity {
             if (this.success) {
                 finish();
             } else {
-                Utils.displayErrorMessage("Failed to load new data.", sContext);
+                Utils.displayMessage("Error", "Failed to load new data.", sContext);
             }
             this.progress.dismiss();
         }
@@ -140,7 +150,7 @@ public class SettingsActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
        if (requestCode == GETURLREQUEST){
            if (resultCode == RESULT_OK){
-               String iCalUrl = data.getStringExtra("iCalUrl");
+               String iCalUrl = data.getStringExtra(Utils.iCalURLKey);
                Log.e("res", iCalUrl);
                iCalInput.setText(iCalUrl);
            }
