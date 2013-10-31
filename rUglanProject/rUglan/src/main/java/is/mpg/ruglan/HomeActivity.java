@@ -1,6 +1,5 @@
 package is.mpg.ruglan;
 
-import is.mpg.ruglan.Utils;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -70,13 +69,13 @@ public class HomeActivity extends Activity {
             this.events = dabbi.getAllCalEvents();
         } catch (Exception ex) {
             this.events = null;
-            Utils.displayErrorMessage("Failed to load events.", getApplicationContext());
+            Utils.displayMessage("Error", "Failed to load events.", getApplicationContext());
             Log.e("Dabbi failed to load data.", ex.getMessage());
         }
         //To do: Error handling, dialog or otherwise
         if (this.events == null){
             /* TODO: Handle more gracefully (design question) */
-            Utils.displayErrorMessage(getString(R.string.Invalid_iCal_alert), this);
+            Utils.displayMessage("Error", getString(R.string.Invalid_iCal_alert), this);
             this.events = new CalEvent[0];
         }
         updateCalEventsInFullCalendar();
@@ -93,9 +92,17 @@ public class HomeActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 WebView wv = (WebView) findViewById(R.id.webView);
-                wv.loadUrl("javascript:" + getJavascriptForCalEvents());
                 wv.loadUrl("javascript: $('#loading').hide();");
-                updateLastUpdatedLabel();
+                if (!prefs.contains(Utils.lastUpdateKey)) {
+                    wv.loadUrl("javascript: $('#no-ical').show();");
+                    Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                    startActivityForResult(intent,SETTINGSREQUEST);
+                }
+                else {
+                    wv.loadUrl("javascript: $('#no-ical').hide();");
+                    wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+                    updateLastUpdatedLabel();
+                }
             }
         });
     }
@@ -198,7 +205,7 @@ public class HomeActivity extends Activity {
      * updated with info from Dabbi.
      */
     private void updateLastUpdatedLabel() {
-        String dabbiLastUpdated = prefs.getString("lastUpdate","");
+        String dabbiLastUpdated = prefs.getString(Utils.lastUpdateKey,"");
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.loadUrl("javascript: $('#last-updated-label').html('"
                 + getString(R.string.lastUpdated) + " " + dabbiLastUpdated
@@ -248,7 +255,9 @@ public class HomeActivity extends Activity {
         @Override
         protected void onPostExecute(Void v) {
             if (!this.success) {
-                Utils.displayErrorMessage("Failed to load new data. Check your iCal URL in settings", sContext);
+                Utils.displayMessage("Error",
+                        "Failed to load new data. " +
+                                "Check your iCal URL in settings", sContext);
             }
             this.progress.dismiss();
         }

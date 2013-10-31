@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <title>Events</title>
 <style>
-	#loading { text-align: center }
-	#last-updated-label { display: none; text-align: center}
+	#loading { text-align: center; }
+	#no-ical { display: none; text-align: center; }
+	#last-updated-label { display: none; text-align: center; }
 </style>
 <link href='fullcalendar.css' rel='stylesheet' />
 <script type='text/javascript' src='jquery-2.0.3.min.js'></script>
@@ -17,6 +18,7 @@
 	<img src="ajax-wheel.gif" alt="Loading wheel"/>
 	<p>Hleð stundatöflu...</p>
 </div>
+<div id="no-ical"><p>Þú átt eftir að fylla út dagatalsslóð í stillingum.<p></div>
 <div id="calendar"></div>
 <p id="last-updated-label"></p>
 </body>
