@@ -105,6 +105,7 @@ public class HomeActivity extends Activity {
                 }
             }
         });
+        Utils.fillColorsArray();
     }
 
     protected void openCalEventActivity(String url) {
