@@ -66,6 +66,7 @@ public class Utils {
     public static void fillColorsArray(){
         int hue_steps = 150;
         int sat_steps = 4;
+        double golden_ratio_conjugate = 0.618033988749895;
         colors = new String[hue_steps*sat_steps];
         float sat = 0.4F;
         for(int j = 0; j < sat_steps; j++)
@@ -75,7 +76,9 @@ public class Utils {
             {
                 String rgb =hsvToRgb(hue,sat,0.95F);
                 colors[i+hue_steps*j] = rgb;
-                hue += 1.0F/(float)(hue_steps);
+                //hue += 1.0F/(float)(hue_steps);
+                hue += golden_ratio_conjugate;
+                hue %= 1;
                 //System.out.println(rgb);
             }
             //We want the sat range to 0.6 long
