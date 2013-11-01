@@ -11,7 +11,6 @@ public class Utils {
     public static String lastUpdateKey = "lastUpdate";
     public static String iCalURLKey = "iCalUrl";
 
-    //public String[] colors;
     public static String[] colors = new String[] {
             "red",
             "#999",
@@ -57,6 +56,13 @@ public class Utils {
         return "#"+rs + gs + bs;
     }
 
+    /**
+     * Fills the Utils.colors array with in some sense good colors.
+     * @use fillColorsArray();
+     * @pre
+     * @post The Utils.colors array contains strings that css takes as colors and
+     * are in some sense good.
+     */
     public static void fillColorsArray(){
         int hue_steps = 150;
         int sat_steps = 4;
@@ -67,8 +73,10 @@ public class Utils {
             float hue = 0F;
             for(int i = 0;i<hue_steps;i++)
             {
-                colors[i+hue_steps*j] = hsvToRgb(hue,sat,0.95F);
+                String rgb =hsvToRgb(hue,sat,0.95F);
+                colors[i+hue_steps*j] = rgb;
                 hue += 1.0F/(float)(hue_steps);
+                //System.out.println(rgb);
             }
             //We want the sat range to 0.6 long
             sat += (1.0F/(float)sat_steps)*0.6F;

@@ -230,27 +230,6 @@ public class CalEvent implements Serializable {
      *          as a parameter for backgroundColor in FullCalendar
      */
     public String getColor() {
-        //if (this.name.startsWith("TOL301G-20136")) {
-        //    return "brown";
-        //}
-        //else if (this.name.startsWith("TOL304G-20136")) {
-        //    return "red";
-        //}
-        //else if (this.name.startsWith("HBV501G-20136")) {
-        //    return "green";
-        //}
-        //else if (this.name.startsWith("TOL306G-20136")) {
-        //    return "#BA55D3";
-        //}
-        //else if (this.name.startsWith("TOL308G-20136")) {
-        //    return "#D2691E";
-        //}
-        //else {
-        //    return "grey";
-        //}
-
-        //Random rand = new Random();
-        //return Utils.colors[rand.nextInt(Utils.colors.length)];
         return Utils.colors[Math.abs(name.hashCode())%Utils.colors.length];
     }
 }
