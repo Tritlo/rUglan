@@ -64,11 +64,11 @@ public class Utils {
      * are in some sense good.
      */
     public static void fillColorsArray(){
-        int hue_steps = 150;
-        int sat_steps = 4;
+        int hue_steps = 50;
+        int sat_steps = 1;
         double golden_ratio_conjugate = 0.618033988749895;
         colors = new String[hue_steps*sat_steps];
-        float sat = 0.4F;
+        float sat = 0.5F;
         for(int j = 0; j < sat_steps; j++)
         {
             float hue = 0F;
@@ -81,8 +81,8 @@ public class Utils {
                 hue %= 1;
                 //System.out.println(rgb);
             }
-            //We want the sat range to 0.6 long
-            sat += (1.0F/(float)sat_steps)*0.6F;
+            //We want the sat range to 0.5 long
+            sat += (1.0F/(float)sat_steps)*0.5F;
         }
     }
 }

@@ -230,6 +230,8 @@ public class CalEvent implements Serializable {
      *          as a parameter for backgroundColor in FullCalendar
      */
     public String getColor() {
-        return Utils.colors[Math.abs(name.hashCode())%Utils.colors.length];
+        Dabbi myDabbi = new Dabbi();
+        return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
+        //return Utils.colors[Math.abs(name.hashCode())%Utils.colors.length];
     }
 }
