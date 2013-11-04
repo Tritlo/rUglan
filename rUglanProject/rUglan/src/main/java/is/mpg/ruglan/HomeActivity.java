@@ -208,7 +208,7 @@ public class HomeActivity extends Activity {
         String dabbiLastUpdated = prefs.getString(Utils.lastUpdateKey,"");
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.loadUrl("javascript: $('#last-updated-label').html('"
-                + getString(R.string.lastUpdated) + " " + dabbiLastUpdated
+                + getString(R.string.last_updated_prefix) + " " + dabbiLastUpdated
                 + "');");
     }
 
@@ -218,8 +218,8 @@ public class HomeActivity extends Activity {
      */
     private void refresh() {
         final ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
+        progress.setTitle(getString(R.string.loading));
+        progress.setMessage(getString(R.string.wait));
         new refreshData(progress).execute();
     }
 
@@ -255,9 +255,8 @@ public class HomeActivity extends Activity {
         @Override
         protected void onPostExecute(Void v) {
             if (!this.success) {
-                Utils.displayMessage("Error",
-                        "Failed to load new data. " +
-                                "Check your iCal URL in settings", sContext);
+                Utils.displayMessage(getString(R.string.error),
+                        getString(R.string.Invalid_iCal_alert), sContext);
             }
             this.progress.dismiss();
         }
