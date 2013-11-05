@@ -232,6 +232,5 @@ public class CalEvent implements Serializable {
     public String getColor() {
         Dabbi myDabbi = new Dabbi();
         return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
-        //return Utils.colors[Math.abs(name.hashCode())%Utils.colors.length];
     }
 }
