@@ -43,6 +43,7 @@ $(document).ready(function() {
 		    day: 'dddd d. MMM'
 		},
 		defaultView: 'agendaWeek',
+		eventTextColor: 'black',
 		%%%EVENTS%%%
 	})
 	$(".fc-header").css("width", "auto");
