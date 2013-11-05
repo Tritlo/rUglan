@@ -42,6 +42,7 @@ $(document).ready(function() {
 		    week: 'd. ddd',
 		    day: 'dddd d. MMM'
 		},
+        defaultView: '%%%DEFAULTVIEW%%%',
 		defaultView: 'agendaWeek',
 		eventTextColor: 'black',
 		%%%EVENTS%%%

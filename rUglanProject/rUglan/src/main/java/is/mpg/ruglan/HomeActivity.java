@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -138,9 +139,12 @@ public class HomeActivity extends Activity {
                 + "}";
         }
         javascriptEvents += "]";
-
+        
+        String view = "agendaWeek";
+        Configuration config = getResources().getConfiguration();
+        if (config.orientation == config.ORIENTATION_PORTRAIT) view = "agendaDay";
         return getTextFromAssetsTextFile("JavascriptBase.js")
-                .replace("%%%EVENTS%%%", javascriptEvents);
+                .replace("%%%EVENTS%%%", javascriptEvents).replace("%%%DEFAULTVIEW%%%", view);
     }
 
     private String getTextFromAssetsTextFile(String filename) {
