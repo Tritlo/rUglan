@@ -37,8 +37,8 @@ public class SettingsActivity extends Activity {
         // Show the Up button in the action bar.
         setupActionBar();
         if (!prefs.contains(Utils.iCalURLKey)) {
-            Utils.displayMessage("Athugaðu",
-                    "Hér þarft þú að fylla út dagatalsslóð.", this);
+            Utils.displayMessage(getString(R.string.note),
+                    getString(R.string.iCalUrlRequired), this);
         }
     }
 
@@ -85,13 +85,13 @@ public class SettingsActivity extends Activity {
 
     public void saveSettings(View view) {
         if (iCalInput.getText().toString().equals("")) {
-            Utils.displayMessage("Villa",
-                    "Þú verður að fylla út dagatalsslóð.", this);
+            Utils.displayMessage(getString(R.string.error),
+                    getString(R.string.iCalUrlRequired), this);
         }
         else {
             final ProgressDialog progress = new ProgressDialog(this);
-            progress.setTitle("Loading");
-            progress.setMessage("Wait while loading...");
+            progress.setTitle(getString(R.string.loading));
+            progress.setMessage(getString(R.string.wait));
             progress.show();
             new saveSettings(progress).execute();
         }
@@ -141,7 +141,8 @@ public class SettingsActivity extends Activity {
             if (this.success) {
                 finish();
             } else {
-                Utils.displayMessage("Error", "Failed to load new data.", sContext);
+                Utils.displayMessage(getString(R.string.error),
+                        getString(R.string.failedToLoadNewData), sContext);
             }
             this.progress.dismiss();
         }
@@ -153,6 +154,8 @@ public class SettingsActivity extends Activity {
                String iCalUrl = data.getStringExtra(Utils.iCalURLKey);
                Log.e("res", iCalUrl);
                iCalInput.setText(iCalUrl);
+               Utils.displayMessage(getString(R.string.note),
+                       getString(R.string.successfullyGotiCalUrl), this);
            }
        }
     }
