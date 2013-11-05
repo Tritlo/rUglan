@@ -71,6 +71,28 @@ public class Dabbi {
         }
         for(CalEvent event: calEvents)
         {
+            //Check if the event is in the color table and if not add it to it.
+            Cursor result = qdb.rawQuery("SELECT color FROM COLORS WHERE name = ?",
+                    new String[]{event.getName()});
+            if(result.getCount() == 0)
+            {
+                //Get the highest color value in the table so we know what value to
+                //assign to this event.
+                result = qdb.rawQuery("SELECT MAX(color) FROM COLORS",null);
+                int newColorValue = 0;
+                if(result.getCount() != 0)
+                {
+                    result.moveToFirst();
+                    newColorValue = result.getInt(0)+1;
+                }
+                ContentValues colorValues = new ContentValues();
+                colorValues.put("name",event.getName());
+                colorValues.put("color", newColorValue);
+                qdb.insert("COLORS",null,colorValues);
+            }
+
+
+
             ContentValues values = new ContentValues();
             values.put("name", event.getName());
             values.put("description", event.getDescription());
@@ -80,6 +102,30 @@ public class Dabbi {
             qdb.insert("CALEVENTS",null,values);
         }
         qdb.close();
+    }
+
+    /**
+     * A function to get the color value of an event.
+     * @use a = getColor(b);
+     * @pre b is a name of an event that is in the database.
+     * @post a is the color value of b.
+     * @param name The event name we want the color for.
+     * @return The color value of name or -1 in case of failure.
+     */
+    public int getColor(String name)
+    {
+        rDataBase DB;
+        if(context == null)
+        {
+            System.out.println("warning Null context");
+            return -1;
+        }
+        DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        Cursor result = qdb.rawQuery("SELECT color FROM COLORS WHERE name = ?",
+                new String[]{name});
+        result.moveToFirst();
+        return result.getInt(0);
     }
 
     /**

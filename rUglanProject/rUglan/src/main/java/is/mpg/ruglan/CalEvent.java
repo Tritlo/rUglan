@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
+import java.util.Random;
 
 /**
  * Class representing Calendar Event for the project.
@@ -229,23 +230,7 @@ public class CalEvent implements Serializable {
      *          as a parameter for backgroundColor in FullCalendar
      */
     public String getColor() {
-        if (this.name.startsWith("TOL301G-20136")) {
-            return "brown";
-        }
-        else if (this.name.startsWith("TOL304G-20136")) {
-            return "red";
-        }
-        else if (this.name.startsWith("HBV501G-20136")) {
-            return "green";
-        }
-        else if (this.name.startsWith("TOL306G-20136")) {
-            return "#BA55D3";
-        }
-        else if (this.name.startsWith("TOL308G-20136")) {
-            return "#D2691E";
-        }
-        else {
-            return "grey";
-        }
+        Dabbi myDabbi = new Dabbi();
+        return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
     }
 }
