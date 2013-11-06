@@ -1,11 +1,8 @@
 package is.mpg.ruglan.test;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
-import junit.framework.TestCase;
-
-import is.mpg.ruglan.Utils;
+import is.mpg.utils.Utils;
 
 /**
  * Created by jon on 1.11.2013.

@@ -25,6 +25,10 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import is.mpg.data.CalEvent;
+import is.mpg.data.Dabbi;
+import is.mpg.utils.Utils;
+
 public class HomeActivity extends Activity {
     //CalEvent[] events;
     SharedPreferences prefs;

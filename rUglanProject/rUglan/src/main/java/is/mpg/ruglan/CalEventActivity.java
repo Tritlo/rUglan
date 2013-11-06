@@ -9,6 +9,8 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.widget.TextView;
 
+import is.mpg.data.CalEvent;
+
 public class CalEventActivity extends Activity {
 
     @Override

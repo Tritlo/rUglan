@@ -17,6 +17,9 @@ import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
 
+import is.mpg.data.Dabbi;
+import is.mpg.utils.Utils;
+
 public class SettingsActivity extends Activity {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;

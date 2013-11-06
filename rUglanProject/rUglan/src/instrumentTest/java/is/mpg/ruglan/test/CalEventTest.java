@@ -1,6 +1,6 @@
 package is.mpg.ruglan.test;
 
-import is.mpg.ruglan.CalEvent;
+import is.mpg.data.CalEvent;
 import android.test.AndroidTestCase;
 import java.text.SimpleDateFormat;
 import java.util.Date;

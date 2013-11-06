@@ -1,4 +1,4 @@
-package is.mpg.ruglan;
+package is.mpg.data;
 
 import android.content.Context;
 import android.content.res.AssetManager;

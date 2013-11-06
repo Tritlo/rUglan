@@ -1,6 +1,5 @@
-package is.mpg.ruglan;
+package is.mpg.data;
 import android.os.AsyncTask;
-import android.text.format.Time;
 
 import java.util.Scanner;
 import java.net.URL;
@@ -73,7 +72,7 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
      * @param calendar A string of an iCal calendar
      * @return a list of the events in the calendar cal
      */
-    public static CalEvent [] parseCalendar(String calendar){
+    public static CalEvent[] parseCalendar(String calendar){
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
 
         String [][] events = calendarToEventList(calendar);

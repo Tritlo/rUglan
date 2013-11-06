@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import is.mpg.ruglan.CalEvent;
-import is.mpg.ruglan.Dabbi;
-import is.mpg.ruglan.iCalParser;
+import is.mpg.data.CalEvent;
+import is.mpg.data.Dabbi;
+import is.mpg.data.iCalParser;
 
 /**
  * Created by jon on 9.10.2013.
