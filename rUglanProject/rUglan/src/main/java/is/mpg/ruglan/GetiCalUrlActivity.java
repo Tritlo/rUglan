@@ -17,6 +17,16 @@ import android.widget.TextView;
 
 import static android.os.SystemClock.sleep;
 
+
+/*
+ * This class is an activity that facilitates fetching of an iCal url from Ugla.
+ * It works by opening a webview,  waiting until the user logs in,
+ * and then using jQuery to find the iCal url of the user on his Ugla.
+ * this is then passed back to the app via the webpage title.
+ * The activity then returns this as a result.
+ *
+ * @author Matthias Pall Gissurarson
+ */
 public class GetiCalUrlActivity extends Activity {
 
     @Override
