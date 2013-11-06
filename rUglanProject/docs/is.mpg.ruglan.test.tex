@@ -51,6 +51,7 @@
 \hspace{1.0cm} $\bullet$ AndroidTestCase {\tiny } \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.CalEventTest {\tiny \refdefined{is.mpg.ruglan.test.CalEventTest}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.DabbiTest {\tiny \refdefined{is.mpg.ruglan.test.DabbiTest}} \\
+\hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.UtilsTest {\tiny \refdefined{is.mpg.ruglan.test.UtilsTest}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.test.iCalParserTest {\tiny \refdefined{is.mpg.ruglan.test.iCalParserTest}} \\
 }
 }
@@ -62,6 +63,7 @@
 \entityintro{CalEventTest}{is.mpg.ruglan.test.CalEventTest}{Unittests for the CalEvent class}
 \entityintro{DabbiTest}{is.mpg.ruglan.test.DabbiTest}{Created by jon on 9.10.2013.}
 \entityintro{iCalParserTest}{is.mpg.ruglan.test.iCalParserTest}{Created by tritlo on 10/8/13.}
+\entityintro{UtilsTest}{is.mpg.ruglan.test.UtilsTest}{Created by jon on 1.11.2013.}
 \vskip .1in
 \vskip .1in
 \section{\label{is.mpg.ruglan.test.CalEventTest}Class CalEventTest}{
@@ -84,6 +86,7 @@ Unittests for the CalEvent class\vskip .1in
 {\bf testCalEventStartSameAsEnd()} Creates a CalEvent with start date same as end date.\\
 {\bf testEquals()} Checks if equals does correct checks\\
 {\bf testGetColor()} Checks if getColor returns the correct color for a CalEvent.\\
+{\bf testGetDateString()} Checks if getDateString returns the correct string describing date of the event.\\
 {\bf testGetDescription()} Checks if getDescription returns the correct description.\\
 {\bf testGetDurationString()} Checks if getDurationString returns the correct string describing duration of the event.\\
 {\bf testGetEnd()} Checks if getEnd returns the correct date.\\
@@ -196,6 +199,24 @@ Checks if equals does correct checks
 {\bf  Description}
 
 Checks if getColor returns the correct color for a CalEvent.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetDateString()}
+{\bf  testGetDateString}\\
+\texttt{public void\ {\bf  testGetDateString}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetDateString()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getDateString returns the correct string describing date of the event.
 }
 \item{{\bf  Throws}
   \begin{itemize}
@@ -367,7 +388,10 @@ Created by jon on 9.10.2013.\vskip .1in
 \begin{verse}
 {\bf setUp()} \\
 {\bf testAddCalEvents()} Tries to add events to the database\\
+{\bf testClearEventsTable()} Tries to empty the event table in the database\\
+{\bf testGetAllCalEvents()} Gets all CalEvents from database and verifies.\\
 {\bf testGetCalEvents()} Tries to add an event to the database and then extract it back from the database and compare it with the original.\\
+{\bf testRefreshEventsTable()} \\
 \end{verse}
 }
 \subsection{Constructors}{
@@ -409,6 +433,42 @@ Tries to add events to the database
 \end{itemize}
 }%end item
 \item{ 
+\index{testClearEventsTable()}
+{\bf  testClearEventsTable}\\
+\texttt{public void\ {\bf  testClearEventsTable}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testClearEventsTable()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tries to empty the event table in the database
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetAllCalEvents()}
+{\bf  testGetAllCalEvents}\\
+\texttt{public void\ {\bf  testGetAllCalEvents}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testGetAllCalEvents()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Gets all CalEvents from database and verifies.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
 \index{testGetCalEvents()}
 {\bf  testGetCalEvents}\\
 \texttt{public void\ {\bf  testGetCalEvents}() throws java.lang.Exception
@@ -425,6 +485,12 @@ Tries to add an event to the database and then extract it back from the database
   \end{itemize}
 }%end item
 \end{itemize}
+}%end item
+\item{ 
+\index{testRefreshEventsTable()}
+{\bf  testRefreshEventsTable}\\
+\texttt{public void\ {\bf  testRefreshEventsTable}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testRefreshEventsTable()}}%end signature
 }%end item
 \end{itemize}
 }
@@ -507,6 +573,46 @@ Created by tritlo on 10/8/13.\vskip .1in
 {\bf  testUrlToString}\\
 \texttt{public void\ {\bf  testUrlToString}() throws java.lang.Exception
 \label{is.mpg.ruglan.test.iCalParserTest.testUrlToString()}}%end signature
+}%end item
+\end{itemize}
+}
+}
+\section{\label{is.mpg.ruglan.test.UtilsTest}Class UtilsTest}{
+\vskip .1in 
+Created by jon on 1.11.2013.\vskip .1in 
+\subsection{Declaration}{
+\small public class UtilsTest
+\\ {\bf  extends} AndroidTestCase
+\refdefined{.AndroidTestCase}}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf UtilsTest()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf testFillColorsArray()} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{UtilsTest()}
+{\bf  UtilsTest}\\
+\texttt{public\ {\bf  UtilsTest}()
+\label{is.mpg.ruglan.test.UtilsTest()}}%end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{testFillColorsArray()}
+{\bf  testFillColorsArray}\\
+\texttt{public void\ {\bf  testFillColorsArray}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.UtilsTest.testFillColorsArray()}}%end signature
 }%end item
 \end{itemize}
 }
