@@ -1,4 +1,4 @@
-package is.mpg.data;
+package is.mpg.ruglan.data;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
 
-import is.mpg.utils.Utils;
+import is.mpg.ruglan.utils.Utils;
 
 /**
  * Class representing Calendar Event for the project.

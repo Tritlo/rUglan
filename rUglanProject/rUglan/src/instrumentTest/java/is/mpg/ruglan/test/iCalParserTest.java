@@ -5,8 +5,8 @@ import android.test.AndroidTestCase;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import is.mpg.data.CalEvent;
-import is.mpg.data.iCalParser;
+import is.mpg.ruglan.data.CalEvent;
+import is.mpg.ruglan.data.iCalParser;
 
 /**
  * Created by tritlo on 10/8/13.

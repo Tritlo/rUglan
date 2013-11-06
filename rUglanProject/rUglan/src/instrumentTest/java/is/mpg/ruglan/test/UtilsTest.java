@@ -2,7 +2,7 @@ package is.mpg.ruglan.test;
 
 import android.test.AndroidTestCase;
 
-import is.mpg.utils.Utils;
+import is.mpg.ruglan.utils.Utils;
 
 /**
  * Created by jon on 1.11.2013.

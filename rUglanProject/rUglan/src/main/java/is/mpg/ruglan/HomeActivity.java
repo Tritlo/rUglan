@@ -25,9 +25,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import is.mpg.data.CalEvent;
-import is.mpg.data.Dabbi;
-import is.mpg.utils.Utils;
+import is.mpg.ruglan.data.CalEvent;
+import is.mpg.ruglan.data.Dabbi;
+import is.mpg.ruglan.utils.Utils;
 
 public class HomeActivity extends Activity {
     //CalEvent[] events;

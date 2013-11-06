@@ -1,4 +1,4 @@
-package is.mpg.data;
+package is.mpg.ruglan.data;
 import android.os.AsyncTask;
 
 import java.util.Scanner;
