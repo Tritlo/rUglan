@@ -24,3 +24,6 @@ rUglanProject/.gradle
 rUglanProject/local.properties
 rUglanProject/.idea/workspace.xml
 rUglanProject/.DS_Store
+
+#TexDoclet
+*.tex.map
