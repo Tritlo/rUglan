@@ -1,0 +1,139 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{ifpdf}
+\usepackage[headings]{fullpage}
+\ifpdf \usepackage[pdftex, pdfpagemode={UseOutlines},bookmarks,colorlinks,linkcolor={blue},plainpages=false,pdfpagelabels,citecolor={red},breaklinks=true]{hyperref}
+  \usepackage[pdftex]{graphicx}
+  \pdfcompresslevel=9
+  \DeclareGraphicsRule{*}{mps}{*}{}
+\else
+  \usepackage[dvips]{graphicx}
+\fi
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\date{\today}
+\title{rUglan documentation}
+\author{Jon Arnar Tomasson, Matthias Pall Gissurarson and Sigurdur Fannar Vilhelmsson}
+\chardef\textbackslash=`\\
+\begin{document}
+\maketitle
+\sloppy
+\addtocontents{toc}{\protect\markboth{Contents}{Contents}}
+\tableofcontents
+\chapter*{Class Hierarchy}{
+\thispagestyle{empty}
+\markboth{Class Hierarchy}{Class Hierarchy}
+\addcontentsline{toc}{chapter}{Class Hierarchy}
+\section*{Classes}
+{\raggedright
+\hspace{0.0cm} $\bullet$ java.lang.Object {\tiny \refdefined{java.lang.Object}} \\
+\hspace{1.0cm} $\bullet$ is.mpg.ruglan.utils.Utils {\tiny \refdefined{is.mpg.ruglan.utils.Utils}} \\
+}
+}
+\chapter{Package is.mpg.ruglan.utils}{
+\label{is.mpg.ruglan.utils}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{Utils}{is.mpg.ruglan.utils.Utils}{Created by tritlo on 10/28/13.}
+\vskip .1in
+\vskip .1in
+\section{\label{is.mpg.ruglan.utils.Utils}Class Utils}{
+\vskip .1in 
+Created by tritlo on 10/28/13.\vskip .1in 
+\subsection{Declaration}{
+\small public class Utils
+\\ {\bf  extends} java.lang.Object
+\refdefined{java.lang.Object}}
+\subsection{Field summary}{
+\begin{verse}
+{\bf colors} \\
+{\bf iCalURLKey} \\
+{\bf lastUpdateKey} \\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf Utils()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf displayMessage(String, String, Context)} \\
+{\bf fillColorsArray()} Fills the Utils.colors array with in some sense good colors.\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{lastUpdateKey}
+\label{is.mpg.ruglan.utils.Utils.lastUpdateKey}public static java.lang.String {\bf  lastUpdateKey}}
+\item{
+\index{iCalURLKey}
+\label{is.mpg.ruglan.utils.Utils.iCalURLKey}public static java.lang.String {\bf  iCalURLKey}}
+\item{
+\index{colors}
+\label{is.mpg.ruglan.utils.Utils.colors}public static java.lang.String {\bf  colors}}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{Utils()}
+{\bf  Utils}\\
+\texttt{public\ {\bf  Utils}()
+\label{is.mpg.ruglan.utils.Utils()}}%end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{displayMessage(String, String, Context)}
+{\bf  displayMessage}\\
+\texttt{public static void\ {\bf  displayMessage}(\texttt{java.lang.String} {\bf  messageHeader},
+\texttt{java.lang.String} {\bf  messageBody},
+\texttt{Context} {\bf  ctx})
+\label{is.mpg.ruglan.utils.Utils.displayMessage(java.lang.String, java.lang.String, Context)}}%end signature
+}%end item
+\item{ 
+\index{fillColorsArray()}
+{\bf  fillColorsArray}\\
+\texttt{public static void\ {\bf  fillColorsArray}()
+\label{is.mpg.ruglan.utils.Utils.fillColorsArray()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Fills the Utils.colors array with in some sense good colors.
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\end{document}
