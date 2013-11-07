@@ -45,19 +45,14 @@
 \thispagestyle{empty}
 \markboth{Class Hierarchy}{Class Hierarchy}
 \addcontentsline{toc}{chapter}{Class Hierarchy}
-\subsection*{Classes}
+\section*{Classes}
 {\raggedright
 \hspace{0.0cm} $\bullet$ java.lang.Object {\tiny \refdefined{java.lang.Object}} \\
-\hspace{1.0cm} $\bullet$  {\tiny } \\
-\hspace{2.0cm} $\bullet$ is.mpg.ruglan.iCalParser {\tiny \refdefined{is.mpg.ruglan.iCalParser}} \\
 \hspace{1.0cm} $\bullet$ Activity {\tiny } \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.CalEventActivity {\tiny \refdefined{is.mpg.ruglan.CalEventActivity}} \\
+\hspace{2.0cm} $\bullet$ is.mpg.ruglan.GetiCalUrlActivity {\tiny \refdefined{is.mpg.ruglan.GetiCalUrlActivity}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.HomeActivity {\tiny \refdefined{is.mpg.ruglan.HomeActivity}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.SettingsActivity {\tiny \refdefined{is.mpg.ruglan.SettingsActivity}} \\
-\hspace{1.0cm} $\bullet$ SQLiteOpenHelper {\tiny } \\
-\hspace{2.0cm} $\bullet$ is.mpg.ruglan.rDataBase {\tiny \refdefined{is.mpg.ruglan.rDataBase}} \\
-\hspace{1.0cm} $\bullet$ is.mpg.ruglan.CalEvent {\tiny \refdefined{is.mpg.ruglan.CalEvent}} \\
-\hspace{1.0cm} $\bullet$ is.mpg.ruglan.Dabbi {\tiny \refdefined{is.mpg.ruglan.Dabbi}} \\
 }
 }
 \chapter{Package is.mpg.ruglan}{
@@ -65,216 +60,31 @@
 \hbox to \hsize{\textit{ Package Contents\hfil Page}}
 \vskip .13in
 \hbox{{\bf  Classes}}
-\entityintro{CalEvent}{is.mpg.ruglan.CalEvent}{Class representing Calendar Event for the project.}
 \entityintro{CalEventActivity}{is.mpg.ruglan.CalEventActivity}{}
-\entityintro{Dabbi}{is.mpg.ruglan.Dabbi}{An interface for the database backend.}
+\entityintro{GetiCalUrlActivity}{is.mpg.ruglan.GetiCalUrlActivity}{}
 \entityintro{HomeActivity}{is.mpg.ruglan.HomeActivity}{}
-\entityintro{iCalParser}{is.mpg.ruglan.iCalParser}{Parser for iCalendars.}
-\entityintro{rDataBase}{is.mpg.ruglan.rDataBase}{An helper class for an sqlite datebase All credit to Gaddo F.}
 \entityintro{SettingsActivity}{is.mpg.ruglan.SettingsActivity}{}
 \vskip .1in
 \vskip .1in
-\subsection{\label{is.mpg.ruglan.CalEvent}Class CalEvent}{
+\section{\label{is.mpg.ruglan.CalEventActivity}Class CalEventActivity}{
 \vskip .1in 
-Class representing Calendar Event for the project.\vskip .1in 
-\subsubsection{Declaration}{
-\small public class CalEvent
-\\ {\bf  extends} java.lang.Object
-\refdefined{java.lang.Object}\\ {\bf  implements} 
-java.io.Serializable}
-\subsubsection{Constructor summary}{
-\begin{verse}
-{\bf CalEvent(String, String, String, Date, Date)} \\
-\end{verse}
-}
-\subsubsection{Method summary}{
-\begin{verse}
-{\bf equals(CalEvent)} \\
-{\bf getColor()} \\
-{\bf getDescription()} \\
-{\bf getDurationString()} \\
-{\bf getEnd()} \\
-{\bf getFullCalendarEndDateString()} \\
-{\bf getFullCalendarStartDateString()} \\
-{\bf getLocation()} \\
-{\bf getName()} \\
-{\bf getStart()} \\
-{\bf toString()} \\
-\end{verse}
-}
-\subsubsection{Constructors}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{CalEvent(String, String, String, Date, Date)}
-{\bf  CalEvent}\\
-\texttt{public\ {\bf  CalEvent}(\texttt{java.lang.String} {\bf  name},
-\texttt{java.lang.String} {\bf  description},
-\texttt{java.lang.String} {\bf  location},
-\texttt{java.util.Date} {\bf  start},
-\texttt{java.util.Date} {\bf  end})
-\label{is.mpg.ruglan.CalEvent(java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.util.Date)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{name} -- Name of the event.}
-   \item{
-\texttt{description} -- Description of the event.}
-   \item{
-\texttt{location} -- Location of the event.}
-   \item{
-\texttt{start} -- Start date of the event.}
-   \item{
-\texttt{end} -- End date of the event.}
-  \end{itemize}
-}%end item
-\end{itemize}
-}%end item
-\end{itemize}
-}
-\subsubsection{Methods}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{equals(CalEvent)}
-{\bf  equals}\\
-\texttt{public boolean\ {\bf  equals}(\texttt{CalEvent} {\bf  a})
-\label{is.mpg.ruglan.CalEvent.equals(is.mpg.ruglan.CalEvent)}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-true if a and b have the same properties, false otherwise 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getColor()}
-{\bf  getColor}\\
-\texttt{public java.lang.String\ {\bf  getColor}()
-\label{is.mpg.ruglan.CalEvent.getColor()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-s is a string representing a color that can be used as a parameter for backgroundColor in FullCalendar 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getDescription()}
-{\bf  getDescription}\\
-\texttt{public java.lang.String\ {\bf  getDescription}()
-\label{is.mpg.ruglan.CalEvent.getDescription()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-Description of the event. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getDurationString()}
-{\bf  getDurationString}\\
-\texttt{public java.lang.String\ {\bf  getDurationString}()
-\label{is.mpg.ruglan.CalEvent.getDurationString()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-A string on the form "HH:MM - HH:MM" describing the duration of the event. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getEnd()}
-{\bf  getEnd}\\
-\texttt{public java.util.Date\ {\bf  getEnd}()
-\label{is.mpg.ruglan.CalEvent.getEnd()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-End date of the event. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getFullCalendarEndDateString()}
-{\bf  getFullCalendarEndDateString}\\
-\texttt{public java.lang.String\ {\bf  getFullCalendarEndDateString}()
-\label{is.mpg.ruglan.CalEvent.getFullCalendarEndDateString()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-s is a string on the form "new Date(y, m, d, H, M)" that can be used as a parameter for date in FullCalendar 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getFullCalendarStartDateString()}
-{\bf  getFullCalendarStartDateString}\\
-\texttt{public java.lang.String\ {\bf  getFullCalendarStartDateString}()
-\label{is.mpg.ruglan.CalEvent.getFullCalendarStartDateString()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-s is a string on the form "new Date(y, m, d, H, M)" that can be used as a parameter for date in FullCalendar 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getLocation()}
-{\bf  getLocation}\\
-\texttt{public java.lang.String\ {\bf  getLocation}()
-\label{is.mpg.ruglan.CalEvent.getLocation()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-Location of the event. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getName()}
-{\bf  getName}\\
-\texttt{public java.lang.String\ {\bf  getName}()
-\label{is.mpg.ruglan.CalEvent.getName()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-Name of the event. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{getStart()}
-{\bf  getStart}\\
-\texttt{public java.util.Date\ {\bf  getStart}()
-\label{is.mpg.ruglan.CalEvent.getStart()}}%end signature
-\begin{itemize}
-\item{{\bf  Returns} -- 
-Start date of the event. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{toString()}
-{\bf  toString}\\
-\texttt{public java.lang.String\ {\bf  toString}()
-\label{is.mpg.ruglan.CalEvent.toString()}}%end signature
-}%end item
-\end{itemize}
-}
-}
-\subsection{\label{is.mpg.ruglan.CalEventActivity}Class CalEventActivity}{
-\vskip .1in 
-\subsubsection{Declaration}{
+\subsection{Declaration}{
 \small public class CalEventActivity
 \\ {\bf  extends} Activity
 \refdefined{.Activity}}
-\subsubsection{Constructor summary}{
+\subsection{Constructor summary}{
 \begin{verse}
 {\bf CalEventActivity()} \\
 \end{verse}
 }
-\subsubsection{Method summary}{
+\subsection{Method summary}{
 \begin{verse}
 {\bf onCreate(Bundle)} \\
 {\bf onCreateOptionsMenu(Menu)} \\
 {\bf onOptionsItemSelected(MenuItem)} \\
 \end{verse}
 }
-\subsubsection{Constructors}{
+\subsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
@@ -285,7 +95,7 @@ Start date of the event.
 }%end item
 \end{itemize}
 }
-\subsubsection{Methods}{
+\subsection{Methods}{
 \vskip -2em
 \begin{itemize}
 \item{ 
@@ -309,123 +119,90 @@ Start date of the event.
 \end{itemize}
 }
 }
-\subsection{\label{is.mpg.ruglan.Dabbi}Class Dabbi}{
+\section{\label{is.mpg.ruglan.GetiCalUrlActivity}Class GetiCalUrlActivity}{
 \vskip .1in 
-An interface for the database backend.\vskip .1in 
-\subsubsection{Declaration}{
-\small public class Dabbi
-\\ {\bf  extends} java.lang.Object
-\refdefined{java.lang.Object}}
-\subsubsection{Constructor summary}{
+\subsection{Declaration}{
+\small public class GetiCalUrlActivity
+\\ {\bf  extends} Activity
+\refdefined{.Activity}}
+\subsection{Constructor summary}{
 \begin{verse}
-{\bf Dabbi()} \\
-{\bf Dabbi(Context)} \\
+{\bf GetiCalUrlActivity()} \\
 \end{verse}
 }
-\subsubsection{Method summary}{
+\subsection{Method summary}{
 \begin{verse}
-{\bf addCalEvents(CalEvent\lbrack \rbrack )} \\
-{\bf getCalEvents(Date, Date)} \\
+{\bf onCreate(Bundle)} \\
+{\bf onCreateOptionsMenu(Menu)} \\
 \end{verse}
 }
-\subsubsection{Constructors}{
+\subsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{Dabbi()}
-{\bf  Dabbi}\\
-\texttt{public\ {\bf  Dabbi}()
-\label{is.mpg.ruglan.Dabbi()}}%end signature
-}%end item
-\item{ 
-\index{Dabbi(Context)}
-{\bf  Dabbi}\\
-\texttt{public\ {\bf  Dabbi}(\texttt{Context} {\bf  context})
-\label{is.mpg.ruglan.Dabbi(Context)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{context} -- A non null android Context object.}
-  \end{itemize}
-}%end item
-\end{itemize}
+\index{GetiCalUrlActivity()}
+{\bf  GetiCalUrlActivity}\\
+\texttt{public\ {\bf  GetiCalUrlActivity}()
+\label{is.mpg.ruglan.GetiCalUrlActivity()}}%end signature
 }%end item
 \end{itemize}
 }
-\subsubsection{Methods}{
+\subsection{Methods}{
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{addCalEvents(CalEvent\lbrack \rbrack )}
-{\bf  addCalEvents}\\
-\texttt{public void\ {\bf  addCalEvents}(\texttt{CalEvent\lbrack \rbrack } {\bf  calEvents})
-\label{is.mpg.ruglan.Dabbi.addCalEvents(is.mpg.ruglan.CalEvent[])}}%end signature
-\begin{itemize}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{calEvents} -- An array of CalEvents to be added.}
-  \end{itemize}
-}%end item
-\end{itemize}
+\index{onCreate(Bundle)}
+{\bf  onCreate}\\
+\texttt{protected void\ {\bf  onCreate}(\texttt{Bundle} {\bf  savedInstanceState})
+\label{is.mpg.ruglan.GetiCalUrlActivity.onCreate(Bundle)}}%end signature
 }%end item
 \item{ 
-\index{getCalEvents(Date, Date)}
-{\bf  getCalEvents}\\
-\texttt{public CalEvent\lbrack \rbrack \ {\bf  getCalEvents}(\texttt{java.util.Date} {\bf  start},
-\texttt{java.util.Date} {\bf  end})
-\label{is.mpg.ruglan.Dabbi.getCalEvents(java.util.Date, java.util.Date)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{start} -- A Date object that is the earliest date we want to look at.}
-   \item{
-\texttt{end} -- A Date object that is the latest time an CalEvent can start at so it is included in the return value.}
-  \end{itemize}
-}%end item
-\end{itemize}
+\index{onCreateOptionsMenu(Menu)}
+{\bf  onCreateOptionsMenu}\\
+\texttt{public boolean\ {\bf  onCreateOptionsMenu}(\texttt{Menu} {\bf  menu})
+\label{is.mpg.ruglan.GetiCalUrlActivity.onCreateOptionsMenu(Menu)}}%end signature
 }%end item
 \end{itemize}
 }
 }
-\subsection{\label{is.mpg.ruglan.HomeActivity}Class HomeActivity}{
+\section{\label{is.mpg.ruglan.HomeActivity}Class HomeActivity}{
 \vskip .1in 
-\subsubsection{Declaration}{
+\subsection{Declaration}{
 \small public class HomeActivity
 \\ {\bf  extends} Activity
 \refdefined{.Activity}}
-\subsubsection{Field summary}{
+\subsection{Field summary}{
 \begin{verse}
-{\bf events} \\
+{\bf prefs} \\
+{\bf SETTINGSREQUEST} \\
 \end{verse}
 }
-\subsubsection{Constructor summary}{
+\subsection{Constructor summary}{
 \begin{verse}
 {\bf HomeActivity()} \\
 \end{verse}
 }
-\subsubsection{Method summary}{
+\subsection{Method summary}{
 \begin{verse}
 {\bf getContext()} \\
-{\bf isURLMatching(String)} \\
+{\bf onActivityResult(int, int, Intent)} \\
 {\bf onCreate(Bundle)} \\
 {\bf onCreateOptionsMenu(Menu)} \\
+{\bf onOptionsItemSelected(MenuItem)} \\
 {\bf openCalEventActivity(String)} \\
 \end{verse}
 }
-\subsubsection{Fields}{
+\subsection{Fields}{
 \begin{itemize}
 \item{
-\index{events}
-\label{is.mpg.ruglan.HomeActivity.events} CalEvent {\bf  events}}
+\index{prefs}
+\label{is.mpg.ruglan.HomeActivity.prefs} SharedPreferences {\bf  prefs}}
+\item{
+\index{SETTINGSREQUEST}
+\label{is.mpg.ruglan.HomeActivity.SETTINGSREQUEST}static final int {\bf  SETTINGSREQUEST}}
 \end{itemize}
 }
-\subsubsection{Constructors}{
+\subsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
@@ -436,7 +213,7 @@ An interface for the database backend.\vskip .1in
 }%end item
 \end{itemize}
 }
-\subsubsection{Methods}{
+\subsection{Methods}{
 \vskip -2em
 \begin{itemize}
 \item{ 
@@ -446,10 +223,12 @@ An interface for the database backend.\vskip .1in
 \label{is.mpg.ruglan.HomeActivity.getContext()}}%end signature
 }%end item
 \item{ 
-\index{isURLMatching(String)}
-{\bf  isURLMatching}\\
-\texttt{protected boolean\ {\bf  isURLMatching}(\texttt{java.lang.String} {\bf  url})
-\label{is.mpg.ruglan.HomeActivity.isURLMatching(java.lang.String)}}%end signature
+\index{onActivityResult(int, int, Intent)}
+{\bf  onActivityResult}\\
+\texttt{public void\ {\bf  onActivityResult}(\texttt{int} {\bf  requestCode},
+\texttt{int} {\bf  resultCode},
+\texttt{Intent} {\bf  data})
+\label{is.mpg.ruglan.HomeActivity.onActivityResult(int, int, Intent)}}%end signature
 }%end item
 \item{ 
 \index{onCreate(Bundle)}
@@ -464,6 +243,12 @@ An interface for the database backend.\vskip .1in
 \label{is.mpg.ruglan.HomeActivity.onCreateOptionsMenu(Menu)}}%end signature
 }%end item
 \item{ 
+\index{onOptionsItemSelected(MenuItem)}
+{\bf  onOptionsItemSelected}\\
+\texttt{public boolean\ {\bf  onOptionsItemSelected}(\texttt{MenuItem} {\bf  item})
+\label{is.mpg.ruglan.HomeActivity.onOptionsItemSelected(MenuItem)}}%end signature
+}%end item
+\item{ 
 \index{openCalEventActivity(String)}
 {\bf  openCalEventActivity}\\
 \texttt{protected void\ {\bf  openCalEventActivity}(\texttt{java.lang.String} {\bf  url})
@@ -472,276 +257,52 @@ An interface for the database backend.\vskip .1in
 \end{itemize}
 }
 }
-\subsection{\label{is.mpg.ruglan.iCalParser}Class iCalParser}{
+\section{\label{is.mpg.ruglan.SettingsActivity}Class SettingsActivity}{
 \vskip .1in 
-Parser for iCalendars.\vskip .1in 
-\subsubsection{Declaration}{
-\small public class iCalParser
-\\ {\bf  extends} 
-\refdefined{.<any>}}
-\subsubsection{Constructor summary}{
-\begin{verse}
-{\bf iCalParser()} \\
-\end{verse}
-}
-\subsubsection{Method summary}{
-\begin{verse}
-{\bf calendarToEventList(String)} Takes an iCal calendar string, and returns an array of string arrays each containing an event\\
-{\bf doInBackground(String\lbrack \rbrack )} \\
-{\bf getICalValue(String\lbrack \rbrack , String)} Takes an string array containing an iCal event, and returns the value of the type\\
-{\bf parseCalendar(String)} Takes a string containing an iCal calendar and returns a list of the events in the calendar\\
-{\bf removeCR(String\lbrack \rbrack )} Removes carriage returns in all string in an array of strings\\
-{\bf urlToCalEvents(String)} \\
-{\bf urlToString(String)} Takes an url and fetches its contents into a string\\
-\end{verse}
-}
-\subsubsection{Constructors}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{iCalParser()}
-{\bf  iCalParser}\\
-\texttt{public\ {\bf  iCalParser}()
-\label{is.mpg.ruglan.iCalParser()}}%end signature
-}%end item
-\end{itemize}
-}
-\subsubsection{Methods}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{calendarToEventList(String)}
-{\bf  calendarToEventList}\\
-\texttt{public static java.lang.String\lbrack \rbrack \lbrack \rbrack \ {\bf  calendarToEventList}(\texttt{java.lang.String} {\bf  calendar})
-\label{is.mpg.ruglan.iCalParser.calendarToEventList(java.lang.String)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Takes an iCal calendar string, and returns an array of string arrays each containing an event
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{calendar} -- a string that contains an iCal calendar}
-  \end{itemize}
-}%end item
-\item{{\bf  Returns} -- 
-an array of the events in the iCal calendar calendar. 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{doInBackground(String\lbrack \rbrack )}
-{\bf  doInBackground}\\
-\texttt{public CalEvent\lbrack \rbrack \ {\bf  doInBackground}(\texttt{java.lang.String\lbrack \rbrack } {\bf  url})
-\label{is.mpg.ruglan.iCalParser.doInBackground(java.lang.String[])}}%end signature
-}%end item
-\item{ 
-\index{getICalValue(String\lbrack \rbrack , String)}
-{\bf  getICalValue}\\
-\texttt{public static java.lang.String\ {\bf  getICalValue}(\texttt{java.lang.String\lbrack \rbrack } {\bf  event},
-\texttt{java.lang.String} {\bf  type})
-\label{is.mpg.ruglan.iCalParser.getICalValue(java.lang.String[], java.lang.String)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Takes an string array containing an iCal event, and returns the value of the type
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{event} -- the event to be parsed}
-   \item{
-\texttt{type} -- the type of the value to be fished out}
-  \end{itemize}
-}%end item
-\item{{\bf  Returns} -- 
-the value of the type type in the event 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{parseCalendar(String)}
-{\bf  parseCalendar}\\
-\texttt{public static CalEvent\lbrack \rbrack \ {\bf  parseCalendar}(\texttt{java.lang.String} {\bf  calendar})
-\label{is.mpg.ruglan.iCalParser.parseCalendar(java.lang.String)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Takes a string containing an iCal calendar and returns a list of the events in the calendar
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{calendar} -- A string of an iCal calendar}
-  \end{itemize}
-}%end item
-\item{{\bf  Returns} -- 
-a list of the events in the calendar cal 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{removeCR(String\lbrack \rbrack )}
-{\bf  removeCR}\\
-\texttt{public static java.lang.String\lbrack \rbrack \ {\bf  removeCR}(\texttt{java.lang.String\lbrack \rbrack } {\bf  lines})
-\label{is.mpg.ruglan.iCalParser.removeCR(java.lang.String[])}}%end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Removes carriage returns in all string in an array of strings
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{lines} -- the lines for which the carriage return is to be removed from}
-  \end{itemize}
-}%end item
-\item{{\bf  Returns} -- 
- 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{urlToCalEvents(String)}
-{\bf  urlToCalEvents}\\
-\texttt{public static CalEvent\lbrack \rbrack \ {\bf  urlToCalEvents}(\texttt{java.lang.String} {\bf  url})
-\label{is.mpg.ruglan.iCalParser.urlToCalEvents(java.lang.String)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{url} -- The url to the iCal calendar}
-  \end{itemize}
-}%end item
-\item{{\bf  Returns} -- 
-a list of the events in the calendar located at the url 
-}%end item
-\end{itemize}
-}%end item
-\item{ 
-\index{urlToString(String)}
-{\bf  urlToString}\\
-\texttt{public static java.lang.String\ {\bf  urlToString}(\texttt{java.lang.String} {\bf  url})
-\label{is.mpg.ruglan.iCalParser.urlToString(java.lang.String)}}%end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Takes an url and fetches its contents into a string
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{url} -- the url of the website to be downloaded}
-  \end{itemize}
-}%end item
-\item{{\bf  Returns} -- 
-the string with the content of the url 
-}%end item
-\end{itemize}
-}%end item
-\end{itemize}
-}
-}
-\subsection{\label{is.mpg.ruglan.rDataBase}Class rDataBase}{
-\vskip .1in 
-An helper class for an sqlite datebase All credit to Gaddo F. Benedetti\vskip .1in 
-\subsubsection{Declaration}{
-\small public class rDataBase
-\\ {\bf  extends} SQLiteOpenHelper
-\refdefined{.SQLiteOpenHelper}}
-\subsubsection{Field summary}{
-\begin{verse}
-{\bf context} \\
-{\bf DB\_NAME} \\
-{\bf DB\_VERSION} \\
-\end{verse}
-}
-\subsubsection{Constructor summary}{
-\begin{verse}
-{\bf rDataBase(Context)} \\
-\end{verse}
-}
-\subsubsection{Method summary}{
-\begin{verse}
-{\bf onCreate(SQLiteDatabase)} \\
-{\bf onUpgrade(SQLiteDatabase, int, int)} \\
-\end{verse}
-}
-\subsubsection{Fields}{
-\begin{itemize}
-\item{
-\index{DB\_VERSION}
-\label{is.mpg.ruglan.rDataBase.DB_VERSION}static final int {\bf  DB\_VERSION}}
-\item{
-\index{DB\_NAME}
-\label{is.mpg.ruglan.rDataBase.DB_NAME}static final java.lang.String {\bf  DB\_NAME}}
-\item{
-\index{context}
-\label{is.mpg.ruglan.rDataBase.context} Context {\bf  context}}
-\end{itemize}
-}
-\subsubsection{Constructors}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{rDataBase(Context)}
-{\bf  rDataBase}\\
-\texttt{public\ {\bf  rDataBase}(\texttt{Context} {\bf  context})
-\label{is.mpg.ruglan.rDataBase(Context)}}%end signature
-}%end item
-\end{itemize}
-}
-\subsubsection{Methods}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{onCreate(SQLiteDatabase)}
-{\bf  onCreate}\\
-\texttt{public void\ {\bf  onCreate}(\texttt{SQLiteDatabase} {\bf  database})
-\label{is.mpg.ruglan.rDataBase.onCreate(SQLiteDatabase)}}%end signature
-}%end item
-\item{ 
-\index{onUpgrade(SQLiteDatabase, int, int)}
-{\bf  onUpgrade}\\
-\texttt{public void\ {\bf  onUpgrade}(\texttt{SQLiteDatabase} {\bf  db},
-\texttt{int} {\bf  oldVersion},
-\texttt{int} {\bf  newVersion})
-\label{is.mpg.ruglan.rDataBase.onUpgrade(SQLiteDatabase, int, int)}}%end signature
-}%end item
-\end{itemize}
-}
-}
-\subsection{\label{is.mpg.ruglan.SettingsActivity}Class SettingsActivity}{
-\vskip .1in 
-\subsubsection{Declaration}{
+\subsection{Declaration}{
 \small public class SettingsActivity
 \\ {\bf  extends} Activity
 \refdefined{.Activity}}
-\subsubsection{Constructor summary}{
+\subsection{Field summary}{
+\begin{verse}
+{\bf editor} \\
+{\bf GETURLREQUEST} \\
+{\bf iCalInput} \\
+{\bf prefs} \\
+\end{verse}
+}
+\subsection{Constructor summary}{
 \begin{verse}
 {\bf SettingsActivity()} \\
 \end{verse}
 }
-\subsubsection{Method summary}{
+\subsection{Method summary}{
 \begin{verse}
+{\bf getIcalUrl(View)} \\
+{\bf onActivityResult(int, int, Intent)} \\
 {\bf onCreate(Bundle)} \\
 {\bf onCreateOptionsMenu(Menu)} \\
 {\bf onOptionsItemSelected(MenuItem)} \\
+{\bf saveSettings(View)} \\
 \end{verse}
 }
-\subsubsection{Constructors}{
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{prefs}
+\label{is.mpg.ruglan.SettingsActivity.prefs} SharedPreferences {\bf  prefs}}
+\item{
+\index{editor}
+\label{is.mpg.ruglan.SettingsActivity.editor} SharedPreferences.Editor {\bf  editor}}
+\item{
+\index{GETURLREQUEST}
+\label{is.mpg.ruglan.SettingsActivity.GETURLREQUEST}static final int {\bf  GETURLREQUEST}}
+\item{
+\index{iCalInput}
+\label{is.mpg.ruglan.SettingsActivity.iCalInput} TextView {\bf  iCalInput}}
+\end{itemize}
+}
+\subsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
@@ -752,9 +313,23 @@ An helper class for an sqlite datebase All credit to Gaddo F. Benedetti\vskip .1
 }%end item
 \end{itemize}
 }
-\subsubsection{Methods}{
+\subsection{Methods}{
 \vskip -2em
 \begin{itemize}
+\item{ 
+\index{getIcalUrl(View)}
+{\bf  getIcalUrl}\\
+\texttt{public void\ {\bf  getIcalUrl}(\texttt{View} {\bf  view})
+\label{is.mpg.ruglan.SettingsActivity.getIcalUrl(View)}}%end signature
+}%end item
+\item{ 
+\index{onActivityResult(int, int, Intent)}
+{\bf  onActivityResult}\\
+\texttt{public void\ {\bf  onActivityResult}(\texttt{int} {\bf  requestCode},
+\texttt{int} {\bf  resultCode},
+\texttt{Intent} {\bf  data})
+\label{is.mpg.ruglan.SettingsActivity.onActivityResult(int, int, Intent)}}%end signature
+}%end item
 \item{ 
 \index{onCreate(Bundle)}
 {\bf  onCreate}\\
@@ -772,6 +347,12 @@ An helper class for an sqlite datebase All credit to Gaddo F. Benedetti\vskip .1
 {\bf  onOptionsItemSelected}\\
 \texttt{public boolean\ {\bf  onOptionsItemSelected}(\texttt{MenuItem} {\bf  item})
 \label{is.mpg.ruglan.SettingsActivity.onOptionsItemSelected(MenuItem)}}%end signature
+}%end item
+\item{ 
+\index{saveSettings(View)}
+{\bf  saveSettings}\\
+\texttt{public void\ {\bf  saveSettings}(\texttt{View} {\bf  view})
+\label{is.mpg.ruglan.SettingsActivity.saveSettings(View)}}%end signature
 }%end item
 \end{itemize}
 }

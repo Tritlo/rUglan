@@ -1,3 +1,5 @@
 android.support.v7.appcompat
 is.mpg.ruglan
+is.mpg.ruglan.data
 is.mpg.ruglan.test
+is.mpg.ruglan.utils

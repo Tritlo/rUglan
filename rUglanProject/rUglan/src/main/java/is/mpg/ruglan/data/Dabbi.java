@@ -1,6 +1,5 @@
-package is.mpg.ruglan;
+package is.mpg.ruglan.data;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +10,8 @@ import android.content.SharedPreferences;
 import android.text.format.Time;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+
+import is.mpg.ruglan.HomeActivity;
 
 /**
  * An interface for the database backend.

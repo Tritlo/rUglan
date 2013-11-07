@@ -1,4 +1,4 @@
-package is.mpg.ruglan;
+package is.mpg.ruglan.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

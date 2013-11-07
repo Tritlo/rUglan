@@ -292,7 +292,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ]
 Chapter 1.
 
-LaTeX Warning: Reference `is.mpg.ruglan.CalEvent' on page 3 undefined on input 
+LaTeX Warning: Reference `is.mpg.ruglan.data.CalEvent' on page 3 undefined on input
 line 71.
 
 
@@ -308,11 +308,11 @@ LaTeX Warning: Reference `is.mpg.ruglan.HomeActivity' on page 3 undefined on in
 put line 74.
 
 
-LaTeX Warning: Reference `is.mpg.ruglan.iCalParser' on page 3 undefined on inpu
+LaTeX Warning: Reference `is.mpg.backend.iCalParser' on page 3 undefined on inpu
 t line 75.
 
 
-LaTeX Warning: Reference `is.mpg.ruglan.rDataBase' on page 3 undefined on input
+LaTeX Warning: Reference `is.mpg.backend.rDataBase' on page 3 undefined on input
  line 76.
 
 

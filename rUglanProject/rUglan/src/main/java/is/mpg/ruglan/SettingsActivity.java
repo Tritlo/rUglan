@@ -17,6 +17,18 @@ import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
 
+import is.mpg.ruglan.data.Dabbi;
+import is.mpg.ruglan.utils.Utils;
+
+/*
+ * This class is an activity to facilitate changing of user settings.
+ * It allows the user to change the settings that are used in the app,
+ * and also provides a link for automatically fetching the iCal url.
+ *
+ * The settings are then stored in the apps default SharedPreferences.
+ *
+ * @author Matthias Pall Gissurarson
+ */
 public class SettingsActivity extends Activity {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
