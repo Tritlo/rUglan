@@ -258,9 +258,12 @@ public class Dabbi {
      */
     public void refreshEventsTable(String iCalUrl) throws Exception{
         CalEvent [] calEvents;
+        Log.d("Dabbi","refreshing table");
         try{
-            calEvents = new iCalParser().execute(iCalUrl).get();
+            Log.d("Dabbi","Trying to fetch from parser");
+            calEvents = iCalParser.urlToCalEvents(iCalUrl);
         } catch (Exception ex) {
+        	Log.e("Dabbi", ex.getMessage());
             calEvents = null;
         }
         if (calEvents == null){
