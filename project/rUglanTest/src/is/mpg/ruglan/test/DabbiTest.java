@@ -116,7 +116,7 @@ public class DabbiTest extends AndroidTestCase {
         assertEquals("Number of events from iCal does not match events from " +
                 "Dabbi after refresh",
                 calEventsiCal.length, calEventsDabbi.length);
-        List calEventsDabbiList = Arrays.asList(calEventsDabbi);
+        List<CalEvent> calEventsDabbiList = Arrays.asList(calEventsDabbi);
         Boolean areEqual = true;
         for(int i=0; i<calEventsiCal.length; i++) {
             if (!calEventsDabbiList.contains(calEventsiCal[i])) {

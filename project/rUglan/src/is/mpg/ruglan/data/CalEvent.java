@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.lang.IllegalArgumentException;
 
+import android.annotation.SuppressLint;
 import is.mpg.ruglan.utils.Utils;
 
 /**
@@ -14,6 +15,7 @@ import is.mpg.ruglan.utils.Utils;
  */
 public class CalEvent implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private String name, description, location;
     private Date start, end;
     /**
@@ -159,6 +161,7 @@ public class CalEvent implements Serializable {
      *
      * @return A string on the form "d. M Y" describing the date of the event.
      */
+    @SuppressLint("SimpleDateFormat")
     public String getDateString(){
         Calendar cal = Calendar.getInstance();
         cal.setTime(this.getStart());

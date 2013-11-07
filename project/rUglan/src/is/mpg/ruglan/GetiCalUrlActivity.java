@@ -1,11 +1,9 @@
 package is.mpg.ruglan;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -13,7 +11,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import static android.os.SystemClock.sleep;
 
@@ -29,6 +26,7 @@ import static android.os.SystemClock.sleep;
  */
 public class GetiCalUrlActivity extends Activity {
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
