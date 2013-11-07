@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class HomeActivity extends Activity {
                     wv.setVisibility(View.VISIBLE);
                     pBar.setVisibility(View.GONE);
                     loadingText.setVisibility(View.GONE);
+                    Utils.setCalendarViewByOrientation(HomeActivity.this, wv);
                 }
                 else {
                     wv.setVisibility(View.GONE);
@@ -112,6 +114,13 @@ public class HomeActivity extends Activity {
         Utils.fillColorsArray();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        WebView wv = (WebView) findViewById(R.id.webView);
+        Utils.setCalendarViewByOrientation(this, wv);
+    }
+    
     protected void openCalEventActivity(String url) {
         Intent intent = new Intent(this, CalEventActivity.class);
         try {
