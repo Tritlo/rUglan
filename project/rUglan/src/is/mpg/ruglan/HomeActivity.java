@@ -1,5 +1,6 @@
 package is.mpg.ruglan;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ public class HomeActivity extends Activity {
     static final int SETTINGSREQUEST = 0;
     private Dabbi dabbi;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Setting variables and other settings
