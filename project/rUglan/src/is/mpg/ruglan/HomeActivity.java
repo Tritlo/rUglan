@@ -253,7 +253,6 @@ public class HomeActivity extends Activity {
             try {
                 dabbi.refreshEventsTable();
                 events = dabbi.getAllCalEvents();
-                updateCalEventsInFullCalendar();
                 success = true;
             } catch (Exception e) {
                 Log.e("Failed renew data.", e.getMessage());
@@ -270,9 +269,11 @@ public class HomeActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void v) {
-            if (!this.success) {
+            if (this.success) {
+               updateCalEventsInFullCalendar();
+            } else {
                 Utils.displayMessage(getString(R.string.error),
-                        getString(R.string.Invalid_iCal_alert), sContext);
+                getString(R.string.Invalid_iCal_alert), sContext);
             }
             this.progress.dismiss();
         }

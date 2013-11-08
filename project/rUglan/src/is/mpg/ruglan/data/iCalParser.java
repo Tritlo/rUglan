@@ -1,5 +1,5 @@
 package is.mpg.ruglan.data;
-import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.Scanner;
 import java.net.URL;
@@ -15,17 +15,7 @@ import java.lang.IllegalArgumentException;
  * Parser for iCalendars.
  * @author Matti
  */
-public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
-
-    public CalEvent [] doInBackground(String... url){
-        try {
-            return urlToCalEvents(url[0]);
-        }
-        catch (Exception ex)
-        {
-            return null;
-        }
-    }
+public class iCalParser {
 
     /**
      * @use events = urlToCalEvents(url)
@@ -37,6 +27,8 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
      * @return a list of the events in the calendar located at the url
      */
     public static CalEvent [] urlToCalEvents(String url){
+        Log.d("iCalParser", "urlToCalEvents url:");
+        Log.d("iCalParser", url);
         return parseCalendar(urlToString(url));
     }
 
@@ -53,7 +45,9 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
      */
     public static String urlToString(String url){
         try {
+        	Log.d("iCalParser", "Fetching calendar");
             String ofTheKing = new Scanner(new URL(url).openStream(), "UTF-8").useDelimiter("\\A").next();
+    	    Log.d("iCalParser","Calendar fetched");
             return ofTheKing;
         }
         catch (IOException e){
@@ -73,6 +67,7 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
      * @return a list of the events in the calendar cal
      */
     public static CalEvent[] parseCalendar(String calendar){
+    	Log.d("iCalParser","Parsing calendar");
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
 
         String [][] events = calendarToEventList(calendar);
@@ -99,6 +94,7 @@ public class iCalParser extends AsyncTask<String, Void, CalEvent []>{
                 calEvents[i] = null;
             }
         }
+    	Log.d("iCalParser","Calendar parser");
         return calEvents;
 
     }
