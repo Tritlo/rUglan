@@ -2,6 +2,7 @@ package is.mpg.ruglan.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.webkit.WebView;
 
 /**
  * Created by tritlo on 10/28/13.
@@ -83,6 +84,26 @@ public class Utils {
             }
             //We want the sat range to 0.5 long
             sat += (1.0F/(float)sat_steps)*0.5F;
+        }
+    }
+    
+    /**
+     * 
+     * @param c The Current context of the application.
+     * @param wv The WebView that contains the FullCalendar object.
+     * 
+     * Sets the agenda view as Week if the orientation is landscape
+     * and to Day if the orientation is portrait.
+     */
+    public static void setCalendarViewByOrientation(Context context, WebView wv) {
+    	int orientation = context.getResources().getConfiguration().orientation;
+        if (orientation == 2) {
+        	// Landscape
+        	wv.loadUrl("javascript: $('.fc-button-agendaWeek').click();");
+        }
+        if (orientation == 1) {
+        	// Portrait
+        	wv.loadUrl("javascript: $('.fc-button-agendaDay').click();");
         }
     }
 }
