@@ -95,13 +95,13 @@ public class Utils {
      * Sets the agenda view as Week if the orientation is landscape
      * and to Day if the orientation is portrait.
      */
-    public static void setCalendarViewByOrientation(Context c, WebView wv) {
-    	int o = c.getResources().getConfiguration().orientation;
-        if (o == 2) {
+    public static void setCalendarViewByOrientation(Context context, WebView wv) {
+    	int orientation = context.getResources().getConfiguration().orientation;
+        if (orientation == 2) {
         	// Landscape
         	wv.loadUrl("javascript: $('.fc-button-agendaWeek').click();");
         }
-        if (o == 1) {
+        if (orientation == 1) {
         	// Portrait
         	wv.loadUrl("javascript: $('.fc-button-agendaDay').click();");
         }
