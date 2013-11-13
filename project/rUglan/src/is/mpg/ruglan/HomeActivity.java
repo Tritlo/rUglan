@@ -113,7 +113,7 @@ public class HomeActivity extends Activity {
                 }
             }
         });
-        Utils.fillColorsArray();
+        //Utils.fillColorsArray();
     }
 
     @Override
