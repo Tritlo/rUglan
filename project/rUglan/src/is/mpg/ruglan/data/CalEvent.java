@@ -18,6 +18,7 @@ public class CalEvent implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name, description, location;
     private Date start, end;
+    private Boolean hidden;
     /**
      *  CalEvent has the following attributes:
      *      - name:
@@ -30,11 +31,13 @@ public class CalEvent implements Serializable {
      *          A Date object holding start date and time of the event.
      *      - end:
      *          A Date object holding end date and time of the event.
+     *      - hidden:
+     *      	Has the value true IFF the event should be hidden.
      */
 
 
     /**
-     * @use CalEvent e = new CalEvent("A", "B", "C", s, e);
+     * @use CalEvent e = new CalEvent("A", "B", "C", s, e, true);
      * @pre s and e have the same date and s < e.
      * @post e is a new instance of type CalEvent. e has the name
      *
@@ -43,8 +46,9 @@ public class CalEvent implements Serializable {
      * @param location Location of the event.
      * @param start Start date of the event.
      * @param end End date of the event.
+     * @param hidden true IFF the event should be hidden.
      */
-    public CalEvent(String name, String description, String location, Date start, Date end) {
+    public CalEvent(String name, String description, String location, Date start, Date end, Boolean hidden) {
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         cal1.setTime(start);
@@ -65,7 +69,22 @@ public class CalEvent implements Serializable {
         this.location = location;
         this.start = start;
         this.end = end;
-
+        this.hidden = hidden;
+    }
+    
+    /**
+     * @use CalEvent e = new CalEvent("A", "B", "C", s, e);
+     * @pre s and e have the same date and s < e.
+     * @post e is a new instance of type CalEvent. e has the name
+     *
+     * @param name Name of the event.
+     * @param description Description of the event.
+     * @param location Location of the event.
+     * @param start Start date of the event.
+     * @param end End date of the event.
+     */
+    public CalEvent(String name, String description, String location, Date start, Date end) {
+    	this(name, description, location, start, end, false);
     }
 
     /**
@@ -121,6 +140,26 @@ public class CalEvent implements Serializable {
      */
     public Date getEnd() {
         return this.end;
+    }
+    
+    /**
+     * @use Boolean b = e.isHidden();
+     * @pre e is an instance of CalEvent.
+     * @post b is true IFF e should be hidden.
+     * @return
+     */
+    public Boolean isHidden() {
+    	return this.hidden;
+    }
+    
+    /**
+     * @use e.setHidden(b);
+     * @pre e is an instance of CalEvent. b is an instance of Boolean.
+     * @post Sets the hidden property of e as b. 
+     * @return
+     */
+    public void setHidden(Boolean hidden) {
+    	this.hidden = hidden;
     }
     
     /**

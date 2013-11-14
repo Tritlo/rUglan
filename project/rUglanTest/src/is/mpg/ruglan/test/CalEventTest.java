@@ -192,4 +192,28 @@ public class CalEventTest extends AndroidTestCase {
         // TODO: Write this test when getColor has been implemented using rules with Dabbi.
         assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
     }
+    
+    /**
+     * Checks if the default value of CalEvent hidden property is false.
+     * @throws Exception
+     */
+    public void testDefaultHiddenProperty() throws Exception {
+    	CalEvent e = new CalEvent(this.name, this.description, 
+    								this.location, this.start, this.end);
+    	assertFalse("The default value of the hidden property is true, " +
+    				"but should be false.", e.isHidden());
+    }
+    
+    /**
+     * Checks if the setHidden methods works as expected.
+     * @throws Exception
+     */
+    public void testSetHidden() throws Exception {
+    	this.event.setHidden(true);
+    	assertTrue("The hidden property is false after setting it as true", 
+    			this.event.isHidden());
+    	this.event.setHidden(false);
+    	assertFalse("The hidden property is true after setting it as false", 
+    			this.event.isHidden());
+    }
 }
