@@ -45,12 +45,10 @@ public class CalEvent implements Serializable {
      * @param end End date of the event.
      */
     public CalEvent(String name, String description, String location, Date start, Date end) {
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(start);
-        cal2.setTime(end);
-        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+        Calendar calStart = Utils.dateToCalendar(start);
+        Calendar calEnd = Utils.dateToCalendar(end);
+        boolean sameDay = calStart.get(Calendar.YEAR) == calEnd.get(Calendar.YEAR) &&
+                calStart.get(Calendar.DAY_OF_YEAR) == calEnd.get(Calendar.DAY_OF_YEAR);
         if (!sameDay) {
             throw new
             IllegalArgumentException("start date and end date need to be on the same day.");
@@ -143,10 +141,8 @@ public class CalEvent implements Serializable {
      * @return A string on the form "HH:MM - HH:MM" describing the duration of the event.
      */
     public String getDurationString(){
-        Calendar startCal = Calendar.getInstance();
-        Calendar endCal = Calendar.getInstance();
-        startCal.setTime(this.getStart());
-        endCal.setTime(this.getEnd());
+        Calendar startCal = Utils.dateToCalendar(this.getStart());
+        Calendar endCal = Utils.dateToCalendar(this.getEnd());
         return startCal.get(Calendar.HOUR_OF_DAY) + ":"
                 + String.format("%02d", startCal.get(Calendar.MINUTE))
                 + " - " + endCal.get(Calendar.HOUR_OF_DAY) + ":"
@@ -163,8 +159,7 @@ public class CalEvent implements Serializable {
      */
     @SuppressLint("SimpleDateFormat")
     public String getDateString(){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(this.getStart());
+        Calendar cal = Utils.dateToCalendar(this.getStart());
         SimpleDateFormat sdf = new SimpleDateFormat("d. MMM yyyy");
         return sdf.format(cal.getTime());
     }
@@ -196,8 +191,7 @@ public class CalEvent implements Serializable {
      *          as a parameter for date in FullCalendar
      */
     public String getFullCalendarStartDateString() {
-        Calendar startCal = Calendar.getInstance();
-        startCal.setTime(this.getStart());
+        Calendar startCal = Utils.dateToCalendar(this.getStart());
         return getFullCalendarDateString(startCal);
     }
 
@@ -208,8 +202,7 @@ public class CalEvent implements Serializable {
      *          as a parameter for date in FullCalendar
      */
     public String getFullCalendarEndDateString() {
-        Calendar endCal = Calendar.getInstance();
-        endCal.setTime(this.getEnd());
+        Calendar endCal = Utils.dateToCalendar(this.getEnd());
         return getFullCalendarDateString(endCal);
     }
 

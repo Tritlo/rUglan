@@ -1,5 +1,7 @@
 package is.mpg.ruglan.utils;
 
+import java.util.Calendar;
+import java.util.Date;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.webkit.WebView;
@@ -85,6 +87,20 @@ public class Utils {
             //We want the sat range to 0.5 long
             sat += (1.0F/(float)sat_steps)*0.5F;
         }
+    }
+    
+    /**
+     * @use	Calendar c = dateToCalendar(d);
+     * @pre d is a Date object.
+     * @post c has the same date as d.
+     * 
+     * @param date Date object.
+     * @return A calendar object with the same date as the date parameter.
+     */
+    public static Calendar dateToCalendar(Date date) {
+    	Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
     }
     
     /**
