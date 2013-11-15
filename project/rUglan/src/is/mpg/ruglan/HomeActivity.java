@@ -37,6 +37,7 @@ public class HomeActivity extends Activity {
     private static Context sContext;
     private CalEvent[] events = {};
     static final int SETTINGSREQUEST = 0;
+    static final int HIDEREQUEST = 0;
     private Dabbi dabbi;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -202,8 +203,12 @@ public class HomeActivity extends Activity {
                 refresh();
                 return true;
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivityForResult(intent,SETTINGSREQUEST);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivityForResult(settingsIntent, SETTINGSREQUEST);
+                return true;
+            case R.id.action_hide:
+                Intent hideIntent = new Intent(this, HideActivity.class);
+                startActivityForResult(hideIntent, HIDEREQUEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

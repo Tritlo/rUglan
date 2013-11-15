@@ -5,6 +5,7 @@
     <string name="app_name">rUglan</string>
     <string name="menu_settings">Stillingar</string>
     <string name="menu_refresh">Endurhlaða</string>
+    <string name="menu_hide">Fela...</string>
     <string name="title_activity_cal_event">Tími</string>
     <string name="title_activity_settings">Stillingar</string>
     <string name="title_activity_geti_cal_url">Næ í dagatalsslóð</string>
@@ -13,6 +14,7 @@
     <string name="error">Villa</string>
     <string name="note">Ath.</string>
     <string name="failedToLoadNewData">Gat ekki sótt ný gögn.</string>
+    <string name="save">Vista</string>
 
     <!-- HomeActivity -->
     <string name="loadingCalendarView">Hleð stundatöflusýn.</string>
@@ -26,8 +28,10 @@
     <string name="iCalUrlSettingText">Dagatalsslóð:</string>
     <string name="iCalUrlRequired">Þú þarft að fylla út dagatalsslóð.</string>
     <string name="Invalid_iCal_alert">Gat ekki náð í gögn. Athugaðu hvort að dagatalsslóð sé rétt útfyllt í stillingum.</string>
-    <string name="save">Vista</string>
     <string name="getiCalUrl_button">Ná í dagatalsslóð</string>
     <string name="successfullyGotiCalUrl">Það tókst að ná í dagatalsslóðina þína.</string>
+    
+    <!-- HideActivity -->
+    <string name="hide_activity_info">Hér getur þú valið hvaða tíma þú vilt sjá á stundatöflunni þinni.</string>
 
 </resources>

@@ -45,6 +45,7 @@
             android:name="is.mpg.ruglan.GetiCalUrlActivity"
             android:label="@string/title_activity_geti_cal_url" >
         </activity>
+        <activity android:name="HideActivity" android:parentActivityName="is.mpg.ruglan.HomeActivity"></activity>
     </application>
 
 </manifest>
