@@ -164,6 +164,13 @@ public class CalEventTest extends AndroidTestCase {
         for (CalEvent aWrong : wrong) {
             assertFalse(a.equals(aWrong));
         }
+        
+        CalEvent event1 = new CalEvent(this.name, this.description, 
+    			this.location, this.start, this.end);
+    	CalEvent event2 = new CalEvent(this.name, this.description, 
+    			this.location, this.start, this.end);
+    	assertTrue("CalEvent.equals does not work as expected.",
+    			event1.equals(event2));
     }
 
     /**

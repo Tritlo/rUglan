@@ -290,5 +290,70 @@ public class Dabbi {
         String iCalUrl = prefs.getString("iCalUrl","");
         refreshEventsTable(iCalUrl);
     }
+    
+    /**
+     * @use CalEvent[] c = d.getCalEventsForRecurringEvents();
+     * @pre d is an instance of Dabbi.
+     * @return A list of CalEvents representing 
+     * recurring events, on weekly basis
+     */
+    public CalEvent[] getCalEventsForRecurringEvents() {
+    	rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        if(qdb == null)
+        {
+            return new CalEvent[0];
+        }
+        int secondsInAWeek = 604800;
+        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS "
+        							+"GROUP BY name, location, start % ?"
+        							+"ORDER BY description, start",
+        							new String[]{Integer.toString(secondsInAWeek)});
+
+        //Iterate over the result.
+        CalEvent[] events = new CalEvent[result.getCount()];
+        result.moveToFirst();
+        int i = 0;
+        while(!result.isAfterLast())
+        {
+            CalEvent event = new CalEvent(result.getString(0),
+                                        result.getString(1),result.getString(2)
+                    ,new Date(Long.parseLong(result.getString(3))*1000)
+                    ,new Date(Long.parseLong(result.getString(4))*1000));
+            events[i] = event;
+            i++;
+            result.moveToNext();
+        }
+        qdb.close();
+        return events;
+    }
+    
+    /**
+     * @use String[] names = d.getCalEventsNames();
+     * @pre d is an instance of Dabbi.
+     * @return A list of event names in Dabbi.
+     */
+    public String[] getCalEventsNames() {
+    	rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        if(qdb == null)
+        {
+            return new String[0];
+        }
+        Cursor result = qdb.rawQuery("SELECT name FROM CALEVENTS GROUP BY name", null);
+
+        //Iterate over the result.
+        String[] names = new String[result.getCount()];
+        result.moveToFirst();
+        int i = 0;
+        while(!result.isAfterLast())
+        {
+            names[i] = result.getString(0);
+            i++;
+            result.moveToNext();
+        }
+        qdb.close();
+        return names;
+    }
 
 }
