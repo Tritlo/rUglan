@@ -15,7 +15,7 @@ import is.mpg.ruglan.HomeActivity;
 
 /**
  * An interface for the database backend.
- * @author Jón
+ * @author Jon
  */
 public class Dabbi {
     SharedPreferences prefs;
@@ -56,6 +56,7 @@ public class Dabbi {
      */
     public void addCalEvents(CalEvent[] calEvents)
     {
+    	Log.d("Dabbi", "Adding " + calEvents.length + " events...");
         rDataBase DB;
         if(context == null)
         {
@@ -102,6 +103,7 @@ public class Dabbi {
             qdb.insert("CALEVENTS",null,values);
         }
         qdb.close();
+        Log.d("Dabbi", "Adding done.");
     }
 
     /**
