@@ -13,7 +13,7 @@ import is.mpg.ruglan.utils.Utils;
  * Class representing Calendar Event for the project.
  * @author Siggi
  */
-public class CalEvent implements Serializable {
+public class CalEvent implements Serializable, Comparable<CalEvent> {
 
     private static final long serialVersionUID = 1L;
     private String name, description, location;
@@ -237,4 +237,15 @@ public class CalEvent implements Serializable {
         Dabbi myDabbi = new Dabbi();
         return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
     }
+    /**
+     * Compares the CalEvent to another CalEvent by their starting dates.
+     * @use a = compareTo(b)
+     * @post a is negative if b happens before this, 0 if they happen on the same time
+     * and else its positive
+     */
+    public int compareTo(CalEvent event)
+    {
+    	return this.start.compareTo(event.start);
+    }
+
 }
