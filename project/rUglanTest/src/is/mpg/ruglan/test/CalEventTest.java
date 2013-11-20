@@ -1,9 +1,13 @@
 package is.mpg.ruglan.test;
 
 import is.mpg.ruglan.data.CalEvent;
+import is.mpg.ruglan.data.Dabbi;
+import is.mpg.ruglan.utils.Utils;
 import android.test.AndroidTestCase;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -196,8 +200,16 @@ public class CalEventTest extends AndroidTestCase {
      * @throws Exception
      */
     public void testGetColor() throws Exception {
-        // TODO: Write this test when getColor has been implemented using rules with Dabbi.
-        assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
+    	Dabbi dabbi = new Dabbi(this.getContext());
+    	dabbi.addCalEvents(new CalEvent[]{this.event});
+    	this.event.setHidden(false);
+    	List<String> colorsList = Arrays.asList(Utils.colors);
+    	assertTrue("Event that is not hidden should have a color defined" +
+    			" in Utils.colors.", 
+    			colorsList.contains(this.event.getColor(this.getContext())));
+    	this.event.setHidden(true);
+    	assertTrue("Event that is hidden should have the hidden color.", 
+    				this.event.getColor(this.getContext()).equals(Utils.hiddenColor));
     }
     
     /**

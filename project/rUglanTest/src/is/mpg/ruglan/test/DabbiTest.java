@@ -170,7 +170,7 @@ public class DabbiTest extends AndroidTestCase {
     	
     	calEvents[0] = new CalEvent("Timi_1","f","Neshagi", date[0], date[1]);
     	calEvents[1] = new CalEvent("Timi_1","f","Neshagi", date[2], date[3]);
-    	calEvents[2] = new CalEvent("Timi_1","d1","HT", date[4], date[5]);
+    	calEvents[2] = new CalEvent("Timi_1","d1","HT", date[4], date[5], true);
     	
     	dabbi.addCalEvents(calEvents);
     	CalEvent[] result = dabbi.getCalEventsForRecurringEvents();

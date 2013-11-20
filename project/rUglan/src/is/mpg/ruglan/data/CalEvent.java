@@ -7,6 +7,7 @@ import java.util.Date;
 import java.lang.IllegalArgumentException;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import is.mpg.ruglan.utils.Utils;
 
 /**
@@ -269,11 +270,17 @@ public class CalEvent implements Serializable {
 
     /**
      * @use s = getColor();
+     * @param context
      * @return  s is a string representing a color that can be used
      *          as a parameter for backgroundColor in FullCalendar
      */
-    public String getColor() {
-        Dabbi myDabbi = new Dabbi();
-        return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
+    public String getColor(Context context) {
+    	if (this.hidden) {
+    		return Utils.hiddenColor;
+    	}
+    	else {
+    		Dabbi myDabbi = new Dabbi(context);
+            return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
+    	}
     }
 }

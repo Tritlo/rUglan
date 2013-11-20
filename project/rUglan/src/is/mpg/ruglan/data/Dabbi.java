@@ -100,6 +100,7 @@ public class Dabbi {
             values.put("location", event.getLocation());
             values.put("start", event.getStart().getTime()/1000);
             values.put("finish", event.getEnd().getTime()/1000);
+            values.put("hidden", event.isHidden());
             qdb.insert("CALEVENTS",null,values);
         }
         qdb.close();
@@ -163,7 +164,9 @@ public class Dabbi {
             CalEvent event = new CalEvent(result.getString(0),
                                         result.getString(1),result.getString(2)
                     ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000));
+                    ,new Date(Long.parseLong(result.getString(4))*1000),
+                    result.getInt(5)>0
+            );
             events[i] = event;
             i++;
             result.moveToNext();
@@ -195,7 +198,8 @@ public class Dabbi {
             CalEvent event = new CalEvent(result.getString(0),
                                         result.getString(1),result.getString(2)
                     ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000));
+                    ,new Date(Long.parseLong(result.getString(4))*1000),
+                    result.getInt(5)>0);
             events[i] = event;
             i++;
             result.moveToNext();
@@ -319,7 +323,8 @@ public class Dabbi {
             CalEvent event = new CalEvent(result.getString(0),
                                         result.getString(1),result.getString(2)
                     ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000));
+                    ,new Date(Long.parseLong(result.getString(4))*1000),
+                    result.getInt(5)>0);
             events[i] = event;
             i++;
             result.moveToNext();

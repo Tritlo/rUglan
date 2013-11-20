@@ -12,6 +12,7 @@ public class Utils {
     public static String lastUpdateKey = "lastUpdate";
     public static String iCalURLKey = "iCalUrl";
 
+    public static String hiddenColor = "rgba(20, 22, 24, 0.2)"; 
     public static String[] colors = new String[] {
             "red",
             "#999",
