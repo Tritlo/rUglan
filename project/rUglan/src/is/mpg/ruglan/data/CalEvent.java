@@ -237,4 +237,18 @@ public class CalEvent implements Serializable {
         Dabbi myDabbi = new Dabbi();
         return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
     }
+    /**
+     * @use s = getBuilding()
+     * @post s contains the name of the building where the event takes place
+     */
+    public String getBuilding()
+    {
+    	try{
+    		return this.name.split("\\\\, ")[1];
+    	}
+    	catch(Exception e)
+    	{
+    		return "";
+    	}
+    }
 }

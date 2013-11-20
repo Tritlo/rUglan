@@ -20,7 +20,7 @@ public class CalEventTest extends AndroidTestCase {
     public void setUp() throws Exception {
         this.name = "Test Event";
         this.description = "Description for the test event.";
-        this.location = "Location for the test event.";
+        this.location = "Location for the test event.\\, Askja";
         this.format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
         this.start = this.format.parse("20130515T132000");
         this.end = this.format.parse("20130515T140000");
@@ -191,5 +191,12 @@ public class CalEventTest extends AndroidTestCase {
     public void testGetColor() throws Exception {
         // TODO: Write this test when getColor has been implemented using rules with Dabbi.
         assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
+    }
+    
+    /**
+     * Checks if getBuilding returns the correct building for the event.
+     */
+    public void testGetBuilding() throws Exception {
+    	assertEquals("Askja",this.event.getBuilding());
     }
 }

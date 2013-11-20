@@ -1,5 +1,7 @@
 package is.mpg.ruglan.utils;
 
+import java.util.HashMap;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.webkit.WebView;
@@ -8,6 +10,8 @@ import android.webkit.WebView;
  * Created by tritlo on 10/28/13.
  */
 public class Utils {
+	
+	public static HashMap<String,String> googleMapsLink = null;
 
     public static String lastUpdateKey = "lastUpdate";
     public static String iCalURLKey = "iCalUrl";
@@ -105,5 +109,19 @@ public class Utils {
         	// Portrait
         	wv.loadUrl("javascript: $('.fc-button-agendaDay').click();");
         }
+    }
+    
+    /**
+     * Initializes the googleMapsLink map.
+     * @use fillGoogleMapsLinkMap()
+     * @post the utils.googleMapsLink map now contains the google maps
+     * links for all known buildings.
+     */
+    public static void fillGoogleMapsLinkMap()
+    {
+    	googleMapsLink.put("Askja","https://maps.google.com/maps?q=64.137259,-21.945772&hl=en&ll=64.137263,-21.94577&spn=0.002743,0.009871&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=17");
+    	googleMapsLink.put("VR-1","https://maps.google.com/maps?q=64.139028,-21.956618&hl=en&ll=64.139032,-21.956627&spn=0.001371,0.004935&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=18");
+    	googleMapsLink.put("VR-2", "https://maps.google.com/maps?q=64.139376,-21.957529&hl=en&ll=64.139376,-21.957529&spn=0.001371,0.004935&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=18");
+    	googleMapsLink.put("Haskolatorg","https://maps.google.com/maps?q=64.140085,-21.950278&hl=en&ll=64.139968,-21.949997&spn=0.002742,0.009871&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=17");
     }
 }

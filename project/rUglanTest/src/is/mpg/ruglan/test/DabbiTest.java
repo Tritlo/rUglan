@@ -111,7 +111,7 @@ public class DabbiTest extends AndroidTestCase {
         String iCalUrl = "http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics"; //Matti
         dabbi.refreshEventsTable();
         CalEvent[] calEventsDabbi = dabbi.getAllCalEvents();
-        CalEvent[] calEventsiCal = new iCalParser().execute(iCalUrl).get();
+        CalEvent[] calEventsiCal = iCalParser.urlToCalEvents(iCalUrl);
 
         assertEquals("Number of events from iCal does not match events from " +
                 "Dabbi after refresh",
