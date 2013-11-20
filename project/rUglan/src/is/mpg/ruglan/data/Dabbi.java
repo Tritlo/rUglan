@@ -345,7 +345,9 @@ public class Dabbi {
         {
             return new String[0];
         }
-        Cursor result = qdb.rawQuery("SELECT name FROM CALEVENTS GROUP BY name", null);
+        Cursor result = qdb.rawQuery("SELECT name, max(start) AS ms FROM CALEVENTS " +
+        		"GROUP BY name " +
+        		"ORDER BY ms", null);
 
         //Iterate over the result.
         String[] names = new String[result.getCount()];
