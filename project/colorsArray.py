@@ -1,30 +1,19 @@
+## This project generates a java inline code for a static array 
+## of colors that are in some sense alike and good.
+## Author: Jon Arnar
+
 def hsvToRgb(hue,sat,value):
         c = sat*value
         h = hue*6
         x = c*(1-abs((h%2)-1))
-        
-        r = 0
-        g = 0
-        b = 0
 
-        if(0 <= h and h < 1):
-                r = c
-                g = b
-        elif(1 <= h and h < 2):
-                r = x
-                g = c
-        elif(2 <= h and h < 3):
-                g = c
-                b = x
-        elif(3 <= h and h < 4):
-                g = x
-                b = c
-        elif(4 <= h and h < 5):
-                r = x
-                b = c
-        elif(5 <= h and h < 6):
-                r = c
-                b = x
+        permutations = [[c,x,0],[x,c,0],[0,c,x],[0,x,c],[x,0,c],[c,0,x]]
+
+
+        r = permutations[int(h)][0]
+        g = permutations[int(h)][1]
+        b = permutations[int(h)][2]
+
         m = value - c
 
         return [int(255*(r+m)),int(255*(g+m)),int(255*(b+m))]
@@ -36,7 +25,7 @@ if __name__ == '__main__':
         n = 100
         golden_ratio_conjugate = 0.618033988749895
         h = 0
-        s = 0.5
+        s = 0.95
         v = 0.95
         javaArray = "public static String[] colors = new String[]{\n"
         for i in range(0, n):
