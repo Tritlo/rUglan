@@ -28,6 +28,18 @@ public class DabbiTest extends AndroidTestCase {
     }
 
     /**
+     * Checks if the database is empty, i.e. tests if the run private
+     * method called in setUp works as expected.
+     * @throws Exception
+     */
+    public void testDatabaseEmptyAfterTestSetUp() throws Exception {
+        CalEvent[] calEventsDabbi = this.dabbi.getAllCalEvents();
+        assertEquals("Number of events in Dabbi is " +calEventsDabbi.length + ", " +
+                 "but should be 0.",
+                 0, calEventsDabbi.length);
+    }
+    
+    /**
      * Tries to add events to the database
      * @throws Exception
      */
@@ -107,14 +119,19 @@ public class DabbiTest extends AndroidTestCase {
      }
 
     public void testRefreshEventsTable() throws Exception {
-        // TODO: get iCalUrl from shared preferences
+    	CalEvent[] calEventsDabbiInit = dabbi.getAllCalEvents();
+    	assertEquals("Number of events in Dabbi at start of test case is " 
+    			+ calEventsDabbiInit.length + ", " + "but should be 0.",
+                0, calEventsDabbiInit.length);
         String iCalUrl = "http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics"; //Matti
         dabbi.refreshEventsTable();
         CalEvent[] calEventsDabbi = dabbi.getAllCalEvents();
         CalEvent[] calEventsiCal = iCalParser.urlToCalEvents(iCalUrl);
 
         assertEquals("Number of events from iCal does not match events from " +
-                "Dabbi after refresh",
+                "Dabbi after refresh. " +
+                "Dabbi: " +calEventsDabbi.length + ", " +
+                "iCalParser: " + calEventsiCal.length,
                 calEventsiCal.length, calEventsDabbi.length);
         List<CalEvent> calEventsDabbiList = Arrays.asList(calEventsDabbi);
         Boolean areEqual = true;
