@@ -7,6 +7,7 @@ import java.util.Date;
 import java.lang.IllegalArgumentException;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import is.mpg.ruglan.utils.Utils;
 
 /**
@@ -244,11 +245,32 @@ public class CalEvent implements Serializable {
     public String getBuilding()
     {
     	try{
-    		return this.name.split("\\\\, ")[1];
+    		Log.d("DEBUG ",this.name+" has building "+this.location.split("\\\\, ")[1]);
+    		return this.location.split(", ")[1];
     	}
     	catch(Exception e)
     	{
+    		Log.d("DEBUG", "could not get a building name");
     		return "";
     	}
     }
+    /**
+     * Returns a link to google maps with the building where the event takes place selected
+     * @use s = getGoogleMapsLink()
+     * @post s contains a link to google maps with the building where the event takes place selected
+     */
+    public String getGoogleMapsLink()
+    {
+    	String building = getBuilding();
+    	if (building == "")
+    	{
+    		return "";
+    	}
+    	if(Utils.googleMapsLink == null)
+    	{
+    		Utils.fillGoogleMapsLinkMap();
+    	}
+    	return Utils.googleMapsLink.get(building);
+    }
+    
 }

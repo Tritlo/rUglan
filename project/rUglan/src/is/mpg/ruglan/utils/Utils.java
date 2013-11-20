@@ -119,6 +119,7 @@ public class Utils {
      */
     public static void fillGoogleMapsLinkMap()
     {
+    	googleMapsLink = new HashMap<String,String>();
     	googleMapsLink.put("Askja","https://maps.google.com/maps?q=64.137259,-21.945772&hl=en&ll=64.137263,-21.94577&spn=0.002743,0.009871&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=17");
     	googleMapsLink.put("VR-1","https://maps.google.com/maps?q=64.139028,-21.956618&hl=en&ll=64.139032,-21.956627&spn=0.001371,0.004935&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=18");
     	googleMapsLink.put("VR-2", "https://maps.google.com/maps?q=64.139376,-21.957529&hl=en&ll=64.139376,-21.957529&spn=0.001371,0.004935&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=18");
