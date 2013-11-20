@@ -4,7 +4,7 @@ CREATE TABLE CALEVENTS (
     location TEXT NOT NULL,
     start INTEGER NOT NULL,
     finish INTEGER NOT NULL,
-    hidden BOOLEAN NOT NULL,
+    hidden INTEGER NOT NULL,
     PRIMARY KEY(location, start)
 );
 
