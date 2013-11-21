@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import is.mpg.ruglan.data.CalEvent;
@@ -34,6 +35,15 @@ public class CalEventActivity extends Activity {
             time.setText(e.getDurationString());
             desc.setText(e.getDescription());
             loc.setText(e.getLocation());
+        }
+        
+        //Get the building if found and make the link
+        String googleMapsLink = e.getGoogleMapsLink();
+        if(googleMapsLink != "")
+        {
+        	LinearLayout buildingLayout =
+                (LinearLayout) findViewById(R.id.building_location);
+        
         }
     }
 

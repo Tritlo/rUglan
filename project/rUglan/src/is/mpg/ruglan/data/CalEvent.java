@@ -270,7 +270,11 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
     	{
     		Utils.fillGoogleMapsLinkMap();
     	}
-    	return Utils.googleMapsLink.get(building);
+    	if(Utils.googleMapsLink.containsKey(building))
+    	{
+    		return Utils.googleMapsLink.get(building);
+    	}
+    	return "";
     }
     
      /** Compares the CalEvent to another CalEvent by their starting dates.
