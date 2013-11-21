@@ -142,7 +142,8 @@ public class HomeActivity extends Activity {
                 javascriptEvents += ",";
             }
             javascriptEvents += "{"
-                + "title: '" + this.events[i].getName() + "',"
+                + "title: '" + Utils.stripCourseNumberFromName(
+                						this.events[i].getName()) + "',"
                 + "start: " +this.events[i].getFullCalendarStartDateString()+","
                 + "end: " +this.events[i].getFullCalendarEndDateString() +","
                 + "allDay: false,"
