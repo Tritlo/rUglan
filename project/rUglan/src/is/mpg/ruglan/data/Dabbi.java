@@ -90,6 +90,7 @@ public class Dabbi {
                 colorValues.put("name",event.getName());
                 colorValues.put("color", newColorValue);
                 qdb.insert("COLORS",null,colorValues);
+                Log.d("Dabbi",event.getName()+" got color "+newColorValue);
             }
 
 
