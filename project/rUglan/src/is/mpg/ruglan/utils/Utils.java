@@ -201,4 +201,13 @@ public class Utils {
         	wv.loadUrl("javascript: $('.fc-button-agendaDay').click();");
         }
     }
+    
+    /**
+     * Removes the course number from of the course name
+     * @param courseName to remove course number from
+     * @return the course name but with the course name removed.
+     */
+    public static String stripCourseNumberFromName(String courseName) {
+            return courseName.replaceAll("^[A-Z]{3}[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
+    }
 }
