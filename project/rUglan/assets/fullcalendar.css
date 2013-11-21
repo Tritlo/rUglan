@@ -267,7 +267,22 @@ html .fc,
 	font-size: .85em;
 	cursor: default;
 	}
+	
 
+.lecture {
+	outline-style: solid;
+	outline-width: 2px;
+	outline-color: blue;
+	border-style: none;
+    }
+
+.tutorial {
+	outline-style: solid;
+	outline-width: 2px;
+	outline-color: red;
+	border-style: none;
+    }
+    
 a.fc-event {
 	text-decoration: none;
 	}
