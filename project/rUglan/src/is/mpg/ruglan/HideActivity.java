@@ -45,12 +45,14 @@ public class HideActivity extends Activity {
 		    	for(int j=0; j<calEvents.length; j++) {
 		    		if (calEvents[j].getName().equals(coursesNames[i])) {
 		    			CheckBox cb = new CheckBox(this);
+		    			cb.setTextAppearance(this, android.R.style.TextAppearance_Small);
 		    			String weekdayShort = 
 		    					new SimpleDateFormat("EEE", new Locale("is")).
 		    					format(calEvents[j].getStart());
 			    		cb.setText(calEvents[j].getDescription() + " "
 			    				+  weekdayShort + " " 
-			    				+ calEvents[j].getDurationString());
+			    				+ calEvents[j].getDurationString() + " @ "
+			    				+ calEvents[j].getLocation().replace("\\,", ""));
 			    		cb.setChecked(!calEvents[j].isHidden());
 			    		cb.setId(j);
 			    		listWrapper.addView(cb);
