@@ -140,7 +140,13 @@ public class HomeActivity extends Activity {
     private String getJavascriptForCalEvents() {
         String javascriptEvents = "events: [";
         for(int i=0; i<this.events.length; i++) {
-            if (i!=0) {
+        	if (this.events[i].isHidden() && 
+        			!prefs.getBoolean(Utils.showHiddenKey, 
+        							Utils.showHiddenDefaultValue)) {
+    			// Skip this event
+    			continue;
+        	}
+            if ( !javascriptEvents.endsWith("[") ) {
                 javascriptEvents += ",";
             }
             javascriptEvents += "{"

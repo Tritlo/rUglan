@@ -30,6 +30,7 @@
     <string name="Invalid_iCal_alert">Gat ekki náð í gögn. Athugaðu hvort að dagatalsslóð sé rétt útfyllt í stillingum.</string>
     <string name="getiCalUrl_button">Ná í dagatalsslóð</string>
     <string name="successfullyGotiCalUrl">Það tókst að ná í dagatalsslóðina þína.</string>
+    <string name="show_hidden">Sýna falda tíma</string>
     
     <!-- HideActivity -->
     <string name="hide_activity_info">Hér getur þú valið hvaða tíma þú vilt sjá á stundatöflunni þinni.</string>

@@ -2,6 +2,8 @@ package is.mpg.ruglan.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.webkit.WebView;
 
 /**
@@ -11,7 +13,9 @@ public class Utils {
 
     public static String lastUpdateKey = "lastUpdate";
     public static String iCalURLKey = "iCalUrl";
+    public static String showHiddenKey = "showHiddenEvents";
 
+    public static boolean showHiddenDefaultValue = false;
     public static String hiddenColor = "rgba(20, 22, 24, 0.2)"; 
     public static String[] colors = new String[] {
             "red",
