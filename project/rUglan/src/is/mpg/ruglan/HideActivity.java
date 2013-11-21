@@ -7,8 +7,12 @@ import is.mpg.ruglan.data.Dabbi;
 import is.mpg.ruglan.utils.Utils;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -18,6 +22,7 @@ import java.util.Locale;
 
 public class HideActivity extends Activity {
 	private Dabbi dabbi;
+	private CalEvent[] calEvents;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -29,7 +34,7 @@ public class HideActivity extends Activity {
 	    LinearLayout listWrapper = 
 	    		(LinearLayout) findViewById(R.id.hide_activity_list_wrapper);
 	    
-	    CalEvent[] calEvents = dabbi.getCalEventsForRecurringEvents();
+	    calEvents = dabbi.getCalEventsForRecurringEvents();
 	    if (calEvents.length > 0) {
 		    String[] coursesNames = dabbi.getCalEventsNames();
 		    for(int i=0; i<coursesNames.length; i++) {
@@ -46,7 +51,8 @@ public class HideActivity extends Activity {
 			    		cb.setText(calEvents[j].getDescription() + " "
 			    				+  weekdayShort + " " 
 			    				+ calEvents[j].getDurationString());
-			    		cb.setChecked(calEvents[j].isHidden());
+			    		cb.setChecked(!calEvents[j].isHidden());
+			    		cb.setId(j);
 			    		listWrapper.addView(cb);
 		    		}
 		    	}
@@ -88,7 +94,63 @@ public class HideActivity extends Activity {
     }
     
     public void saveHidden(View view) {
-    	// TODO: Implement the logic for saving
-    	Utils.displayMessage("Ath!", "A eftir ad utfaera!!!", this);
+    	final ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle(getString(R.string.loading));
+        progress.setMessage(getString(R.string.wait));
+        progress.show();
+        dabbi = new Dabbi(this);
+        new saveHidden(progress).execute();
+    }
+    
+    private class saveHidden extends AsyncTask<Void, Void, Void> {
+
+        private Boolean success = false;
+        private ProgressDialog progress;
+
+        public saveHidden(ProgressDialog progress) {
+            this.progress = progress;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+            	Boolean changed = false;
+            	for(int i=0; i<calEvents.length; i++) {
+            		CheckBox tmpCB = (CheckBox) findViewById(i);
+            		if (tmpCB.isChecked() == calEvents[i].isHidden()) {
+            			// The check box for calEvent i has been changed.
+            			changed = true;
+            			dabbi.changeHiddenForEventsLike(calEvents[i], 
+            											!tmpCB.isChecked());
+            		}
+            	}
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("eventsChanged", changed);
+                setResult(RESULT_OK, resultIntent);
+                success = true;
+            } catch (Exception e) {
+                Log.e("Failed renew data.", e.getMessage());
+                this.progress.dismiss();
+                // In onPostExecute an error alert message will be sent.
+            }
+            return null;
+        }
+
+        @Override
+        public void onPreExecute() {
+            this.progress.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            if (this.success) {
+                finish();
+            } else {
+                Utils.displayMessage(getString(R.string.error),
+                        getString(R.string.failed_to_save_hidden), 
+                        HideActivity.this);
+            }
+            this.progress.dismiss();
+        }
     }
 }

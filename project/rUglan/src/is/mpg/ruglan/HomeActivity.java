@@ -37,7 +37,7 @@ public class HomeActivity extends Activity {
     private static Context sContext;
     private CalEvent[] events = {};
     static final int SETTINGSREQUEST = 0;
-    static final int HIDEREQUEST = 0;
+    static final int HIDEREQUEST = 1;
     private Dabbi dabbi;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -285,7 +285,7 @@ public class HomeActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == SETTINGSREQUEST){
+        if (requestCode == SETTINGSREQUEST || requestCode == HIDEREQUEST){
             if (resultCode == RESULT_OK){
                 Boolean eventsChanged = data.getBooleanExtra("eventsChanged", false);
                 if (eventsChanged)

@@ -34,5 +34,6 @@
     <!-- HideActivity -->
     <string name="hide_activity_info">Hér getur þú valið hvaða tíma þú vilt sjá á stundatöflunni þinni.</string>
     <string name="no_cources_found">Engir tímar fundust.</string>
+    <string name="failed_to_save_hidden">Gat ekki vistað breytingar.</string>
 
 </resources>
