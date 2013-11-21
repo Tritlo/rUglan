@@ -6,6 +6,7 @@ import java.net.URL;
 import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.ArrayList;
 import java.text.ParseException;
@@ -29,7 +30,9 @@ public class iCalParser {
     public static CalEvent [] urlToCalEvents(String url){
         Log.d("iCalParser", "urlToCalEvents url:");
         Log.d("iCalParser", url);
-        return parseCalendar(urlToString(url));
+        CalEvent[] events =parseCalendar(urlToString(url));
+        Arrays.sort(events);
+        return events;
     }
 
     /**
