@@ -29,5 +29,6 @@
     <string name="save">Vista</string>
     <string name="getiCalUrl_button">Ná í dagatalsslóð</string>
     <string name="successfullyGotiCalUrl">Það tókst að ná í dagatalsslóðina þína.</string>
+    <string name="open_google_maps">Hver er þessi bygging?</string>
 
 </resources>

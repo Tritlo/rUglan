@@ -44,13 +44,13 @@
         android:id="@+id/loc_label"
         android:text="" />
     
-    <LinearLayout 
+    <LinearLayout
         android:id="@+id/building_location"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        ></LinearLayout>
+        android:layout_marginTop="20dp">
+        </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
