@@ -12,6 +12,7 @@ public class Utils {
     public static String lastUpdateKey = "lastUpdate";
     public static String iCalURLKey = "iCalUrl";
 
+    public static String rssMenuFeedUrl = "http://www.fs.is/rss.xml";
     public static String[] colors = new String[]{
     	"rgb(242,12,12)",
     	"rgb(12,79,242)",
