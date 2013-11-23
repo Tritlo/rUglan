@@ -217,31 +217,38 @@ public class Utils {
     	//links are something thats opened with the default app for
     	//that type of URI like a http url or a geo uri
     	//geo uri is on the form
-    	//geo:latitude,longitude?z=zoom where zoom is in [1:23] and 1 is
+    	//geo:latitude,longitude?z=zoom&q=QUERY where zoom is in [1:23] and 1 is
     	//the entire earth and 23 is as close as it gets.
+    	//QUERY is a string to put in the search bar of google maps when it is opened
+    	//That should do the trick by it self but if you have the map loaded and no Internet
+    	//you still get the map zoomed at the correct building if you include the coordinates.
     	String zoom = "18";
     	googleMapsLink = new HashMap<String,String>();
     	googleMapsLink.put("Askja","geo:64.137273,-21.945709?z="+zoom+"&q=64.137273,-21.945709");
-    	googleMapsLink.put("VR-1","geo:64.138883,-21.954482?z="+zoom);
-    	googleMapsLink.put("VR-2", "geo:64.138846,-21.955356?z="+zoom);
-    	googleMapsLink.put("Haskolatorg","geo:64.139949,-21.950432?z="+zoom);
-    	googleMapsLink.put("Haskolabio","geo:64.140333,-21.953967?z="+zoom);
-    	googleMapsLink.put("Adalbygging","geo:64.140475,-21.949050?z="+zoom);
-    	googleMapsLink.put("Arnagardur","geo:64.138883,-21.951367?z="+zoom);
-    	googleMapsLink.put("Gimli","geo:64.139117,-21.950117?z="+zoom);
-    	googleMapsLink.put("Ithrottahus, Saemundargotu 6","geo:64.139517,-21.951083?z="+zoom);
-    	googleMapsLink.put("Logberg","geo:64.139483,-21.949667?z="+zoom);
-    	googleMapsLink.put("Nyi Gardur","geo:64.13905,-21.94915?z="+zoom);
-    	googleMapsLink.put("Oddi","geo:64.138677,-21.950405?z="+zoom);
-    	googleMapsLink.put("Stapi","geo:64.141567,-21.947083?z="+zoom);
-    	googleMapsLink.put("Endurmenntun ","geo:64.139717,-21.95585?z="+zoom);
-    	googleMapsLink.put("Hagi","geo:64.14355,-21.961883?z="+zoom);
-    	googleMapsLink.put("Neshagi 16","geo:64.143283,-21.962260?z="+zoom);
-    	googleMapsLink.put("Raunvisindastofnun","geo:64.139917,-21.95555?z="+zoom);
-    	googleMapsLink.put("Taeknigardur","geo:64.139483,-21.955217?z="+zoom);
-    	googleMapsLink.put("VR-3","geo:64.138883,-21.953517?z="+zoom);
-    	googleMapsLink.put("Eirberg","geo:64.1383,-21.925333?z="+zoom);
-    	googleMapsLink.put("Laeknagardur","geo:64.136783,-21.929167?z="+zoom);
+
+
+
+
+googleMapsLink.put("VR-1","geo:64.138883,-21.954482?z="+zoom+"&q=64.138883,-21.954482");
+    	googleMapsLink.put("VR-2", "geo:64.138736, -21.955587?z="+zoom+"&q=Háskóli Íslands VRII");
+    	googleMapsLink.put("Haskolatorg","geo:64.139949,-21.950432?z="+zoom+"&q=64.139949,-21.950432");
+    	googleMapsLink.put("Haskolabio","geo:64.140333,-21.953967?z="+zoom+"&q=64.140333,-21.953967");
+    	googleMapsLink.put("Adalbygging","geo:64.140475,-21.949050?z="+zoom+"&q=64.140475,-21.949050");
+    	googleMapsLink.put("Arnagardur","geo:64.138883,-21.951367?z="+zoom+"&q=64.138883,-21.951367");
+    	googleMapsLink.put("Gimli","geo:64.139117,-21.950117?z="+zoom+"&q=64.139117,-21.950117");
+    	googleMapsLink.put("Ithrottahus, Saemundargotu 6","geo:64.139517,-21.951083?z="+zoom+"&q=64.139517,-21.951083");
+    	googleMapsLink.put("Logberg","geo:64.139483,-21.949667?z="+zoom+"&q=64.139483,-21.949667");
+    	googleMapsLink.put("Nyi Gardur","geo:64.13905,-21.94915?z="+zoom+"&q=64.13905,-21.94915");
+    	googleMapsLink.put("Oddi","geo:64.138677,-21.950405?z="+zoom+"&q=64.138677,-21.950405");
+    	googleMapsLink.put("Stapi","geo:64.141567,-21.947083?z="+zoom+"&q=64.141567,-21.947083");
+    	googleMapsLink.put("Endurmenntun ","geo:64.139717,-21.95585?z="+zoom+"&q=64.139717,-21.95585");
+    	googleMapsLink.put("Hagi","geo:64.14355,-21.961883?z="+zoom+"&q=64.14355,-21.961883");
+    	googleMapsLink.put("Neshagi 16","geo:64.143283,-21.962260?z="+zoom+"&q=64.143283,-21.962260");
+    	googleMapsLink.put("Raunvisindastofnun","geo:64.139917,-21.95555?z="+zoom+"&q=64.139917,-21.95555");
+    	googleMapsLink.put("Taeknigardur","geo:64.139483,-21.955217?z="+zoom+"&q=64.139483,-21.955217");
+    	googleMapsLink.put("VR-3","geo:64.138883,-21.953517?z="+zoom+"&q=64.138883,-21.953517");
+    	googleMapsLink.put("Eirberg","geo:64.1383,-21.925333?z="+zoom+"&q=64.1383,-21.925333");
+    	googleMapsLink.put("Laeknagardur","geo:64.136783,-21.929167?z="+zoom+"&q=64.136783,-21.929167");
 
     	
     }
