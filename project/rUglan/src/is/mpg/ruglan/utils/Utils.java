@@ -230,7 +230,7 @@ public class Utils {
     	googleMapsLink.put("Haskolatorg","geo:64.139949,-21.950432?z="+zoom+"&q=64.139949,-21.950432");
     	googleMapsLink.put("Haskolabio","geo:64.140333,-21.953967?z="+zoom+"&q=64.140333,-21.953967");
     	googleMapsLink.put("Adalbygging","geo:64.140475,-21.949050?z="+zoom+"&q=64.140475,-21.949050");
-    	googleMapsLink.put("Arnagardur","geo:64.138883,-21.951367?z="+zoom+"&q=Arnagarður, Haskoli islands");
+    	googleMapsLink.put("Arnagardur","geo:64.138883,-21.951367?z="+zoom+"&q=Arnagardur, Haskoli islands");
     	googleMapsLink.put("Gimli","geo:64.139117,-21.950117?z="+zoom+"&q=64.139117,-21.950117");
     	googleMapsLink.put("Ithrottahus, Saemundargotu 6","geo:64.139517,-21.951083?z="+zoom+"&q=64.139517,-21.951083");
     	googleMapsLink.put("Logberg","geo:64.139483,-21.949667?z="+zoom+"&q=64.139483,-21.949667");
@@ -245,7 +245,13 @@ public class Utils {
     	googleMapsLink.put("VR-3","geo:64.138883,-21.953517?z="+zoom+"&q=64.138883,-21.953517"); //TODO: This is slightly wrong but
     	googleMapsLink.put("Eirberg","geo:64.1383,-21.925333?z="+zoom+"&q=Eirberg, Eiriksgata 34");  // Haskoli Islands {VRIII, VR3}
     	googleMapsLink.put("Laeknagardur","geo:64.136783,-21.929167?z="+zoom+"&q=64.136783,-21.929167");//is way off.
-
-    	
+    }
+     /**	
+     * Removes the course number from of the course name
+     * @param courseName to remove course number from
+     * @return the course name but with the course name removed.
+     */
+    public static String stripCourseNumberFromName(String courseName) {
+            return courseName.replaceAll("^[A-Z]{3}[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
     }
 }
