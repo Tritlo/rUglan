@@ -26,11 +26,14 @@ import static android.os.SystemClock.sleep;
  */
 public class GetiCalUrlActivity extends Activity {
 
+	String scheduleUrl;
+	
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acvitvity_getical);
+        scheduleUrl = "https://ugla.hi.is/HTS/taflan_min.php?";
         final String javascr = "javascript: function getIcal() {" +
                 " if ($(':contains(.ics)').length > 0){ " +
                 "var str =  $(':contains(.ics)').last().text().split('. ')[1]; " +
@@ -52,10 +55,13 @@ public class GetiCalUrlActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 WebView wv = (WebView) findViewById(R.id.iCalUrlWebView);
+                if (!wv.getUrl().startsWith(scheduleUrl)) {
+                	wv.loadUrl(scheduleUrl);
+                }
                 wv.loadUrl(javascr);
                 String title = wv.getTitle();
                 if (title.contains("tafla")){
-                    sleep(500);
+                    sleep(1000);
                 }
                 title = wv.getTitle();
                 if (title.contains(".ics")){
@@ -79,7 +85,7 @@ public class GetiCalUrlActivity extends Activity {
                 }
             }
         });
-        wv.loadUrl("https://ugla.hi.is/HTS/taflan_min.php?");
+        wv.loadUrl(scheduleUrl);
     }
 
 
