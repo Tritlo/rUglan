@@ -49,6 +49,7 @@ public class CalEventTest extends AndroidTestCase {
         assertTrue("Unit test was able to create CalEvent with dates not on the same day.",
                     exThrown);
     }
+    
 
     /**
      * Creates a CalEvent with end date before start date. Expects IllegalArgumentException.
@@ -190,6 +191,22 @@ public class CalEventTest extends AndroidTestCase {
      */
     public void testGetColor() throws Exception {
         // TODO: Write this test when getColor has been implemented using rules with Dabbi.
-        assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
+        assertTrue("getColor needs a running home activity to be tested in, hard to test.", false);
+    }
+    
+    public void testisLecture() throws Exception {
+        CalEvent event = new CalEvent(this.name, "d1", this.location, this.start, this.end);
+        assertFalse("d1 is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "vst", this.location, this.start, this.end);
+        assertFalse("vst is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "d", this.location, this.start, this.end);
+        assertFalse("d is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "f", this.location, this.start, this.end);
+        assertTrue("f is a lecture",event.isLecture);
+        event = new CalEvent(this.name, "f-auka", this.location, this.start, this.end);
+        assertTrue("f-auka is a lecture",event.isLecture);
+         event = new CalEvent(this.name, "", this.location, this.start, this.end);
+        assertTrue("blank is a lecture",event.isLecture);
+    	
     }
 }

@@ -136,22 +136,10 @@ public class HomeActivity extends Activity {
     }
 
     private String getJavascriptForCalEvents() {
-    	String [] tutorialPrefixes = prefs.getString("tutorialPrefixes", "d,vst").split(",");
         String javascriptEvents = "events: [";
         for(int i=0; i<this.events.length; i++) {
         	CalEvent event = this.events[i];
-        	Boolean isTutorial = false;
-        	String description = event.getDescription();
-        	Log.e("TutorialPrefixes", tutorialPrefixes[0]);
-        	Log.e("TutorialPrefixes", tutorialPrefixes[1]);
-        	Log.e("TutorialPrefixes", description);
-        	for(int j =0; j < tutorialPrefixes.length; ++j)
-        	{
-        		if(description.startsWith(tutorialPrefixes[j])){
-        			isTutorial = true;
-        		}
-        	}
-        	String className = isTutorial ? "tutorial" : "lecture";
+        	String className = event.isLecture ?  "lecture" : "tutorial";
             if (i!=0) {
                 javascriptEvents += ",";
             }

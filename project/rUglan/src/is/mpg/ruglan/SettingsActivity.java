@@ -47,9 +47,6 @@ public class SettingsActivity extends Activity {
         String iCalUrl = prefs.getString(Utils.iCalURLKey,"");
         iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
         iCalInput.setText(iCalUrl);
-        String tutorialPrefixes = prefs.getString("tutorialPrefixes", "d,vst");
-        tutorialPrefixesInput = (TextView) findViewById(R.id.tutorialPrefixesInput);
-        tutorialPrefixesInput.setText(tutorialPrefixes);
         // Show the Up button in the action bar.
         setupActionBar();
         if (!prefs.contains(Utils.iCalURLKey)) {
@@ -127,8 +124,6 @@ public class SettingsActivity extends Activity {
             try {
                 String current = prefs.getString(Utils.iCalURLKey,"");
                 String iCalInputText = iCalInput.getText().toString();
-                String tutorialPrefixes = tutorialPrefixesInput.getText().toString();
-                editor.putString("tuorialPrefixes", tutorialPrefixes);
                 Boolean changed = !(current.equals(iCalInputText));
                 if (changed){
                     editor.putString(Utils.iCalURLKey, iCalInputText);

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.lang.IllegalArgumentException;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import is.mpg.ruglan.utils.Utils;
 
 /**
@@ -18,6 +19,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
     private static final long serialVersionUID = 1L;
     private String name, description, location;
     private Date start, end;
+	public boolean isLecture;
     /**
      *  CalEvent has the following attributes:
      *      - name:
@@ -30,6 +32,8 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      *          A Date object holding start date and time of the event.
      *      - end:
      *          A Date object holding end date and time of the event.
+     *        -isLecture
+     *        	A boolean which says whether this is a lecture or not.
      */
 
 
@@ -65,6 +69,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
         this.location = location;
         this.start = start;
         this.end = end;
+        this.isLecture = (description.length() == 0 || description.startsWith("f"));
 
     }
 
