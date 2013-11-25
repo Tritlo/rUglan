@@ -144,9 +144,10 @@ public class HomeActivity extends Activity {
                 javascriptEvents += ",";
             }
             javascriptEvents += "{"
-                + "title: '" + event.getName() + "',"
-                + "start: " +event.getFullCalendarStartDateString()+","
-                + "end: "   +event.getFullCalendarEndDateString() +","
+                + "title: '" + Utils.stripCourseNumberFromName(
+                						this.events[i].getName()) + "',"
+                + "start: " +this.events[i].getFullCalendarStartDateString()+","
+                + "end: " +this.events[i].getFullCalendarEndDateString() +","
                 + "allDay: false,"
                 + "backgroundColor: '" +event.getColor() + "',"
                 + "borderColor: 'black',"
