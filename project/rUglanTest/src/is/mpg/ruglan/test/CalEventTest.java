@@ -1,9 +1,13 @@
 package is.mpg.ruglan.test;
 
 import is.mpg.ruglan.data.CalEvent;
+import is.mpg.ruglan.data.Dabbi;
+import is.mpg.ruglan.utils.Utils;
 import android.test.AndroidTestCase;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -165,6 +169,13 @@ public class CalEventTest extends AndroidTestCase {
         for (CalEvent aWrong : wrong) {
             assertFalse(a.equals(aWrong));
         }
+        
+        CalEvent event1 = new CalEvent(this.name, this.description, 
+    			this.location, this.start, this.end);
+    	CalEvent event2 = new CalEvent(this.name, this.description, 
+    			this.location, this.start, this.end);
+    	assertTrue("CalEvent.equals does not work as expected.",
+    			event1.equals(event2));
     }
 
     /**
@@ -190,8 +201,16 @@ public class CalEventTest extends AndroidTestCase {
      * @throws Exception
      */
     public void testGetColor() throws Exception {
-        // TODO: Write this test when getColor has been implemented using rules with Dabbi.
-        assertTrue("getColor needs a running home activity to be tested in, hard to test.", false);
+			Dabbi dabbi = new Dabbi(this.getContext());
+			dabbi.addCalEvents(new CalEvent[]{this.event});
+			this.event.setHidden(false);
+			List<String> colorsList = Arrays.asList(Utils.colors);
+			assertTrue("Event that is not hidden should have a color defined" +
+					" in Utils.colors.", 
+					colorsList.contains(this.event.getColor(this.getContext())));
+			this.event.setHidden(true);
+			assertTrue("Event that is hidden should have the hidden color.", 
+			this.event.getColor(this.getContext()).equals(Utils.hiddenColor));
     }
     
     public void testisLecture() throws Exception {
@@ -207,7 +226,30 @@ public class CalEventTest extends AndroidTestCase {
         assertTrue("f-auka is a lecture",event.isLecture);
          event = new CalEvent(this.name, "", this.location, this.start, this.end);
         assertTrue("blank is a lecture",event.isLecture);
-    	
+    }
+    
+    /**
+     * Checks if the default value of CalEvent hidden property is false.
+     * @throws Exception
+     */
+    public void testDefaultHiddenProperty() throws Exception {
+    	CalEvent e = new CalEvent(this.name, this.description, 
+    								this.location, this.start, this.end);
+    	assertFalse("The default value of the hidden property is true, " +
+    				"but should be false.", e.isHidden());
+    }
+    
+    /**
+     * Checks if the setHidden methods works as expected.
+     * @throws Exception
+     */
+    public void testSetHidden() throws Exception {
+    	this.event.setHidden(true);
+    	assertTrue("The hidden property is false after setting it as true", 
+    			this.event.isHidden());
+    	this.event.setHidden(false);
+    	assertFalse("The hidden property is true after setting it as false", 
+    			this.event.isHidden());
     }
     
     /**

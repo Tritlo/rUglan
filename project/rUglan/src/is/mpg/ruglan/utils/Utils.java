@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.webkit.WebView;
 
 /**
@@ -15,7 +17,10 @@ public class Utils {
 
     public static String lastUpdateKey = "lastUpdate";
     public static String iCalURLKey = "iCalUrl";
+    public static String showHiddenKey = "showHiddenEvents";
 
+    public static boolean showHiddenDefaultValue = false;
+    public static String hiddenColor = "rgba(20, 22, 24, 0.2)"; 
     public static String[] colors = new String[]{
     	"rgb(242,12,12)",
     	"rgb(12,79,242)",
@@ -252,6 +257,7 @@ public class Utils {
      * @return the course name but with the course name removed.
      */
     public static String stripCourseNumberFromName(String courseName) {
-            return courseName.replaceAll("^[A-Z]{3}[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
+    	return courseName.replaceAll("^[A-Z]{3}[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
+
     }
 }
