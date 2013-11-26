@@ -270,17 +270,13 @@ html .fc,
 	
 
 .lecture {
-	outline-style: solid;
-	outline-width: 2px;
-	outline-color: blue;
-	border-style: none;
+	box-shadow: 0px 0px 2px 3px #1873CC;
+	border: none;
     }
 
 .tutorial {
-	outline-style: solid;
-	outline-width: 2px;
-	outline-color: red;
-	border-style: none;
+	box-shadow: 0px 0px 2px 3px #B84733;
+	border: none;
     }
     
 a.fc-event {
