@@ -139,6 +139,7 @@ public class HomeActivity extends Activity {
     private String getJavascriptForCalEvents() {
         String javascriptEvents = "events: [";
         for(int i=0; i<this.events.length; i++) {
+        	CalEvent event = this.events[i];
         	if (this.events[i].isHidden() && 
         			!prefs.getBoolean(Utils.showHiddenKey, 
         							Utils.showHiddenDefaultValue)) {
@@ -148,6 +149,10 @@ public class HomeActivity extends Activity {
             if ( !javascriptEvents.endsWith("[") ) {
                 javascriptEvents += ",";
             }
+            String className = ""; 
+            if (!event.isHidden()) {
+            	className = event.isLecture ?  "lecture" : "tutorial";
+            }
             javascriptEvents += "{"
                 + "title: '" + Utils.stripCourseNumberFromName(
                 						this.events[i].getName()) + "',"
@@ -156,6 +161,7 @@ public class HomeActivity extends Activity {
                 + "allDay: false,"
                 + "backgroundColor: '" +this.events[i].getColor(getContext()) + "',"
                 + "borderColor: 'black',"
+                + "className: '" + className + "',"
                 + "url: '" + i + "'"
                 + "}";
         }

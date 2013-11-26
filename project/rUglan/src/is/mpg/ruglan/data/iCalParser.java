@@ -118,7 +118,7 @@ public class iCalParser {
         for(int i = 0; i < event.length;i++) {
             if (event[i].startsWith(type)) {
                 String[] spli = event[i].split(":");
-                return spli.length == 2 ? spli[1] : "";
+                return spli.length == 2 ? spli[1].trim() : "";
             }
         }
         return "";

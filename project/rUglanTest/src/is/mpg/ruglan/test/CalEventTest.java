@@ -53,6 +53,7 @@ public class CalEventTest extends AndroidTestCase {
         assertTrue("Unit test was able to create CalEvent with dates not on the same day.",
                     exThrown);
     }
+    
 
     /**
      * Creates a CalEvent with end date before start date. Expects IllegalArgumentException.
@@ -200,16 +201,31 @@ public class CalEventTest extends AndroidTestCase {
      * @throws Exception
      */
     public void testGetColor() throws Exception {
-    	Dabbi dabbi = new Dabbi(this.getContext());
-    	dabbi.addCalEvents(new CalEvent[]{this.event});
-    	this.event.setHidden(false);
-    	List<String> colorsList = Arrays.asList(Utils.colors);
-    	assertTrue("Event that is not hidden should have a color defined" +
-    			" in Utils.colors.", 
-    			colorsList.contains(this.event.getColor(this.getContext())));
-    	this.event.setHidden(true);
-    	assertTrue("Event that is hidden should have the hidden color.", 
-    				this.event.getColor(this.getContext()).equals(Utils.hiddenColor));
+			Dabbi dabbi = new Dabbi(this.getContext());
+			dabbi.addCalEvents(new CalEvent[]{this.event});
+			this.event.setHidden(false);
+			List<String> colorsList = Arrays.asList(Utils.colors);
+			assertTrue("Event that is not hidden should have a color defined" +
+					" in Utils.colors.", 
+					colorsList.contains(this.event.getColor(this.getContext())));
+			this.event.setHidden(true);
+			assertTrue("Event that is hidden should have the hidden color.", 
+			this.event.getColor(this.getContext()).equals(Utils.hiddenColor));
+    }
+    
+    public void testisLecture() throws Exception {
+        CalEvent event = new CalEvent(this.name, "d1", this.location, this.start, this.end);
+        assertFalse("d1 is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "vst", this.location, this.start, this.end);
+        assertFalse("vst is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "d", this.location, this.start, this.end);
+        assertFalse("d is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "f", this.location, this.start, this.end);
+        assertTrue("f is a lecture",event.isLecture);
+        event = new CalEvent(this.name, "f-auka", this.location, this.start, this.end);
+        assertTrue("f-auka is a lecture",event.isLecture);
+         event = new CalEvent(this.name, "", this.location, this.start, this.end);
+        assertTrue("blank is a lecture",event.isLecture);
     }
     
     /**

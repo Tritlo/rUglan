@@ -36,6 +36,7 @@ public class SettingsActivity extends Activity {
     static final int GETURLREQUEST = 0;
     private static Context sContext;
     TextView iCalInput;
+    TextView tutorialPrefixesInput;
     CheckBox showHiddenCheckBox;
 
     @Override

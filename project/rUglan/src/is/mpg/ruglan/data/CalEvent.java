@@ -20,6 +20,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
     private static final long serialVersionUID = 1L;
     private String name, description, location;
     private Date start, end;
+	public boolean isLecture;
     private Boolean hidden;
     /**
      *  CalEvent has the following attributes:
@@ -33,8 +34,13 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      *          A Date object holding start date and time of the event.
      *      - end:
      *          A Date object holding end date and time of the event.
+<<<<<<< HEAD
+     *        -isLecture
+     *        	A boolean which says whether this is a lecture or not.
+=======
      *      - hidden:
      *      	Has the value true IFF the event should be hidden.
+>>>>>>> master
      */
 
 
@@ -71,6 +77,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
         this.location = location;
         this.start = start;
         this.end = end;
+        this.isLecture = (description.length() == 0 || description.startsWith("f"));
         this.hidden = hidden;
     }
     
