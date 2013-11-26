@@ -31,10 +31,10 @@
     <string name="getiCalUrl_button">Ná í dagatalsslóð</string>
     <string name="successfullyGotiCalUrl">Það tókst að ná í dagatalsslóðina þína.</string>
     <string name="show_hidden">Sýna falda tíma</string>
-    
     <!-- HideActivity -->
     <string name="hide_activity_info">Hér getur þú valið hvaða tíma þú vilt sjá á stundatöflunni þinni.</string>
     <string name="no_cources_found">Engir tímar fundust.</string>
     <string name="failed_to_save_hidden">Gat ekki vistað breytingar.</string>
+    <string name="open_google_maps">Hver er þessi bygging?</string>
 
 </resources>
