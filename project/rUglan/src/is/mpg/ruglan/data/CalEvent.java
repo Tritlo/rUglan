@@ -243,7 +243,45 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
         return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
     }
     /**
-     * Compares the CalEvent to another CalEvent by their starting dates.
+     * @use s = getBuilding()
+     * @post s contains the name of the building where the event takes place
+     */
+    public String getBuilding()
+    {
+    	try{
+    		Log.d("DEBUG ",this.name+" has building "+this.location.split("\\\\, ")[1]);
+    		return this.location.split(", ")[1];
+    	}
+    	catch(Exception e)
+    	{
+    		Log.d("DEBUG", "could not get a building name");
+    		return "";
+    	}
+    }
+    /**
+     * Returns a link to google maps with the building where the event takes place selected
+     * @use s = getGoogleMapsLink()
+     * @post s contains a link to google maps with the building where the event takes place selected
+     */
+    public String getGoogleMapsLink()
+    {
+    	String building = getBuilding();
+    	if (building == "")
+    	{
+    		return "";
+    	}
+    	if(Utils.googleMapsLink == null)
+    	{
+    		Utils.fillGoogleMapsLinkMap();
+    	}
+    	if(Utils.googleMapsLink.containsKey(building))
+    	{
+    		return Utils.googleMapsLink.get(building);
+    	}
+    	return "";
+    }
+    
+     /** Compares the CalEvent to another CalEvent by their starting dates.
      * @use a = compareTo(b)
      * @post a is negative if b happens before this, 0 if they happen on the same time
      * and else its positive
