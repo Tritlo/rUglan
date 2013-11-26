@@ -37,6 +37,7 @@ public class HomeActivity extends Activity {
     private static Context sContext;
     private CalEvent[] events = {};
     static final int SETTINGSREQUEST = 0;
+    static final int HIDEREQUEST = 1;
     private Dabbi dabbi;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -138,7 +139,13 @@ public class HomeActivity extends Activity {
     private String getJavascriptForCalEvents() {
         String javascriptEvents = "events: [";
         for(int i=0; i<this.events.length; i++) {
-            if (i!=0) {
+        	if (this.events[i].isHidden() && 
+        			!prefs.getBoolean(Utils.showHiddenKey, 
+        							Utils.showHiddenDefaultValue)) {
+    			// Skip this event
+    			continue;
+        	}
+            if ( !javascriptEvents.endsWith("[") ) {
                 javascriptEvents += ",";
             }
             javascriptEvents += "{"
@@ -147,7 +154,7 @@ public class HomeActivity extends Activity {
                 + "start: " +this.events[i].getFullCalendarStartDateString()+","
                 + "end: " +this.events[i].getFullCalendarEndDateString() +","
                 + "allDay: false,"
-                + "backgroundColor: '" +this.events[i].getColor() + "',"
+                + "backgroundColor: '" +this.events[i].getColor(getContext()) + "',"
                 + "borderColor: 'black',"
                 + "url: '" + i + "'"
                 + "}";
@@ -202,8 +209,12 @@ public class HomeActivity extends Activity {
                 refresh();
                 return true;
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivityForResult(intent,SETTINGSREQUEST);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivityForResult(settingsIntent, SETTINGSREQUEST);
+                return true;
+            case R.id.action_hide:
+                Intent hideIntent = new Intent(this, HideActivity.class);
+                startActivityForResult(hideIntent, HIDEREQUEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -280,7 +291,7 @@ public class HomeActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == SETTINGSREQUEST){
+        if (requestCode == SETTINGSREQUEST || requestCode == HIDEREQUEST){
             if (resultCode == RESULT_OK){
                 Boolean eventsChanged = data.getBooleanExtra("eventsChanged", false);
                 if (eventsChanged)

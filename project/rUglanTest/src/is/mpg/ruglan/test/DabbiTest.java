@@ -1,10 +1,14 @@
 package is.mpg.ruglan.test;
 
 import android.test.AndroidTestCase;
+import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import is.mpg.ruglan.data.CalEvent;
 import is.mpg.ruglan.data.Dabbi;
@@ -118,6 +122,10 @@ public class DabbiTest extends AndroidTestCase {
          assertEquals(0,dabbi.getCalEvents(new Date(0),new Date(((long)Integer.MAX_VALUE)*1000)).length);
      }
 
+    /**
+     * Tests if the refreshEventTable works as expected.
+     * @throws Exception
+     */
     public void testRefreshEventsTable() throws Exception {
     	CalEvent[] calEventsDabbiInit = dabbi.getAllCalEvents();
     	assertEquals("Number of events in Dabbi at start of test case is " 
@@ -144,4 +152,155 @@ public class DabbiTest extends AndroidTestCase {
                 "Dabbi after refresh", areEqual);
     }
 
+    /**
+     * Tests if the getCalEventsForRecurringEvents works as expected.
+     * @throws Exception
+     */
+    public void testGetCalEventsForRecurringEvents() throws Exception {
+    	CalEvent[] calEvents = new CalEvent[3];
+    	Date[] date = new Date[calEvents.length*2];
+    	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", 
+    			new Locale("UTC"));
+        date[0] = format.parse("20140012T132000");
+        date[1] = format.parse("20140012T140000");
+        date[2] = format.parse("20140019T132000");
+        date[3] = format.parse("20140019T140000");
+        date[4] = format.parse("20140012T150000");
+        date[5] = format.parse("20140012T154000");
+    	
+    	calEvents[0] = new CalEvent("Timi_1","f","Neshagi", date[0], date[1]);
+    	calEvents[1] = new CalEvent("Timi_1","f","Neshagi", date[2], date[3]);
+    	calEvents[2] = new CalEvent("Timi_1","d1","HT", date[4], date[5], true);
+    	
+    	dabbi.addCalEvents(calEvents);
+    	CalEvent[] result = dabbi.getCalEventsForRecurringEvents();
+    	CalEvent[] expectedResult = new CalEvent[] {calEvents[1], calEvents[2]};
+    	
+    	assertEquals("Dabbi did not return the expected length of result.", 
+    			expectedResult.length, result.length);
+
+    	List<CalEvent> resultList = Arrays.asList(result);
+        Boolean areEqual = true;
+        for(int i=0; i<expectedResult.length; i++) {
+            if (!resultList.contains(expectedResult[i])) {
+                areEqual = false;
+            }
+        }
+        assertTrue("Actual results not same as expected results", areEqual);
+    }
+    
+    /**
+     * Tests if the getCalEventsNames works as expected.
+     * @throws Exception
+     */
+    public void testGetCalEventsNames() throws Exception {
+    	Date startDate0 = new Date(999999998000L);
+        Date endDate0 = new Date(999999999000L);
+        Date startDate1 = new Date(99999912000L);
+        Date endDate1 = new Date(99999919000L);
+        CalEvent[] calEvents = new CalEvent[2];
+        calEvents[0] = new CalEvent("test_timi1","Ekki til","Neshagi", 
+        		startDate0, endDate0);
+        calEvents[0] = new CalEvent("test_timi1","Ekki til","Neshagi", 
+        		startDate1, endDate1);
+        calEvents[1] = new CalEvent("test_timi2","Heldur ekki til","Laugarvatn", 
+        		startDate1, endDate1);
+        String[] calEventsNames = new String[2];
+        calEventsNames[0] = "test_timi1";
+        calEventsNames[1] = "test_timi2";
+        Dabbi dabbi = new Dabbi(this.getContext());
+        dabbi.addCalEvents(calEvents);
+        
+        String[] dabbiNames = dabbi.getCalEventsNames();
+        assertEquals("Number of event names not as expected",
+                calEventsNames.length, dabbiNames.length);
+        List<String> dabbiNamesList = Arrays.asList(dabbiNames);
+        Boolean areEqual = true;
+        for(int i=0; i<calEvents.length; i++) {
+            if (!dabbiNamesList.contains(calEventsNames[i])) {
+                areEqual = false;
+            }
+        }
+        assertTrue("Event names not as expected", areEqual);
+    }
+    
+    /**
+     * Tests if the getEventsLike works as expected.
+     * @throws Exception
+     */
+    public void testGetEventsLike() throws Exception {
+    	CalEvent[] calEvents = new CalEvent[4];
+    	Date[] date = new Date[calEvents.length*2];
+    	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", 
+    			new Locale("UTC"));
+    	date[0] = format.parse("20140012T132000");
+        date[1] = format.parse("20140012T140000");
+        date[2] = format.parse("20140019T132000");
+        date[3] = format.parse("20140019T140000");
+        date[4] = format.parse("20140012T150000");
+        date[5] = format.parse("20140012T154000");
+        date[6] = format.parse("20140026T132000");
+        date[7] = format.parse("20140026T140000");
+    	
+    	calEvents[0] = new CalEvent("Timi_1","f","Neshagi", date[0], date[1]);
+    	calEvents[1] = new CalEvent("Timi_1","f","Askja", date[2], date[3]);
+    	calEvents[2] = new CalEvent("Timi_1","d1","HT", date[4], date[5], true);
+    	calEvents[3] = new CalEvent("Timi_1","f","Neshagi", date[6], date[7]);
+    	
+    	dabbi.addCalEvents(calEvents);
+    	CalEvent[] result = dabbi.getEventsLike(calEvents[0]);
+    	CalEvent[] expectedResult = new CalEvent[] {
+    			calEvents[0], calEvents[3]};
+    	
+    	assertEquals("Dabbi did not return the expected length of result.", 
+    			expectedResult.length, result.length);
+
+    	List<CalEvent> resultList = Arrays.asList(result);
+        Boolean areEqual = true;
+        for(int i=0; i<expectedResult.length; i++) {
+            if (!resultList.contains(expectedResult[i])) {
+                areEqual = false;
+            }
+        }
+        assertTrue("Actual results not same as expected results", areEqual);
+    }
+    
+    /**
+     * Tests if the changeHiddenForEventsLike works as expected.
+     * @throws Exception
+     */
+    public void testChangeHiddenForEventsLike() throws Exception {
+    	CalEvent[] calEvents = new CalEvent[4];
+    	Date[] date = new Date[calEvents.length*2];
+    	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", 
+    			new Locale("UTC"));
+    	date[0] = format.parse("20140012T132000");
+        date[1] = format.parse("20140012T140000");
+        date[2] = format.parse("20140019T132000");
+        date[3] = format.parse("20140019T140000");
+        date[4] = format.parse("20140012T150000");
+        date[5] = format.parse("20140012T154000");
+        date[6] = format.parse("20140026T132000");
+        date[7] = format.parse("20140026T140000");
+    	
+    	calEvents[0] = new CalEvent("Timi_1","f","Neshagi", 
+    			date[0], date[1],false);
+    	calEvents[1] = new CalEvent("Timi_1","f","Askja", 
+    			date[2], date[3],true);
+    	calEvents[2] = new CalEvent("Timi_1","d1","HT", 
+    			date[4], date[5], true);
+    	calEvents[3] = new CalEvent("Timi_1","f","Neshagi", 
+    			date[6], date[7], false);
+    	
+    	dabbi.addCalEvents(calEvents);
+    	dabbi.changeHiddenForEventsLike(calEvents[0], true);
+
+    	CalEvent[] allEventsAfterChange = dabbi.getAllCalEvents();
+    	for(int i=0; i<allEventsAfterChange.length; i++) {
+    		CalEvent currentEvent = allEventsAfterChange[i];
+    		assertTrue("Event " +currentEvent.toString() +" is not hidden, " +
+    				"but should be.", currentEvent.isHidden());
+    	}
+    	
+    }
 }
