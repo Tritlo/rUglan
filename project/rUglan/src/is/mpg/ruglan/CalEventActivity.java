@@ -1,12 +1,18 @@
 package is.mpg.ruglan;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import is.mpg.ruglan.data.CalEvent;
@@ -34,6 +40,28 @@ public class CalEventActivity extends Activity {
             time.setText(e.getDurationString());
             desc.setText(e.getDescription());
             loc.setText(e.getLocation());
+        }
+        
+        //Get the building if found and make the link
+        final String googleMapsLink = e.getGoogleMapsLink();
+        if(googleMapsLink != "")
+        {
+        	LinearLayout buildingLayout =
+                (LinearLayout) findViewById(R.id.building_location);
+        	TextView tv = new TextView(this);
+            tv.setText(R.string.open_google_maps);
+            tv.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            tv.setClickable(true);
+            tv.setTextColor(Color.rgb(78,133,252));
+            tv.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                	Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsLink));
+                	startActivity(mapsIntent);
+                }
+            });
+            buildingLayout.addView(tv);
         }
     }
 

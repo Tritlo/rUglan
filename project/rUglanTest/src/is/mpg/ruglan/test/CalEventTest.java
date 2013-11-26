@@ -20,7 +20,7 @@ public class CalEventTest extends AndroidTestCase {
     public void setUp() throws Exception {
         this.name = "Test Event";
         this.description = "Description for the test event.";
-        this.location = "Location for the test event.";
+        this.location = "Location for the test event.\\, Askja";
         this.format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
         this.start = this.format.parse("20130515T132000");
         this.end = this.format.parse("20130515T140000");
@@ -191,5 +191,19 @@ public class CalEventTest extends AndroidTestCase {
     public void testGetColor() throws Exception {
         // TODO: Write this test when getColor has been implemented using rules with Dabbi.
         assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
+    }
+    
+    /**
+     * Checks if getBuilding returns the correct building for the event.
+     */
+    public void testGetBuilding() throws Exception {
+    	System.out.println("TEST got building "+this.event.getBuilding());
+    	assertEquals("Askja",this.event.getBuilding());
+    }
+    
+    public void testGetGoogleMapsLink()
+    {
+    	assertEquals("https://maps.google.com/maps?q=64.137259,-21.945772&hl=en&ll=64.137263,-21.94577&spn=0.002743,0.009871&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=17",
+    			this.event.getGoogleMapsLink());
     }
 }
