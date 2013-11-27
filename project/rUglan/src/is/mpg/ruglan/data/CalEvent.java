@@ -72,7 +72,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
         this.location = location;
         this.start = start;
         this.end = end;
-        this.isLecture = (description.length() == 0 || description.startsWith("f"));
+        this.isLecture = Utils.isLecture(description);
         this.hidden = hidden;
     }
     

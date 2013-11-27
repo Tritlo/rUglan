@@ -125,7 +125,14 @@ public class Utils {
     	"rgb(12,149,242)",
     	"rgb(216,242,12)"};
 
-
+   /** 
+    * @param description
+    * @return whether the description matches the description of a lecture.
+    */
+    public static Boolean isLecture(String description){
+    	return (description.length() == 0 || description.startsWith("f"));
+    }
+    
     public static void displayMessage(String messageHeader, String messageBody, Context ctx) {
         AlertDialog.Builder alertDialogBuilder =
                 new AlertDialog.Builder(ctx);

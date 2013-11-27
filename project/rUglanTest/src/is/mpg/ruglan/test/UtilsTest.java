@@ -39,7 +39,7 @@ public class UtilsTest extends AndroidTestCase {
         assertEquals("#",Utils.colors[10].substring(0, 1));
         Long.decode(Utils.colors[10]);
     }
-    
+
     /**
      * Checks if the stripCourseNumberFromName works as expected.
      * @throws Exception
@@ -61,5 +61,16 @@ public class UtilsTest extends AndroidTestCase {
     		assertTrue("Result did not match expected result.",
     			Utils.stripCourseNumberFromName(input[i]).equals(output[i]));
     	}
+    }
+
+    public void testisLecture() throws Exception {
+        assertFalse("d1 is not a lecture",Utils.isLecture("d1"));
+        assertFalse("vst is not a lecture",Utils.isLecture("vst"));
+        assertFalse("d is not a lecture",Utils.isLecture("d"));
+        assertFalse("daematimi is not a lecture",Utils.isLecture("daematimi"));
+        assertTrue("f is a lecture",Utils.isLecture("f"));
+        assertTrue("fyrirlestur is a lecture",Utils.isLecture("fyrirlestur"));
+        assertTrue("f-auka is a lecture",Utils.isLecture("f-auka"));
+        assertTrue("blank is a lecture",Utils.isLecture(""));
     }
 }
