@@ -257,7 +257,7 @@ public class Utils {
      * @return the course name but with the course name removed.
      */
     public static String stripCourseNumberFromName(String courseName) {
-    	return courseName.replaceAll("^[A-Z]{3}[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
+    	return courseName.replaceAll("^[A-Za-z]+[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
 
     }
 }

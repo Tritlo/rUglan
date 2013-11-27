@@ -10,6 +10,7 @@ $(document).ready(function() {
 		axisFormat: 'HH:mm',
 		timeFormat: 'HH:mm',
 		allDaySlot: false,
+		weekends: false,
 		slotEventOverlap: false,
 		firstDay: 1,
 		header:

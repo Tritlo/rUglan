@@ -39,7 +39,7 @@ public class CalEventActivity extends Activity {
             date.setText(e.getDateString());
             time.setText(e.getDurationString());
             desc.setText(e.getDescription());
-            loc.setText(e.getLocation());
+            loc.setText(e.getLocation().replaceFirst("\\\\,", ""));
         }
         
         //Get the building if found and make the link
@@ -50,7 +50,7 @@ public class CalEventActivity extends Activity {
                 (LinearLayout) findViewById(R.id.building_location);
         	TextView tv = new TextView(this);
             tv.setText(R.string.open_google_maps);
-            tv.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            tv.setTextAppearance(this, android.R.style.TextAppearance_Small);
             tv.setClickable(true);
             tv.setTextColor(Color.rgb(78,133,252));
             tv.setOnClickListener(new OnClickListener() {

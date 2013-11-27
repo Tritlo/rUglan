@@ -111,6 +111,7 @@ public class HomeActivity extends Activity {
                     wv.loadUrl("javascript: $('#no-ical').hide();");
                     wv.loadUrl("javascript:" + getJavascriptForCalEvents());
                     updateLastUpdatedLabel();
+                    Utils.setCalendarViewByOrientation(HomeActivity.this, wv);
                 }
             }
         });
