@@ -1,5 +1,10 @@
 package is.mpg.ruglan.utils;
 
+import is.mpg.ruglan.data.CalEvent;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,7 +12,9 @@ import java.util.HashMap;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.webkit.WebView;
 
 /**
@@ -253,5 +260,66 @@ public class Utils {
     public static String stripCourseNumberFromName(String courseName) {
     	return courseName.replaceAll("^[A-Z]{3}[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
 
+    }
+    
+    public static String getJavascriptForCalEvents(CalEvent[] events, Context context) {
+    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String javascriptEvents = "events: [";
+        for(int i=0; i<events.length; i++) {
+        	CalEvent event = events[i];
+        	if (event.isHidden() && 
+        			!prefs.getBoolean(Utils.showHiddenKey, 
+        							Utils.showHiddenDefaultValue)) {
+    			// Skip this event
+    			continue;
+        	}
+            if ( !javascriptEvents.endsWith("[") ) {
+                javascriptEvents += ",";
+            }
+            String className = ""; 
+            if (!event.isHidden()) {
+            	className = event.isLecture ?  "lecture" : "tutorial";
+            }
+            javascriptEvents += "{"
+                + "title: '" + Utils.stripCourseNumberFromName(
+                						event.getName()) + "',"
+                + "start: " +event.getFullCalendarStartDateString()+","
+                + "end: " +event.getFullCalendarEndDateString() +","
+                + "allDay: false,"
+                + "backgroundColor: '" +event.getColor(context) + "',"
+                + "borderColor: 'black',"
+                + "className: '" + className + "',"
+                + "url: '" + i + "'"
+                + "}";
+        }
+        javascriptEvents += "]";
+
+        return getTextFromAssetsTextFile("JavascriptBase.js", context)
+                .replace("%%%EVENTS%%%", javascriptEvents);
+    }
+    
+    public static String getTextFromAssetsTextFile(String filename, Context context) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte buf[] = new byte[1024];
+        int len;
+        InputStream inputStream = null;
+
+        try{
+            Context applicationContext = context;
+            AssetManager assetManager = applicationContext.getAssets();
+            inputStream = assetManager.open(filename);
+            while ((len = inputStream.read(buf)) != -1) {
+                outputStream.write(buf, 0, len);
+            }
+            outputStream.close();
+            inputStream.close();
+
+            return outputStream.toString();
+        } catch (IOException e){
+            Log.e("TextFromAssets failed", e.getMessage());
+        } catch (NullPointerException e){
+            Log.e("NullPointerException in getApplicationContext", e.getMessage());
+        }
+        return "Failed to load file";
     }
 }
