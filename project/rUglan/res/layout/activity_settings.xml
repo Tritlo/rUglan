@@ -41,5 +41,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/iCalUrlInput"
         android:onClick="getIcalUrl" />
+    
+    <CheckBox 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/getIcalUrlButton"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/show_hidden"
+        android:id="@+id/showHiddenCheckbox"
+        />
 
 </RelativeLayout>
