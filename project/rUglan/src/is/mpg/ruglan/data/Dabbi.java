@@ -145,35 +145,12 @@ public class Dabbi {
      */
     public CalEvent[] getCalEvents(Date start, Date end)
     {
-        rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        if(qdb == null)
-        {
-            return new CalEvent[0];
-        }
-        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS "
-        +"WHERE start BETWEEN ? AND ?" ,new String[]{
+        String query = "SELECT * FROM CALEVENTS"
+        +"WHERE start BETWEEN ? AND ?";
+        String queryArgs[] = new String[]{
                 Long.toString(start.getTime()/1000),
-                Long.toString(end.getTime()/1000)});
-
-        //Iterate over the result.
-        CalEvent[] events = new CalEvent[result.getCount()];
-        result.moveToFirst();
-        int i = 0;
-        while(!result.isAfterLast())
-        {
-            CalEvent event = new CalEvent(result.getString(0),
-                                        result.getString(1),result.getString(2)
-                    ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000),
-                    result.getInt(5)>0
-            );
-            events[i] = event;
-            i++;
-            result.moveToNext();
-        }
-        qdb.close();
-        return events;
+                Long.toString(end.getTime()/1000)};
+        return getCalEventsForQuery(query, queryArgs);
     }
 
     /**
@@ -182,31 +159,10 @@ public class Dabbi {
      */
     public CalEvent[] getAllCalEvents()
     {
-        rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        if(qdb == null)
-        {
-            return new CalEvent[0];
-        }
-        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS ", null);
-
-        //Iterate over the result.
-        CalEvent[] events = new CalEvent[result.getCount()];
-        result.moveToFirst();
-        int i = 0;
-        while(!result.isAfterLast())
-        {
-            CalEvent event = new CalEvent(result.getString(0),
-                                        result.getString(1),result.getString(2)
-                    ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000),
-                    result.getInt(5)>0);
-            events[i] = event;
-            i++;
-            result.moveToNext();
-        }
-        qdb.close();
-        return events;
+        
+        String query ="SELECT * FROM CALEVENTS";
+        String queryArgs[] = null;
+        return getCalEventsForQuery(query, queryArgs);
     }
     
     /**
