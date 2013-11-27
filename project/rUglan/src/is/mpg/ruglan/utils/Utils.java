@@ -163,35 +163,6 @@ public class Utils {
         return "#"+rs + gs + bs;
     }
 
-    /**
-     * Fills the Utils.colors array with in some sense good colors.
-     * @use fillColorsArray();
-     * @pre
-     * @post The Utils.colors array contains strings that css takes as colors and
-     * are in some sense good.
-     */
-    public static void fillColorsArray(){
-        int hue_steps = 50;
-        int sat_steps = 1;
-        double golden_ratio_conjugate = 0.618033988749895;
-        colors = new String[hue_steps*sat_steps];
-        float sat = 0.5F;
-        for(int j = 0; j < sat_steps; j++)
-        {
-            float hue = 0F;
-            for(int i = 0;i<hue_steps;i++)
-            {
-                String rgb =hsvToRgb(hue,sat,0.95F);
-                colors[i+hue_steps*j] = rgb;
-                //hue += 1.0F/(float)(hue_steps);
-                hue += golden_ratio_conjugate;
-                hue %= 1;
-                //System.out.println(rgb);
-            }
-            //We want the sat range to 0.5 long
-            sat += (1.0F/(float)sat_steps)*0.5F;
-        }
-    }
     
     /**
      * @use	Calendar c = dateToCalendar(d);

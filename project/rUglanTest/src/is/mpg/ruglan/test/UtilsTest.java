@@ -31,14 +31,6 @@ public class UtilsTest extends AndroidTestCase {
         		0, calEnd.getTime().compareTo(end));
 	}
 	
-    public void testFillColorsArray() throws Exception {
-
-        Utils.fillColorsArray();
-        assertTrue(Utils.colors.length > 10);
-        assertEquals(7, Utils.colors[10].length());
-        assertEquals("#",Utils.colors[10].substring(0, 1));
-        Long.decode(Utils.colors[10]);
-    }
     
     /**
      * Checks if the stripCourseNumberFromName works as expected.
