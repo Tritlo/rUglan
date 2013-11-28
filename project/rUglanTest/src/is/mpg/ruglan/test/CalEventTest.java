@@ -262,7 +262,7 @@ public class CalEventTest extends AndroidTestCase {
     
     public void testGetGoogleMapsLink()
     {
-    	assertEquals("https://maps.google.com/maps?q=64.137259,-21.945772&hl=en&ll=64.137263,-21.94577&spn=0.002743,0.009871&sll=37.0625,-95.677068&sspn=40.681389,80.859375&t=m&z=17",
+    	assertEquals("geo:64.137273,-21.945709?z=18&q=64.137273,-21.945709",
     			this.event.getGoogleMapsLink());
     }
 }

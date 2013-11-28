@@ -132,7 +132,7 @@ public class DabbiTest extends AndroidTestCase {
     			+ calEventsDabbiInit.length + ", " + "but should be 0.",
                 0, calEventsDabbiInit.length);
         String iCalUrl = "http://uc-media.rhi.hi.is/HTSProxies/6566792d312d36362e2f313436.ics"; //Matti
-        dabbi.refreshEventsTable();
+        dabbi.refreshEventsTable(iCalUrl);
         CalEvent[] calEventsDabbi = dabbi.getAllCalEvents();
         CalEvent[] calEventsiCal = iCalParser.urlToCalEvents(iCalUrl);
 

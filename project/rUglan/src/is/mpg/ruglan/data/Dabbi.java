@@ -145,7 +145,7 @@ public class Dabbi {
      */
     public CalEvent[] getCalEvents(Date start, Date end)
     {
-        String query = "SELECT * FROM CALEVENTS"
+        String query = "SELECT * FROM CALEVENTS "
         +"WHERE start BETWEEN ? AND ?";
         String queryArgs[] = new String[]{
                 Long.toString(start.getTime()/1000),
@@ -262,7 +262,7 @@ public class Dabbi {
     	
     	int secondsInAWeek = 604800;
         String query = "SELECT * FROM CALEVENTS "
-        							+"GROUP BY name, location, start % ?"
+        							+"GROUP BY name, location, start % ? "
         							+"ORDER BY description, start";
         String queryArgs[] = new String[]{Integer.toString(secondsInAWeek)};
         return getCalEventsForQuery(query, queryArgs);
@@ -329,7 +329,7 @@ public class Dabbi {
         SQLiteDatabase qdb = DB.getWritableDatabase();
         int secondsInAWeek = 604800;
         qdb.execSQL("UPDATE CALEVENTS "
-        			+ "SET hidden=?"
+        			+ "SET hidden=? "
 					+ "WHERE name=? AND location=? " 
 					+ "AND (start-?)%?=0",
 					new String[]{
