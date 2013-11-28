@@ -51,6 +51,7 @@
 \hspace{1.0cm} $\bullet$ Activity {\tiny } \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.CalEventActivity {\tiny \refdefined{is.mpg.ruglan.CalEventActivity}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.GetiCalUrlActivity {\tiny \refdefined{is.mpg.ruglan.GetiCalUrlActivity}} \\
+\hspace{2.0cm} $\bullet$ is.mpg.ruglan.HideActivity {\tiny \refdefined{is.mpg.ruglan.HideActivity}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.HomeActivity {\tiny \refdefined{is.mpg.ruglan.HomeActivity}} \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.SettingsActivity {\tiny \refdefined{is.mpg.ruglan.SettingsActivity}} \\
 }
@@ -62,6 +63,7 @@
 \hbox{{\bf  Classes}}
 \entityintro{CalEventActivity}{is.mpg.ruglan.CalEventActivity}{}
 \entityintro{GetiCalUrlActivity}{is.mpg.ruglan.GetiCalUrlActivity}{This class is an activity that facilitates fetching of an iCal url from Ugla.}
+\entityintro{HideActivity}{is.mpg.ruglan.HideActivity}{}
 \entityintro{HomeActivity}{is.mpg.ruglan.HomeActivity}{}
 \entityintro{SettingsActivity}{is.mpg.ruglan.SettingsActivity}{This class is an activity to facilitate changing of user settings.}
 \vskip .1in
@@ -126,6 +128,11 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 \small public class GetiCalUrlActivity
 \\ {\bf  extends} Activity
 \refdefined{.Activity}}
+\subsection{Field summary}{
+\begin{verse}
+{\bf scheduleUrl} \\
+\end{verse}
+}
 \subsection{Constructor summary}{
 \begin{verse}
 {\bf GetiCalUrlActivity()} \\
@@ -136,6 +143,13 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 {\bf onCreate(Bundle)} \\
 {\bf onCreateOptionsMenu(Menu)} \\
 \end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{scheduleUrl}
+\label{is.mpg.ruglan.GetiCalUrlActivity.scheduleUrl} java.lang.String {\bf  scheduleUrl}}
+\end{itemize}
 }
 \subsection{Constructors}{
 \vskip -2em
@@ -166,6 +180,66 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 \end{itemize}
 }
 }
+\section{\label{is.mpg.ruglan.HideActivity}Class HideActivity}{
+\vskip .1in 
+\subsection{Declaration}{
+\small public class HideActivity
+\\ {\bf  extends} Activity
+\refdefined{.Activity}}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf HideActivity()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf onCreate(Bundle)} Called when the activity is first created.\\
+{\bf onOptionsItemSelected(MenuItem)} \\
+{\bf saveHidden(View)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{HideActivity()}
+{\bf  HideActivity}\\
+\texttt{public\ {\bf  HideActivity}()
+\label{is.mpg.ruglan.HideActivity()}}%end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{onCreate(Bundle)}
+{\bf  onCreate}\\
+\texttt{public void\ {\bf  onCreate}(\texttt{Bundle} {\bf  savedInstanceState})
+\label{is.mpg.ruglan.HideActivity.onCreate(Bundle)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Called when the activity is first created.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{onOptionsItemSelected(MenuItem)}
+{\bf  onOptionsItemSelected}\\
+\texttt{public boolean\ {\bf  onOptionsItemSelected}(\texttt{MenuItem} {\bf  item})
+\label{is.mpg.ruglan.HideActivity.onOptionsItemSelected(MenuItem)}}%end signature
+}%end item
+\item{ 
+\index{saveHidden(View)}
+{\bf  saveHidden}\\
+\texttt{public void\ {\bf  saveHidden}(\texttt{View} {\bf  view})
+\label{is.mpg.ruglan.HideActivity.saveHidden(View)}}%end signature
+}%end item
+\end{itemize}
+}
+}
 \section{\label{is.mpg.ruglan.HomeActivity}Class HomeActivity}{
 \vskip .1in 
 \subsection{Declaration}{
@@ -174,6 +248,7 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 \refdefined{.Activity}}
 \subsection{Field summary}{
 \begin{verse}
+{\bf HIDEREQUEST} \\
 {\bf prefs} \\
 {\bf SETTINGSREQUEST} \\
 \end{verse}
@@ -187,6 +262,7 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 \begin{verse}
 {\bf getContext()} \\
 {\bf onActivityResult(int, int, Intent)} \\
+{\bf onConfigurationChanged(Configuration)} \\
 {\bf onCreate(Bundle)} \\
 {\bf onCreateOptionsMenu(Menu)} \\
 {\bf onOptionsItemSelected(MenuItem)} \\
@@ -201,6 +277,9 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 \item{
 \index{SETTINGSREQUEST}
 \label{is.mpg.ruglan.HomeActivity.SETTINGSREQUEST}static final int {\bf  SETTINGSREQUEST}}
+\item{
+\index{HIDEREQUEST}
+\label{is.mpg.ruglan.HomeActivity.HIDEREQUEST}static final int {\bf  HIDEREQUEST}}
 \end{itemize}
 }
 \subsection{Constructors}{
@@ -230,6 +309,12 @@ This class is an activity that facilitates fetching of an iCal url from Ugla. It
 \texttt{int} {\bf  resultCode},
 \texttt{Intent} {\bf  data})
 \label{is.mpg.ruglan.HomeActivity.onActivityResult(int, int, Intent)}}%end signature
+}%end item
+\item{ 
+\index{onConfigurationChanged(Configuration)}
+{\bf  onConfigurationChanged}\\
+\texttt{public void\ {\bf  onConfigurationChanged}(\texttt{Configuration} {\bf  newConfig})
+\label{is.mpg.ruglan.HomeActivity.onConfigurationChanged(Configuration)}}%end signature
 }%end item
 \item{ 
 \index{onCreate(Bundle)}
@@ -271,6 +356,8 @@ This class is an activity to facilitate changing of user settings. It allows the
 {\bf GETURLREQUEST} \\
 {\bf iCalInput} \\
 {\bf prefs} \\
+{\bf showHiddenCheckBox} \\
+{\bf tutorialPrefixesInput} \\
 \end{verse}
 }
 \subsection{Constructor summary}{
@@ -302,6 +389,12 @@ This class is an activity to facilitate changing of user settings. It allows the
 \item{
 \index{iCalInput}
 \label{is.mpg.ruglan.SettingsActivity.iCalInput} TextView {\bf  iCalInput}}
+\item{
+\index{tutorialPrefixesInput}
+\label{is.mpg.ruglan.SettingsActivity.tutorialPrefixesInput} TextView {\bf  tutorialPrefixesInput}}
+\item{
+\index{showHiddenCheckBox}
+\label{is.mpg.ruglan.SettingsActivity.showHiddenCheckBox} CheckBox {\bf  showHiddenCheckBox}}
 \end{itemize}
 }
 \subsection{Constructors}{
