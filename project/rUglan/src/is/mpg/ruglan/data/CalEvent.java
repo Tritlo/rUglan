@@ -56,9 +56,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
     public CalEvent(String name, String description, String location, Date start, Date end, Boolean hidden) {
         Calendar calStart = Utils.dateToCalendar(start);
         Calendar calEnd = Utils.dateToCalendar(end);
-        boolean sameDay = calStart.get(Calendar.YEAR) == calEnd.get(Calendar.YEAR) &&
-                calStart.get(Calendar.DAY_OF_YEAR) == calEnd.get(Calendar.DAY_OF_YEAR);
-        if (!sameDay) {
+        if (!Utils.isSameDay(calStart, calEnd)) {
             throw new
             IllegalArgumentException("start date and end date need to be on the same day.");
         }

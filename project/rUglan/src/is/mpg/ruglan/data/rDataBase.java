@@ -14,6 +14,8 @@ import java.io.InputStream;
  * An helper class for an sqlite datebase
  * All credit to  Gaddo F. Benedetti
  * @author  Gaddo F. Benedetti
+ * 
+ * All we did here is to change values for database name and schema file.
  */
 public class rDataBase extends SQLiteOpenHelper {
     final static int DB_VERSION = 1;
@@ -33,7 +35,6 @@ public class rDataBase extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase database) {
-        System.out.println("test database running schema");
         executeSQLScript(database, "create.sql");
         executeSQLScript(database, "create_settings.sql");
     }

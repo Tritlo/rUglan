@@ -79,12 +79,12 @@ public class Dabbi {
             {
                 //Get the highest color value in the table so we know what value to
                 //assign to this event.
-                result = qdb.rawQuery("SELECT MAX(color) FROM COLORS",null);
+                Cursor maxColorResult = qdb.rawQuery("SELECT MAX(color) FROM COLORS",null);
                 int newColorValue = 0;
-                if(result.getCount() != 0)
+                if(maxColorResult.getCount() != 0)
                 {
-                    result.moveToFirst();
-                    newColorValue = result.getInt(0)+1;
+                	maxColorResult.moveToFirst();
+                    newColorValue = maxColorResult.getInt(0)+1;
                 }
                 ContentValues colorValues = new ContentValues();
                 colorValues.put("name",event.getName());
@@ -350,7 +350,6 @@ public class Dabbi {
         {
             return new CalEvent[0];
         }
-        int secondsInAWeek = 604800;
         Cursor result = qdb.rawQuery(query,queryArgs);
 
         //Iterate over the result.

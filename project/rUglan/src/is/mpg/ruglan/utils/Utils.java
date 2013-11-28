@@ -296,4 +296,14 @@ public class Utils {
         }
         return "Failed to load file";
     }
+    
+    /**
+     * @param cal1
+     * @param cal2
+     * @return True IFF cal1 and cal2 are the same day.
+     */
+    public static Boolean isSameDay(Calendar cal1, Calendar cal2) {
+    	return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
 }
