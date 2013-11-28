@@ -1,11 +1,20 @@
 package is.mpg.ruglan.utils;
 
+import is.mpg.ruglan.data.CalEvent;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.webkit.WebView;
 
 /**
@@ -123,7 +132,14 @@ public class Utils {
     	"rgb(12,149,242)",
     	"rgb(216,242,12)"};
 
-
+   /** 
+    * @param description
+    * @return whether the description matches the description of a lecture.
+    */
+    public static Boolean isLecture(String description){
+    	return (description.length() == 0 || description.startsWith("f"));
+    }
+    
     public static void displayMessage(String messageHeader, String messageBody, Context ctx) {
         AlertDialog.Builder alertDialogBuilder =
                 new AlertDialog.Builder(ctx);
@@ -135,60 +151,19 @@ public class Utils {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-    private static String hsvToRgb(float hue, float saturation, float value) {
-
-        int h = (int)(hue * 6);
-        float f = hue * 6 - h;
-        float p = value * (1 - saturation);
-        float q = value * (1 - f * saturation);
-        float t = value * (1 - (1 - f) * saturation);
-
-        switch (h) {
-            case 0: return rgbToString(value, t, p);
-            case 1: return rgbToString(q, value, p);
-            case 2: return rgbToString(p, value, t);
-            case 3: return rgbToString(p, q, value);
-            case 4: return rgbToString(t, p, value);
-            case 5: return rgbToString(value, p, q);
-            default: throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
-        }
-    }
-    private static String rgbToString(float r, float g, float b) {
-        String rs = Integer.toHexString((int)(r * 256));
-        String gs = Integer.toHexString((int)(g * 256));
-        String bs = Integer.toHexString((int)(b * 256));
-        return "#"+rs + gs + bs;
-    }
-
+    
     /**
-     * Fills the Utils.colors array with in some sense good colors.
-     * @use fillColorsArray();
-     * @pre
-     * @post The Utils.colors array contains strings that css takes as colors and
-     * are in some sense good.
+     * @use	Calendar c = dateToCalendar(d);
+     * @pre d is a Date object.
+     * @post c has the same date as d.
+     * 
+     * @param date Date object.
+     * @return A calendar object with the same date as the date parameter.
      */
-    public static void fillColorsArray(){
-        int hue_steps = 50;
-        int sat_steps = 1;
-        double golden_ratio_conjugate = 0.618033988749895;
-        colors = new String[hue_steps*sat_steps];
-        float sat = 0.5F;
-        for(int j = 0; j < sat_steps; j++)
-        {
-            float hue = 0F;
-            for(int i = 0;i<hue_steps;i++)
-            {
-                String rgb =hsvToRgb(hue,sat,0.95F);
-                colors[i+hue_steps*j] = rgb;
-                //hue += 1.0F/(float)(hue_steps);
-                hue += golden_ratio_conjugate;
-                hue %= 1;
-                //System.out.println(rgb);
-            }
-            //We want the sat range to 0.5 long
-            sat += (1.0F/(float)sat_steps)*0.5F;
-        }
+    public static Calendar dateToCalendar(Date date) {
+    	Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
     }
     
     /**
@@ -259,5 +234,76 @@ public class Utils {
     public static String stripCourseNumberFromName(String courseName) {
     	return courseName.replaceAll("^[A-Za-z]+[0-9]{3}[A-Z]?-[0-9]{5}\\s", "");
 
+    }
+    
+    public static String getJavascriptForCalEvents(CalEvent[] events, Context context) {
+    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String javascriptEvents = "events: [";
+        for(int i=0; i<events.length; i++) {
+        	CalEvent event = events[i];
+        	if (event.isHidden() && 
+        			!prefs.getBoolean(Utils.showHiddenKey, 
+        							Utils.showHiddenDefaultValue)) {
+    			// Skip this event
+    			continue;
+        	}
+            if ( !javascriptEvents.endsWith("[") ) {
+                javascriptEvents += ",";
+            }
+            String className = ""; 
+            if (!event.isHidden()) {
+            	className = event.isLecture ?  "lecture" : "tutorial";
+            }
+            javascriptEvents += "{"
+                + "title: '" + Utils.stripCourseNumberFromName(
+                						event.getName()) + "',"
+                + "start: " +event.getFullCalendarStartDateString()+","
+                + "end: " +event.getFullCalendarEndDateString() +","
+                + "allDay: false,"
+                + "backgroundColor: '" +event.getColor(context) + "',"
+                + "borderColor: 'black',"
+                + "className: '" + className + "',"
+                + "url: '" + i + "'"
+                + "}";
+        }
+        javascriptEvents += "]";
+
+        return getTextFromAssetsTextFile("JavascriptBase.js", context)
+                .replace("%%%EVENTS%%%", javascriptEvents);
+    }
+    
+    public static String getTextFromAssetsTextFile(String filename, Context context) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte buf[] = new byte[1024];
+        int len;
+        InputStream inputStream = null;
+
+        try{
+            Context applicationContext = context;
+            AssetManager assetManager = applicationContext.getAssets();
+            inputStream = assetManager.open(filename);
+            while ((len = inputStream.read(buf)) != -1) {
+                outputStream.write(buf, 0, len);
+            }
+            outputStream.close();
+            inputStream.close();
+
+            return outputStream.toString();
+        } catch (IOException e){
+            Log.e("TextFromAssets failed", e.getMessage());
+        } catch (NullPointerException e){
+            Log.e("NullPointerException in getApplicationContext", e.getMessage());
+        }
+        return "Failed to load file";
+    }
+    
+    /**
+     * @param cal1
+     * @param cal2
+     * @return True IFF cal1 and cal2 are the same day.
+     */
+    public static Boolean isSameDay(Calendar cal1, Calendar cal2) {
+    	return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 }

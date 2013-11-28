@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -21,9 +20,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -109,7 +105,8 @@ public class HomeActivity extends Activity {
                 }
                 else {
                     wv.loadUrl("javascript: $('#no-ical').hide();");
-                    wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+                    wv.loadUrl("javascript:" + Utils.getJavascriptForCalEvents(
+                    			events, HomeActivity.this));
                     updateLastUpdatedLabel();
                     Utils.setCalendarViewByOrientation(HomeActivity.this, wv);
                 }
@@ -135,66 +132,6 @@ public class HomeActivity extends Activity {
         } catch (MalformedURLException e) {
             Log.e("MalformedURLException", e.getMessage());
         }
-    }
-
-    private String getJavascriptForCalEvents() {
-        String javascriptEvents = "events: [";
-        for(int i=0; i<this.events.length; i++) {
-        	CalEvent event = this.events[i];
-        	if (this.events[i].isHidden() && 
-        			!prefs.getBoolean(Utils.showHiddenKey, 
-        							Utils.showHiddenDefaultValue)) {
-    			// Skip this event
-    			continue;
-        	}
-            if ( !javascriptEvents.endsWith("[") ) {
-                javascriptEvents += ",";
-            }
-            String className = ""; 
-            if (!event.isHidden()) {
-            	className = event.isLecture ?  "lecture" : "tutorial";
-            }
-            javascriptEvents += "{"
-                + "title: '" + Utils.stripCourseNumberFromName(
-                						this.events[i].getName()) + "',"
-                + "start: " +this.events[i].getFullCalendarStartDateString()+","
-                + "end: " +this.events[i].getFullCalendarEndDateString() +","
-                + "allDay: false,"
-                + "backgroundColor: '" +this.events[i].getColor(getContext()) + "',"
-                + "borderColor: 'black',"
-                + "className: '" + className + "',"
-                + "url: '" + i + "'"
-                + "}";
-        }
-        javascriptEvents += "]";
-
-        return getTextFromAssetsTextFile("JavascriptBase.js")
-                .replace("%%%EVENTS%%%", javascriptEvents);
-    }
-
-    private String getTextFromAssetsTextFile(String filename) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte buf[] = new byte[1024];
-        int len;
-        InputStream inputStream = null;
-
-        try{
-            Context applicationContext = getApplicationContext();
-            AssetManager assetManager = applicationContext.getAssets();
-            inputStream = assetManager.open(filename);
-            while ((len = inputStream.read(buf)) != -1) {
-                outputStream.write(buf, 0, len);
-            }
-            outputStream.close();
-            inputStream.close();
-
-            return outputStream.toString();
-        } catch (IOException e){
-            Log.e("TextFromAssets failed", e.getMessage());
-        } catch (NullPointerException e){
-            Log.e("NullPointerException in getApplicationContext", e.getMessage());
-        }
-        return "Failed to load file";
     }
 
     public static Context getContext() {

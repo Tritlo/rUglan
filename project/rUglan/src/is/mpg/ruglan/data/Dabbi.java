@@ -79,12 +79,12 @@ public class Dabbi {
             {
                 //Get the highest color value in the table so we know what value to
                 //assign to this event.
-                result = qdb.rawQuery("SELECT MAX(color) FROM COLORS",null);
+                Cursor maxColorResult = qdb.rawQuery("SELECT MAX(color) FROM COLORS",null);
                 int newColorValue = 0;
-                if(result.getCount() != 0)
+                if(maxColorResult.getCount() != 0)
                 {
-                    result.moveToFirst();
-                    newColorValue = result.getInt(0)+1;
+                	maxColorResult.moveToFirst();
+                    newColorValue = maxColorResult.getInt(0)+1;
                 }
                 ContentValues colorValues = new ContentValues();
                 colorValues.put("name",event.getName());
@@ -145,35 +145,12 @@ public class Dabbi {
      */
     public CalEvent[] getCalEvents(Date start, Date end)
     {
-        rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        if(qdb == null)
-        {
-            return new CalEvent[0];
-        }
-        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS "
-        +"WHERE start BETWEEN ? AND ?" ,new String[]{
+        String query = "SELECT * FROM CALEVENTS "
+        +"WHERE start BETWEEN ? AND ?";
+        String queryArgs[] = new String[]{
                 Long.toString(start.getTime()/1000),
-                Long.toString(end.getTime()/1000)});
-
-        //Iterate over the result.
-        CalEvent[] events = new CalEvent[result.getCount()];
-        result.moveToFirst();
-        int i = 0;
-        while(!result.isAfterLast())
-        {
-            CalEvent event = new CalEvent(result.getString(0),
-                                        result.getString(1),result.getString(2)
-                    ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000),
-                    result.getInt(5)>0
-            );
-            events[i] = event;
-            i++;
-            result.moveToNext();
-        }
-        qdb.close();
-        return events;
+                Long.toString(end.getTime()/1000)};
+        return getCalEventsForQuery(query, queryArgs);
     }
 
     /**
@@ -182,31 +159,10 @@ public class Dabbi {
      */
     public CalEvent[] getAllCalEvents()
     {
-        rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        if(qdb == null)
-        {
-            return new CalEvent[0];
-        }
-        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS ", null);
-
-        //Iterate over the result.
-        CalEvent[] events = new CalEvent[result.getCount()];
-        result.moveToFirst();
-        int i = 0;
-        while(!result.isAfterLast())
-        {
-            CalEvent event = new CalEvent(result.getString(0),
-                                        result.getString(1),result.getString(2)
-                    ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000),
-                    result.getInt(5)>0);
-            events[i] = event;
-            i++;
-            result.moveToNext();
-        }
-        qdb.close();
-        return events;
+        
+        String query ="SELECT * FROM CALEVENTS";
+        String queryArgs[] = null;
+        return getCalEventsForQuery(query, queryArgs);
     }
     
     /**
@@ -303,35 +259,13 @@ public class Dabbi {
      * recurring events, on weekly basis
      */
     public CalEvent[] getCalEventsForRecurringEvents() {
-    	rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        if(qdb == null)
-        {
-            return new CalEvent[0];
-        }
-        int secondsInAWeek = 604800;
-        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS "
-        							+"GROUP BY name, location, start % ?"
-        							+"ORDER BY description, start",
-        							new String[]{Integer.toString(secondsInAWeek)});
-
-        //Iterate over the result.
-        CalEvent[] events = new CalEvent[result.getCount()];
-        result.moveToFirst();
-        int i = 0;
-        while(!result.isAfterLast())
-        {
-            CalEvent event = new CalEvent(result.getString(0),
-                                        result.getString(1),result.getString(2)
-                    ,new Date(Long.parseLong(result.getString(3))*1000)
-                    ,new Date(Long.parseLong(result.getString(4))*1000),
-                    result.getInt(5)>0);
-            events[i] = event;
-            i++;
-            result.moveToNext();
-        }
-        qdb.close();
-        return events;
+    	
+    	int secondsInAWeek = 604800;
+        String query = "SELECT * FROM CALEVENTS "
+        							+"GROUP BY name, location, start % ? "
+        							+"ORDER BY description, start";
+        String queryArgs[] = new String[]{Integer.toString(secondsInAWeek)};
+        return getCalEventsForQuery(query, queryArgs);
     }
     
     /**
@@ -377,16 +311,46 @@ public class Dabbi {
             return new CalEvent[0];
         }
         int secondsInAWeek = 604800;
-        Cursor result = qdb.rawQuery("SELECT * FROM CALEVENTS "
+        String query = "SELECT * FROM CALEVENTS "
         							+ "WHERE name=? AND location=? " 
-        							+ "AND (start-?)%?=0",
-        							new String[]{
+        							+ "AND (start-?)%?=0";
+        String queryArgs[] = new String[]{
         									event.getName(),
         									event.getLocation(),
         									Long.toString(
         									   event.getStart().getTime()/1000),
         									Integer.toString(secondsInAWeek)
-        							});
+        							};
+        return getCalEventsForQuery(query,queryArgs);
+    }
+    
+    public void changeHiddenForEventsLike(CalEvent event, Boolean hidden) {
+    	rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        int secondsInAWeek = 604800;
+        qdb.execSQL("UPDATE CALEVENTS "
+        			+ "SET hidden=? "
+					+ "WHERE name=? AND location=? " 
+					+ "AND (start-?)%?=0",
+					new String[]{
+        					hidden? "1" : "0",
+							event.getName(),
+							event.getLocation(),
+							Long.toString(
+							   event.getStart().getTime()/1000),
+							Integer.toString(secondsInAWeek)
+					});
+    }
+    
+    private CalEvent[] getCalEventsForQuery(String query, String[] queryArgs)
+    {
+    	rDataBase DB = new rDataBase(context);
+        SQLiteDatabase qdb = DB.getWritableDatabase();
+        if(qdb == null)
+        {
+            return new CalEvent[0];
+        }
+        Cursor result = qdb.rawQuery(query,queryArgs);
 
         //Iterate over the result.
         CalEvent[] events = new CalEvent[result.getCount()];
@@ -404,24 +368,6 @@ public class Dabbi {
             result.moveToNext();
         }
         qdb.close();
-        return events;
-    }
-    
-    public void changeHiddenForEventsLike(CalEvent event, Boolean hidden) {
-    	rDataBase DB = new rDataBase(context);
-        SQLiteDatabase qdb = DB.getWritableDatabase();
-        int secondsInAWeek = 604800;
-        qdb.execSQL("UPDATE CALEVENTS "
-        			+ "SET hidden=?"
-					+ "WHERE name=? AND location=? " 
-					+ "AND (start-?)%?=0",
-					new String[]{
-        					hidden? "1" : "0",
-							event.getName(),
-							event.getLocation(),
-							Long.toString(
-							   event.getStart().getTime()/1000),
-							Integer.toString(secondsInAWeek)
-					});
+        return events;    
     }
 }
