@@ -15,7 +15,7 @@ import is.mpg.ruglan.data.iCalParser;
 public class iCalParserTest extends AndroidTestCase {
 
     private String calendarString;
-    private CalEvent hbv;
+    private CalEvent hbv, forr;
     private String url;
 
     public void setUp() throws Exception {
@@ -23,13 +23,16 @@ public class iCalParserTest extends AndroidTestCase {
         this.url = "https://notendur.hi.is/mpg3/ugla.ics";
         this.calendarString = iCalParser.urlToString(this.url);
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
-        this.hbv = new CalEvent("HBV501G-20136 Hugbunadarverkefni 1", " d1", "V02-152\\, VR-2",
+        this.hbv = new CalEvent("HBV501G-20136 Hugbunadarverkefni 1", "d1", "V02-152\\, VR-2",
                 format.parse("20131017T100000"), format.parse("20131017T113000"));
+        //First after having ordered.
+        this.forr = new CalEvent("TOL304G-20136 Forritunarmal", "d3", "V02-155\\, VR-2",
+                format.parse("20131014T164000"), format.parse("20131014T181000"));
     }
 
     public void testUrlToCalEvents() throws Exception {
         CalEvent [] events = iCalParser.urlToCalEvents(this.url);
-        assertTrue(this.hbv.toString(),this.hbv.equals(events[0]));
+        assertTrue(this.forr.toString() + " not " + events[0].toString(),this.forr.equals(events[0]));
     }
 
     public void testUrlToString() throws Exception {

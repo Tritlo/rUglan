@@ -267,7 +267,18 @@ html .fc,
 	font-size: .85em;
 	cursor: default;
 	}
+	
 
+.lecture {
+	box-shadow: 0px 0px 2px 3px #1873CC;
+	border: none;
+    }
+
+.tutorial {
+	box-shadow: 0px 0px 2px 3px #B84733;
+	border: none;
+    }
+    
 a.fc-event {
 	text-decoration: none;
 	}

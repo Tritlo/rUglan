@@ -87,7 +87,7 @@ public class iCalParser {
                 Date start = format.parse(st);
                 Date end = format.parse(en);
                 try {
-                calEvents[i] = new CalEvent(name,desc,loc,start,end);
+                	calEvents[i] = new CalEvent(name,desc,loc,start,end,false);
                 } catch (IllegalArgumentException ex)
                 {
                     calEvents[i] = null;
@@ -118,7 +118,7 @@ public class iCalParser {
         for(int i = 0; i < event.length;i++) {
             if (event[i].startsWith(type)) {
                 String[] spli = event[i].split(":");
-                return spli.length == 2 ? spli[1] : "";
+                return spli.length == 2 ? spli[1].trim() : "";
             }
         }
         return "";

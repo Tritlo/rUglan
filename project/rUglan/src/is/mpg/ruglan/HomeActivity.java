@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -21,9 +20,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -37,6 +33,7 @@ public class HomeActivity extends Activity {
     private static Context sContext;
     private CalEvent[] events = {};
     static final int SETTINGSREQUEST = 0;
+    static final int HIDEREQUEST = 1;
     private Dabbi dabbi;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -108,8 +105,10 @@ public class HomeActivity extends Activity {
                 }
                 else {
                     wv.loadUrl("javascript: $('#no-ical').hide();");
-                    wv.loadUrl("javascript:" + getJavascriptForCalEvents());
+                    wv.loadUrl("javascript:" + Utils.getJavascriptForCalEvents(
+                    			events, HomeActivity.this));
                     updateLastUpdatedLabel();
+                    Utils.setCalendarViewByOrientation(HomeActivity.this, wv);
                 }
             }
         });
@@ -135,54 +134,6 @@ public class HomeActivity extends Activity {
         }
     }
 
-    private String getJavascriptForCalEvents() {
-        String javascriptEvents = "events: [";
-        for(int i=0; i<this.events.length; i++) {
-            if (i!=0) {
-                javascriptEvents += ",";
-            }
-            javascriptEvents += "{"
-                + "title: '" + Utils.stripCourseNumberFromName(
-                						this.events[i].getName()) + "',"
-                + "start: " +this.events[i].getFullCalendarStartDateString()+","
-                + "end: " +this.events[i].getFullCalendarEndDateString() +","
-                + "allDay: false,"
-                + "backgroundColor: '" +this.events[i].getColor() + "',"
-                + "borderColor: 'black',"
-                + "url: '" + i + "'"
-                + "}";
-        }
-        javascriptEvents += "]";
-
-        return getTextFromAssetsTextFile("JavascriptBase.js")
-                .replace("%%%EVENTS%%%", javascriptEvents);
-    }
-
-    private String getTextFromAssetsTextFile(String filename) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte buf[] = new byte[1024];
-        int len;
-        InputStream inputStream = null;
-
-        try{
-            Context applicationContext = getApplicationContext();
-            AssetManager assetManager = applicationContext.getAssets();
-            inputStream = assetManager.open(filename);
-            while ((len = inputStream.read(buf)) != -1) {
-                outputStream.write(buf, 0, len);
-            }
-            outputStream.close();
-            inputStream.close();
-
-            return outputStream.toString();
-        } catch (IOException e){
-            Log.e("TextFromAssets failed", e.getMessage());
-        } catch (NullPointerException e){
-            Log.e("NullPointerException in getApplicationContext", e.getMessage());
-        }
-        return "Failed to load file";
-    }
-
     public static Context getContext() {
         return sContext;
     }
@@ -206,8 +157,12 @@ public class HomeActivity extends Activity {
                 startActivity(rssMenuIntent);
                 return true;
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivityForResult(intent,SETTINGSREQUEST);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivityForResult(settingsIntent, SETTINGSREQUEST);
+                return true;
+            case R.id.action_hide:
+                Intent hideIntent = new Intent(this, HideActivity.class);
+                startActivityForResult(hideIntent, HIDEREQUEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -284,7 +239,7 @@ public class HomeActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == SETTINGSREQUEST){
+        if (requestCode == SETTINGSREQUEST || requestCode == HIDEREQUEST){
             if (resultCode == RESULT_OK){
                 Boolean eventsChanged = data.getBooleanExtra("eventsChanged", false);
                 if (eventsChanged)

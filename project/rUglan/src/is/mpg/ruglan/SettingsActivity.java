@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import is.mpg.ruglan.data.Dabbi;
@@ -35,6 +36,8 @@ public class SettingsActivity extends Activity {
     static final int GETURLREQUEST = 0;
     private static Context sContext;
     TextView iCalInput;
+    TextView tutorialPrefixesInput;
+    CheckBox showHiddenCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,11 @@ public class SettingsActivity extends Activity {
         String iCalUrl = prefs.getString(Utils.iCalURLKey,"");
         iCalInput = (TextView) findViewById(R.id.iCalUrlInput);
         iCalInput.setText(iCalUrl);
+        showHiddenCheckBox = (CheckBox) findViewById(R.id.showHiddenCheckbox);
+        showHiddenCheckBox.setChecked(
+        				prefs.getBoolean(Utils.showHiddenKey, 
+        				Utils.showHiddenDefaultValue));
+        
         // Show the Up button in the action bar.
         setupActionBar();
         if (!prefs.contains(Utils.iCalURLKey)) {
@@ -121,17 +129,24 @@ public class SettingsActivity extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                String current = prefs.getString(Utils.iCalURLKey,"");
+                String currentiCal = prefs.getString(Utils.iCalURLKey,"");
+                boolean currentShow = prefs.getBoolean(Utils.showHiddenKey, 
+                							Utils.showHiddenDefaultValue);
                 String iCalInputText = iCalInput.getText().toString();
-                Boolean changed = !(current.equals(iCalInputText));
-                if (changed){
-                    editor.putString(Utils.iCalURLKey, iCalInputText);
-                    //editor.commit();
+                boolean show = showHiddenCheckBox.isChecked();
+                if (!currentiCal.equals(iCalInputText)) {
+                	editor.putString(Utils.iCalURLKey, iCalInputText);
                     Dabbi dabbi = new Dabbi(sContext);
                     dabbi.refreshEventsTable(iCalInputText);
                 }
+                if (currentShow != show) {
+                	editor.putBoolean(Utils.showHiddenKey, 
+        					showHiddenCheckBox.isChecked());
+                }
                 editor.commit();
                 Intent resultIntent = new Intent();
+                Boolean changed = !(currentiCal.equals(iCalInputText) && 
+    					currentShow == show );
                 resultIntent.putExtra("eventsChanged",changed);
                 setResult(RESULT_OK,resultIntent);
                 success = true;

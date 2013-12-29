@@ -69,8 +69,12 @@ Created by tritlo on 10/28/13.\vskip .1in
 \subsection{Field summary}{
 \begin{verse}
 {\bf colors} \\
+{\bf googleMapsLink} \\
+{\bf hiddenColor} \\
 {\bf iCalURLKey} \\
 {\bf lastUpdateKey} \\
+{\bf showHiddenDefaultValue} \\
+{\bf showHiddenKey} \\
 \end{verse}
 }
 \subsection{Constructor summary}{
@@ -80,18 +84,37 @@ Created by tritlo on 10/28/13.\vskip .1in
 }
 \subsection{Method summary}{
 \begin{verse}
+{\bf dateToCalendar(Date)} \\
 {\bf displayMessage(String, String, Context)} \\
-{\bf fillColorsArray()} Fills the Utils.colors array with in some sense good colors.\\
+{\bf fillGoogleMapsLinkMap()} Initializes the googleMapsLink map.\\
+{\bf getJavascriptForCalEvents(CalEvent\lbrack \rbrack , Context)} \\
+{\bf getTextFromAssetsTextFile(String, Context)} \\
+{\bf isLecture(String)} \\
+{\bf isSameDay(Calendar, Calendar)} \\
+{\bf setCalendarViewByOrientation(Context, WebView)} \\
+{\bf stripCourseNumberFromName(String)} Removes the course number from of the course name\\
 \end{verse}
 }
 \subsection{Fields}{
 \begin{itemize}
+\item{
+\index{googleMapsLink}
+\label{is.mpg.ruglan.utils.Utils.googleMapsLink}public static java.util.HashMap {\bf  googleMapsLink}}
 \item{
 \index{lastUpdateKey}
 \label{is.mpg.ruglan.utils.Utils.lastUpdateKey}public static java.lang.String {\bf  lastUpdateKey}}
 \item{
 \index{iCalURLKey}
 \label{is.mpg.ruglan.utils.Utils.iCalURLKey}public static java.lang.String {\bf  iCalURLKey}}
+\item{
+\index{showHiddenKey}
+\label{is.mpg.ruglan.utils.Utils.showHiddenKey}public static java.lang.String {\bf  showHiddenKey}}
+\item{
+\index{showHiddenDefaultValue}
+\label{is.mpg.ruglan.utils.Utils.showHiddenDefaultValue}public static boolean {\bf  showHiddenDefaultValue}}
+\item{
+\index{hiddenColor}
+\label{is.mpg.ruglan.utils.Utils.hiddenColor}public static java.lang.String {\bf  hiddenColor}}
 \item{
 \index{colors}
 \label{is.mpg.ruglan.utils.Utils.colors}public static java.lang.String {\bf  colors}}
@@ -112,6 +135,24 @@ Created by tritlo on 10/28/13.\vskip .1in
 \vskip -2em
 \begin{itemize}
 \item{ 
+\index{dateToCalendar(Date)}
+{\bf  dateToCalendar}\\
+\texttt{public static java.util.Calendar\ {\bf  dateToCalendar}(\texttt{java.util.Date} {\bf  date})
+\label{is.mpg.ruglan.utils.Utils.dateToCalendar(java.util.Date)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{date} -- Date object.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+A calendar object with the same date as the date parameter. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
 \index{displayMessage(String, String, Context)}
 {\bf  displayMessage}\\
 \texttt{public static void\ {\bf  displayMessage}(\texttt{java.lang.String} {\bf  messageHeader},
@@ -120,16 +161,110 @@ Created by tritlo on 10/28/13.\vskip .1in
 \label{is.mpg.ruglan.utils.Utils.displayMessage(java.lang.String, java.lang.String, Context)}}%end signature
 }%end item
 \item{ 
-\index{fillColorsArray()}
-{\bf  fillColorsArray}\\
-\texttt{public static void\ {\bf  fillColorsArray}()
-\label{is.mpg.ruglan.utils.Utils.fillColorsArray()}}%end signature
+\index{fillGoogleMapsLinkMap()}
+{\bf  fillGoogleMapsLinkMap}\\
+\texttt{public static void\ {\bf  fillGoogleMapsLinkMap}()
+\label{is.mpg.ruglan.utils.Utils.fillGoogleMapsLinkMap()}}%end signature
 \begin{itemize}
 \item{
 {\bf  Description}
 
-Fills the Utils.colors array with in some sense good colors.
+Initializes the googleMapsLink map.
 }
+\end{itemize}
+}%end item
+\item{ 
+\index{getJavascriptForCalEvents(CalEvent\lbrack \rbrack , Context)}
+{\bf  getJavascriptForCalEvents}\\
+\texttt{public static java.lang.String\ {\bf  getJavascriptForCalEvents}(\texttt{is.mpg.ruglan.data.CalEvent\lbrack \rbrack } {\bf  events},
+\texttt{Context} {\bf  context})
+\label{is.mpg.ruglan.utils.Utils.getJavascriptForCalEvents(is.mpg.ruglan.data.CalEvent[], Context)}}%end signature
+}%end item
+\item{ 
+\index{getTextFromAssetsTextFile(String, Context)}
+{\bf  getTextFromAssetsTextFile}\\
+\texttt{public static java.lang.String\ {\bf  getTextFromAssetsTextFile}(\texttt{java.lang.String} {\bf  filename},
+\texttt{Context} {\bf  context})
+\label{is.mpg.ruglan.utils.Utils.getTextFromAssetsTextFile(java.lang.String, Context)}}%end signature
+}%end item
+\item{ 
+\index{isLecture(String)}
+{\bf  isLecture}\\
+\texttt{public static java.lang.Boolean\ {\bf  isLecture}(\texttt{java.lang.String} {\bf  description})
+\label{is.mpg.ruglan.utils.Utils.isLecture(java.lang.String)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{description} -- }
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+whether the description matches the description of a lecture. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isSameDay(Calendar, Calendar)}
+{\bf  isSameDay}\\
+\texttt{public static java.lang.Boolean\ {\bf  isSameDay}(\texttt{java.util.Calendar} {\bf  cal1},
+\texttt{java.util.Calendar} {\bf  cal2})
+\label{is.mpg.ruglan.utils.Utils.isSameDay(java.util.Calendar, java.util.Calendar)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{cal1} -- }
+   \item{
+\texttt{cal2} -- }
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+True IFF cal1 and cal2 are the same day. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setCalendarViewByOrientation(Context, WebView)}
+{\bf  setCalendarViewByOrientation}\\
+\texttt{public static void\ {\bf  setCalendarViewByOrientation}(\texttt{Context} {\bf  context},
+\texttt{WebView} {\bf  wv})
+\label{is.mpg.ruglan.utils.Utils.setCalendarViewByOrientation(Context, WebView)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{c} -- The Current context of the application.}
+   \item{
+\texttt{wv} -- The WebView that contains the FullCalendar object. Sets the agenda view as Week if the orientation is landscape and to Day if the orientation is portrait.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{stripCourseNumberFromName(String)}
+{\bf  stripCourseNumberFromName}\\
+\texttt{public static java.lang.String\ {\bf  stripCourseNumberFromName}(\texttt{java.lang.String} {\bf  courseName})
+\label{is.mpg.ruglan.utils.Utils.stripCourseNumberFromName(java.lang.String)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Removes the course number from of the course name
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{courseName} -- to remove course number from}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the course name but with the course name removed. 
+}%end item
 \end{itemize}
 }%end item
 \end{itemize}

@@ -84,7 +84,9 @@ Unittests for the CalEvent class\vskip .1in
 {\bf testCalEventDatesNotSameDay()} Creates a CalEvent with dates not on the same day.\\
 {\bf testCalEventEndBeforeStart()} Creates a CalEvent with end date before start date.\\
 {\bf testCalEventStartSameAsEnd()} Creates a CalEvent with start date same as end date.\\
+{\bf testDefaultHiddenProperty()} Checks if the default value of CalEvent hidden property is false.\\
 {\bf testEquals()} Checks if equals does correct checks\\
+{\bf testGetBuilding()} Checks if getBuilding returns the correct building for the event.\\
 {\bf testGetColor()} Checks if getColor returns the correct color for a CalEvent.\\
 {\bf testGetDateString()} Checks if getDateString returns the correct string describing date of the event.\\
 {\bf testGetDescription()} Checks if getDescription returns the correct description.\\
@@ -92,9 +94,12 @@ Unittests for the CalEvent class\vskip .1in
 {\bf testGetEnd()} Checks if getEnd returns the correct date.\\
 {\bf testGetFullCalendarEndDateString()} Checks if getFullCalendarEndDateString returns the correct string of the event; a string that can be used as a parameter in FullCalendar.\\
 {\bf testGetFullCalendarStartDateString()} Checks if getFullCalendarStartDateString returns the correct string of the event; a string that can be used as a parameter in FullCalendar.\\
+{\bf testGetGoogleMapsLink()} \\
 {\bf testGetLocation()} Checks if getLocation returns the correct location.\\
 {\bf testGetName()} Checks if getName returns the correct name.\\
 {\bf testGetStart()} Checks if getStart returns the correct date.\\
+{\bf testisLecture()} \\
+{\bf testSetHidden()} Checks if the setHidden methods works as expected.\\
 \end{verse}
 }
 \subsection{Constructors}{
@@ -172,6 +177,24 @@ Creates a CalEvent with start date same as end date. Expects IllegalArgumentExce
 \end{itemize}
 }%end item
 \item{ 
+\index{testDefaultHiddenProperty()}
+{\bf  testDefaultHiddenProperty}\\
+\texttt{public void\ {\bf  testDefaultHiddenProperty}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testDefaultHiddenProperty()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if the default value of CalEvent hidden property is false.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
 \index{testEquals()}
 {\bf  testEquals}\\
 \texttt{public void\ {\bf  testEquals}() throws java.lang.Exception
@@ -187,6 +210,19 @@ Checks if equals does correct checks
    \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
   \end{itemize}
 }%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetBuilding()}
+{\bf  testGetBuilding}\\
+\texttt{public void\ {\bf  testGetBuilding}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testGetBuilding()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if getBuilding returns the correct building for the event.
+}
 \end{itemize}
 }%end item
 \item{ 
@@ -316,6 +352,12 @@ Checks if getFullCalendarStartDateString returns the correct string of the event
 \end{itemize}
 }%end item
 \item{ 
+\index{testGetGoogleMapsLink()}
+{\bf  testGetGoogleMapsLink}\\
+\texttt{public void\ {\bf  testGetGoogleMapsLink}()
+\label{is.mpg.ruglan.test.CalEventTest.testGetGoogleMapsLink()}}%end signature
+}%end item
+\item{ 
 \index{testGetLocation()}
 {\bf  testGetLocation}\\
 \texttt{public void\ {\bf  testGetLocation}() throws java.lang.Exception
@@ -369,6 +411,30 @@ Checks if getStart returns the correct date.
 }%end item
 \end{itemize}
 }%end item
+\item{ 
+\index{testisLecture()}
+{\bf  testisLecture}\\
+\texttt{public void\ {\bf  testisLecture}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testisLecture()}}%end signature
+}%end item
+\item{ 
+\index{testSetHidden()}
+{\bf  testSetHidden}\\
+\texttt{public void\ {\bf  testSetHidden}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.CalEventTest.testSetHidden()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if the setHidden methods works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
 \end{itemize}
 }
 }
@@ -388,10 +454,15 @@ Created by jon on 9.10.2013.\vskip .1in
 \begin{verse}
 {\bf setUp()} \\
 {\bf testAddCalEvents()} Tries to add events to the database\\
+{\bf testChangeHiddenForEventsLike()} Tests if the changeHiddenForEventsLike works as expected.\\
 {\bf testClearEventsTable()} Tries to empty the event table in the database\\
+{\bf testDatabaseEmptyAfterTestSetUp()} Checks if the database is empty, i.e.\\
 {\bf testGetAllCalEvents()} Gets all CalEvents from database and verifies.\\
 {\bf testGetCalEvents()} Tries to add an event to the database and then extract it back from the database and compare it with the original.\\
-{\bf testRefreshEventsTable()} \\
+{\bf testGetCalEventsForRecurringEvents()} Tests if the getCalEventsForRecurringEvents works as expected.\\
+{\bf testGetCalEventsNames()} Tests if the getCalEventsNames works as expected.\\
+{\bf testGetEventsLike()} Tests if the getEventsLike works as expected.\\
+{\bf testRefreshEventsTable()} Tests if the refreshEventTable works as expected.\\
 \end{verse}
 }
 \subsection{Constructors}{
@@ -433,6 +504,24 @@ Tries to add events to the database
 \end{itemize}
 }%end item
 \item{ 
+\index{testChangeHiddenForEventsLike()}
+{\bf  testChangeHiddenForEventsLike}\\
+\texttt{public void\ {\bf  testChangeHiddenForEventsLike}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testChangeHiddenForEventsLike()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tests if the changeHiddenForEventsLike works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
 \index{testClearEventsTable()}
 {\bf  testClearEventsTable}\\
 \texttt{public void\ {\bf  testClearEventsTable}() throws java.lang.Exception
@@ -442,6 +531,24 @@ Tries to add events to the database
 {\bf  Description}
 
 Tries to empty the event table in the database
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testDatabaseEmptyAfterTestSetUp()}
+{\bf  testDatabaseEmptyAfterTestSetUp}\\
+\texttt{public void\ {\bf  testDatabaseEmptyAfterTestSetUp}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testDatabaseEmptyAfterTestSetUp()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if the database is empty, i.e. tests if the run private method called in setUp works as expected.
 }
 \item{{\bf  Throws}
   \begin{itemize}
@@ -487,10 +594,76 @@ Tries to add an event to the database and then extract it back from the database
 \end{itemize}
 }%end item
 \item{ 
+\index{testGetCalEventsForRecurringEvents()}
+{\bf  testGetCalEventsForRecurringEvents}\\
+\texttt{public void\ {\bf  testGetCalEventsForRecurringEvents}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testGetCalEventsForRecurringEvents()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tests if the getCalEventsForRecurringEvents works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetCalEventsNames()}
+{\bf  testGetCalEventsNames}\\
+\texttt{public void\ {\bf  testGetCalEventsNames}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testGetCalEventsNames()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tests if the getCalEventsNames works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testGetEventsLike()}
+{\bf  testGetEventsLike}\\
+\texttt{public void\ {\bf  testGetEventsLike}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.DabbiTest.testGetEventsLike()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tests if the getEventsLike works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
 \index{testRefreshEventsTable()}
 {\bf  testRefreshEventsTable}\\
 \texttt{public void\ {\bf  testRefreshEventsTable}() throws java.lang.Exception
 \label{is.mpg.ruglan.test.DabbiTest.testRefreshEventsTable()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tests if the refreshEventTable works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \end{itemize}
 }
@@ -591,7 +764,9 @@ Created by jon on 1.11.2013.\vskip .1in
 }
 \subsection{Method summary}{
 \begin{verse}
-{\bf testFillColorsArray()} \\
+{\bf testDateToCalendar()} Tests if the conversion from Date to Calendar preserves the actual date/time\\
+{\bf testisLecture()} \\
+{\bf testStripCourseNumberFromName()} Checks if the stripCourseNumberFromName works as expected.\\
 \end{verse}
 }
 \subsection{Constructors}{
@@ -609,10 +784,46 @@ Created by jon on 1.11.2013.\vskip .1in
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{testFillColorsArray()}
-{\bf  testFillColorsArray}\\
-\texttt{public void\ {\bf  testFillColorsArray}() throws java.lang.Exception
-\label{is.mpg.ruglan.test.UtilsTest.testFillColorsArray()}}%end signature
+\index{testDateToCalendar()}
+{\bf  testDateToCalendar}\\
+\texttt{public void\ {\bf  testDateToCalendar}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.UtilsTest.testDateToCalendar()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tests if the conversion from Date to Calendar preserves the actual date/time
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{testisLecture()}
+{\bf  testisLecture}\\
+\texttt{public void\ {\bf  testisLecture}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.UtilsTest.testisLecture()}}%end signature
+}%end item
+\item{ 
+\index{testStripCourseNumberFromName()}
+{\bf  testStripCourseNumberFromName}\\
+\texttt{public void\ {\bf  testStripCourseNumberFromName}() throws java.lang.Exception
+\label{is.mpg.ruglan.test.UtilsTest.testStripCourseNumberFromName()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks if the stripCourseNumberFromName works as expected.
+}
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \end{itemize}
 }

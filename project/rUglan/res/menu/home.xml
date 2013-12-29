@@ -10,4 +10,7 @@
     <item android:id="@+id/action_rss_menu"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/menu_rss_menu"/>
+    <item android:id="@+id/action_hide"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/menu_hide"/>
 </menu>

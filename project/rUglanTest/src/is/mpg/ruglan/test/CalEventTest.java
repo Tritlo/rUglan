@@ -1,9 +1,13 @@
 package is.mpg.ruglan.test;
 
 import is.mpg.ruglan.data.CalEvent;
+import is.mpg.ruglan.data.Dabbi;
+import is.mpg.ruglan.utils.Utils;
 import android.test.AndroidTestCase;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -20,7 +24,7 @@ public class CalEventTest extends AndroidTestCase {
     public void setUp() throws Exception {
         this.name = "Test Event";
         this.description = "Description for the test event.";
-        this.location = "Location for the test event.";
+        this.location = "Location for the test event.\\, Askja";
         this.format = new SimpleDateFormat("yyyyMMdd'T'HHmmss", new Locale("UTC"));
         this.start = this.format.parse("20130515T132000");
         this.end = this.format.parse("20130515T140000");
@@ -49,6 +53,7 @@ public class CalEventTest extends AndroidTestCase {
         assertTrue("Unit test was able to create CalEvent with dates not on the same day.",
                     exThrown);
     }
+    
 
     /**
      * Creates a CalEvent with end date before start date. Expects IllegalArgumentException.
@@ -164,6 +169,13 @@ public class CalEventTest extends AndroidTestCase {
         for (CalEvent aWrong : wrong) {
             assertFalse(a.equals(aWrong));
         }
+        
+        CalEvent event1 = new CalEvent(this.name, this.description, 
+    			this.location, this.start, this.end);
+    	CalEvent event2 = new CalEvent(this.name, this.description, 
+    			this.location, this.start, this.end);
+    	assertTrue("CalEvent.equals does not work as expected.",
+    			event1.equals(event2));
     }
 
     /**
@@ -189,7 +201,68 @@ public class CalEventTest extends AndroidTestCase {
      * @throws Exception
      */
     public void testGetColor() throws Exception {
-        // TODO: Write this test when getColor has been implemented using rules with Dabbi.
-        assertTrue("getColor has not yet been implemented with Dabbi's rules.", false);
+			Dabbi dabbi = new Dabbi(this.getContext());
+			dabbi.addCalEvents(new CalEvent[]{this.event});
+			this.event.setHidden(false);
+			List<String> colorsList = Arrays.asList(Utils.colors);
+			assertTrue("Event that is not hidden should have a color defined" +
+					" in Utils.colors.", 
+					colorsList.contains(this.event.getColor(this.getContext())));
+			this.event.setHidden(true);
+			assertTrue("Event that is hidden should have the hidden color.", 
+			this.event.getColor(this.getContext()).equals(Utils.hiddenColor));
+    }
+    
+    public void testisLecture() throws Exception {
+        CalEvent event = new CalEvent(this.name, "d1", this.location, this.start, this.end);
+        assertFalse("d1 is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "vst", this.location, this.start, this.end);
+        assertFalse("vst is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "d", this.location, this.start, this.end);
+        assertFalse("d is not a lecture",event.isLecture);
+        event = new CalEvent(this.name, "f", this.location, this.start, this.end);
+        assertTrue("f is a lecture",event.isLecture);
+        event = new CalEvent(this.name, "f-auka", this.location, this.start, this.end);
+        assertTrue("f-auka is a lecture",event.isLecture);
+         event = new CalEvent(this.name, "", this.location, this.start, this.end);
+        assertTrue("blank is a lecture",event.isLecture);
+    }
+    
+    /**
+     * Checks if the default value of CalEvent hidden property is false.
+     * @throws Exception
+     */
+    public void testDefaultHiddenProperty() throws Exception {
+    	CalEvent e = new CalEvent(this.name, this.description, 
+    								this.location, this.start, this.end);
+    	assertFalse("The default value of the hidden property is true, " +
+    				"but should be false.", e.isHidden());
+    }
+    
+    /**
+     * Checks if the setHidden methods works as expected.
+     * @throws Exception
+     */
+    public void testSetHidden() throws Exception {
+    	this.event.setHidden(true);
+    	assertTrue("The hidden property is false after setting it as true", 
+    			this.event.isHidden());
+    	this.event.setHidden(false);
+    	assertFalse("The hidden property is true after setting it as false", 
+    			this.event.isHidden());
+    }
+    
+    /**
+     * Checks if getBuilding returns the correct building for the event.
+     */
+    public void testGetBuilding() throws Exception {
+    	System.out.println("TEST got building "+this.event.getBuilding());
+    	assertEquals("Askja",this.event.getBuilding());
+    }
+    
+    public void testGetGoogleMapsLink()
+    {
+    	assertEquals("geo:64.137273,-21.945709?z=18&q=64.137273,-21.945709",
+    			this.event.getGoogleMapsLink());
     }
 }

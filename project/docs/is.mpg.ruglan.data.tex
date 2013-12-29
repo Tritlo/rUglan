@@ -48,12 +48,11 @@
 \section*{Classes}
 {\raggedright
 \hspace{0.0cm} $\bullet$ java.lang.Object {\tiny \refdefined{java.lang.Object}} \\
-\hspace{1.0cm} $\bullet$  {\tiny } \\
-\hspace{2.0cm} $\bullet$ is.mpg.ruglan.data.iCalParser {\tiny \refdefined{is.mpg.ruglan.data.iCalParser}} \\
 \hspace{1.0cm} $\bullet$ SQLiteOpenHelper {\tiny } \\
 \hspace{2.0cm} $\bullet$ is.mpg.ruglan.data.rDataBase {\tiny \refdefined{is.mpg.ruglan.data.rDataBase}} \\
 \hspace{1.0cm} $\bullet$ is.mpg.ruglan.data.CalEvent {\tiny \refdefined{is.mpg.ruglan.data.CalEvent}} \\
 \hspace{1.0cm} $\bullet$ is.mpg.ruglan.data.Dabbi {\tiny \refdefined{is.mpg.ruglan.data.Dabbi}} \\
+\hspace{1.0cm} $\bullet$ is.mpg.ruglan.data.iCalParser {\tiny \refdefined{is.mpg.ruglan.data.iCalParser}} \\
 }
 }
 \chapter{Package is.mpg.ruglan.data}{
@@ -74,27 +73,45 @@ Class representing Calendar Event for the project.\vskip .1in
 \small public class CalEvent
 \\ {\bf  extends} java.lang.Object
 \refdefined{java.lang.Object}\\ {\bf  implements} 
-java.io.Serializable}
+java.io.Serializable, java.lang.Comparable}
+\subsection{Field summary}{
+\begin{verse}
+{\bf isLecture} \\
+\end{verse}
+}
 \subsection{Constructor summary}{
 \begin{verse}
 {\bf CalEvent(String, String, String, Date, Date)} \\
+{\bf CalEvent(String, String, String, Date, Date, Boolean)} \\
 \end{verse}
 }
 \subsection{Method summary}{
 \begin{verse}
+{\bf compareTo(CalEvent)} Compares the CalEvent to another CalEvent by their starting dates.\\
 {\bf equals(Object)} \\
-{\bf getColor()} \\
+{\bf getBuilding()} \\
+{\bf getColor(Context)} \\
 {\bf getDateString()} \\
 {\bf getDescription()} \\
 {\bf getDurationString()} \\
 {\bf getEnd()} \\
 {\bf getFullCalendarEndDateString()} \\
 {\bf getFullCalendarStartDateString()} \\
+{\bf getGoogleMapsLink()} Returns a link to google maps with the building where the event takes place selected\\
 {\bf getLocation()} \\
 {\bf getName()} \\
 {\bf getStart()} \\
+{\bf isHidden()} \\
+{\bf setHidden(Boolean)} \\
 {\bf toString()} \\
 \end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{isLecture}
+\label{is.mpg.ruglan.data.CalEvent.isLecture}public boolean {\bf  isLecture}}
+\end{itemize}
 }
 \subsection{Constructors}{
 \vskip -2em
@@ -126,11 +143,54 @@ java.io.Serializable}
 }%end item
 \end{itemize}
 }%end item
+\item{ 
+\index{CalEvent(String, String, String, Date, Date, Boolean)}
+{\bf  CalEvent}\\
+\texttt{public\ {\bf  CalEvent}(\texttt{java.lang.String} {\bf  name},
+\texttt{java.lang.String} {\bf  description},
+\texttt{java.lang.String} {\bf  location},
+\texttt{java.util.Date} {\bf  start},
+\texttt{java.util.Date} {\bf  end},
+\texttt{java.lang.Boolean} {\bf  hidden})
+\label{is.mpg.ruglan.data.CalEvent(java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.util.Date, java.lang.Boolean)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{name} -- Name of the event.}
+   \item{
+\texttt{description} -- Description of the event.}
+   \item{
+\texttt{location} -- Location of the event.}
+   \item{
+\texttt{start} -- Start date of the event.}
+   \item{
+\texttt{end} -- End date of the event.}
+   \item{
+\texttt{hidden} -- true IFF the event should be hidden.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
 \end{itemize}
 }
 \subsection{Methods}{
 \vskip -2em
 \begin{itemize}
+\item{ 
+\index{compareTo(CalEvent)}
+{\bf  compareTo}\\
+\texttt{public int\ {\bf  compareTo}(\texttt{CalEvent} {\bf  event})
+\label{is.mpg.ruglan.data.CalEvent.compareTo(is.mpg.ruglan.data.CalEvent)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Compares the CalEvent to another CalEvent by their starting dates.
+}
+\end{itemize}
+}%end item
 \item{ 
 \index{equals(Object)}
 {\bf  equals}\\
@@ -138,11 +198,24 @@ java.io.Serializable}
 \label{is.mpg.ruglan.data.CalEvent.equals(java.lang.Object)}}%end signature
 }%end item
 \item{ 
-\index{getColor()}
+\index{getBuilding()}
+{\bf  getBuilding}\\
+\texttt{public java.lang.String\ {\bf  getBuilding}()
+\label{is.mpg.ruglan.data.CalEvent.getBuilding()}}%end signature
+}%end item
+\item{ 
+\index{getColor(Context)}
 {\bf  getColor}\\
-\texttt{public java.lang.String\ {\bf  getColor}()
-\label{is.mpg.ruglan.data.CalEvent.getColor()}}%end signature
+\texttt{public java.lang.String\ {\bf  getColor}(\texttt{Context} {\bf  context})
+\label{is.mpg.ruglan.data.CalEvent.getColor(Context)}}%end signature
 \begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{context} -- }
+  \end{itemize}
+}%end item
 \item{{\bf  Returns} -- 
 s is a string representing a color that can be used as a parameter for backgroundColor in FullCalendar 
 }%end item
@@ -215,6 +288,19 @@ s is a string on the form "new Date(y, m, d, H, M)" that can be used as a parame
 \end{itemize}
 }%end item
 \item{ 
+\index{getGoogleMapsLink()}
+{\bf  getGoogleMapsLink}\\
+\texttt{public java.lang.String\ {\bf  getGoogleMapsLink}()
+\label{is.mpg.ruglan.data.CalEvent.getGoogleMapsLink()}}%end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns a link to google maps with the building where the event takes place selected
+}
+\end{itemize}
+}%end item
+\item{ 
 \index{getLocation()}
 {\bf  getLocation}\\
 \texttt{public java.lang.String\ {\bf  getLocation}()
@@ -244,6 +330,28 @@ Name of the event.
 \begin{itemize}
 \item{{\bf  Returns} -- 
 Start date of the event. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isHidden()}
+{\bf  isHidden}\\
+\texttt{public java.lang.Boolean\ {\bf  isHidden}()
+\label{is.mpg.ruglan.data.CalEvent.isHidden()}}%end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+ 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setHidden(Boolean)}
+{\bf  setHidden}\\
+\texttt{public void\ {\bf  setHidden}(\texttt{java.lang.Boolean} {\bf  hidden})
+\label{is.mpg.ruglan.data.CalEvent.setHidden(java.lang.Boolean)}}%end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+ 
 }%end item
 \end{itemize}
 }%end item
@@ -278,10 +386,14 @@ An interface for the database backend.\vskip .1in
 \subsection{Method summary}{
 \begin{verse}
 {\bf addCalEvents(CalEvent\lbrack \rbrack )} \\
+{\bf changeHiddenForEventsLike(CalEvent, Boolean)} \\
 {\bf clearEventsTable()} Deletes all the events in the events table of the database.\\
 {\bf getAllCalEvents()} \\
 {\bf getCalEvents(Date, Date)} \\
+{\bf getCalEventsForRecurringEvents()} \\
+{\bf getCalEventsNames()} \\
 {\bf getColor(String)} A function to get the color value of an event.\\
+{\bf getEventsLike(CalEvent)} \\
 {\bf refreshEventsTable()} \\
 {\bf refreshEventsTable(String)} Refreshes the events in the CALEVENTS table.\\
 {\bf runPrivateMethod(String)} Runs a private method of the class if with the correct password.\\
@@ -342,6 +454,13 @@ An interface for the database backend.\vskip .1in
 \end{itemize}
 }%end item
 \item{ 
+\index{changeHiddenForEventsLike(CalEvent, Boolean)}
+{\bf  changeHiddenForEventsLike}\\
+\texttt{public void\ {\bf  changeHiddenForEventsLike}(\texttt{CalEvent} {\bf  event},
+\texttt{java.lang.Boolean} {\bf  hidden})
+\label{is.mpg.ruglan.data.Dabbi.changeHiddenForEventsLike(is.mpg.ruglan.data.CalEvent, java.lang.Boolean)}}%end signature
+}%end item
+\item{ 
 \index{clearEventsTable()}
 {\bf  clearEventsTable}\\
 \texttt{ boolean\ {\bf  clearEventsTable}()
@@ -379,6 +498,28 @@ Deletes all the events in the events table of the database.
 \end{itemize}
 }%end item
 \item{ 
+\index{getCalEventsForRecurringEvents()}
+{\bf  getCalEventsForRecurringEvents}\\
+\texttt{public CalEvent\lbrack \rbrack \ {\bf  getCalEventsForRecurringEvents}()
+\label{is.mpg.ruglan.data.Dabbi.getCalEventsForRecurringEvents()}}%end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+A list of CalEvents representing recurring events, on weekly basis 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getCalEventsNames()}
+{\bf  getCalEventsNames}\\
+\texttt{public java.lang.String\lbrack \rbrack \ {\bf  getCalEventsNames}()
+\label{is.mpg.ruglan.data.Dabbi.getCalEventsNames()}}%end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+A list of event names in Dabbi. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
 \index{getColor(String)}
 {\bf  getColor}\\
 \texttt{public int\ {\bf  getColor}(\texttt{java.lang.String} {\bf  name})
@@ -398,6 +539,24 @@ A function to get the color value of an event.
 }%end item
 \item{{\bf  Returns} -- 
 The color value of name or -1 in case of failure. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getEventsLike(CalEvent)}
+{\bf  getEventsLike}\\
+\texttt{public CalEvent\lbrack \rbrack \ {\bf  getEventsLike}(\texttt{CalEvent} {\bf  event})
+\label{is.mpg.ruglan.data.Dabbi.getEventsLike(is.mpg.ruglan.data.CalEvent)}}%end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{event} -- is an instance of CalEvent}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+A list of CalEvents of same type as event, i.e. has the same name and location and their start times are at the same time each week. 
 }%end item
 \end{itemize}
 }%end item
@@ -441,8 +600,8 @@ Runs a private method of the class if with the correct password.
 Parser for iCalendars.\vskip .1in 
 \subsection{Declaration}{
 \small public class iCalParser
-\\ {\bf  extends} 
-\refdefined{.<any>}}
+\\ {\bf  extends} java.lang.Object
+\refdefined{java.lang.Object}}
 \subsection{Constructor summary}{
 \begin{verse}
 {\bf iCalParser()} \\
@@ -451,7 +610,6 @@ Parser for iCalendars.\vskip .1in
 \subsection{Method summary}{
 \begin{verse}
 {\bf calendarToEventList(String)} Takes an iCal calendar string, and returns an array of string arrays each containing an event\\
-{\bf doInBackground(String\lbrack \rbrack )} \\
 {\bf getICalValue(String\lbrack \rbrack , String)} Takes an string array containing an iCal event, and returns the value of the type\\
 {\bf parseCalendar(String)} Takes a string containing an iCal calendar and returns a list of the events in the calendar\\
 {\bf removeCR(String\lbrack \rbrack )} Removes carriage returns in all string in an array of strings\\
@@ -495,12 +653,6 @@ Takes an iCal calendar string, and returns an array of string arrays each contai
 an array of the events in the iCal calendar calendar. 
 }%end item
 \end{itemize}
-}%end item
-\item{ 
-\index{doInBackground(String\lbrack \rbrack )}
-{\bf  doInBackground}\\
-\texttt{public CalEvent\lbrack \rbrack \ {\bf  doInBackground}(\texttt{java.lang.String\lbrack \rbrack } {\bf  url})
-\label{is.mpg.ruglan.data.iCalParser.doInBackground(java.lang.String[])}}%end signature
 }%end item
 \item{ 
 \index{getICalValue(String\lbrack \rbrack , String)}

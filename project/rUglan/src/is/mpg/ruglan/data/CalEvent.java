@@ -7,6 +7,8 @@ import java.util.Date;
 import java.lang.IllegalArgumentException;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.Log;
 import is.mpg.ruglan.utils.Utils;
 
 /**
@@ -18,6 +20,8 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
     private static final long serialVersionUID = 1L;
     private String name, description, location;
     private Date start, end;
+	public boolean isLecture;
+    private Boolean hidden;
     /**
      *  CalEvent has the following attributes:
      *      - name:
@@ -30,11 +34,15 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      *          A Date object holding start date and time of the event.
      *      - end:
      *          A Date object holding end date and time of the event.
+     *        -isLecture
+     *        	A boolean which says whether this is a lecture or not.
+     *      - hidden:
+     *      	Has the value true IFF the event should be hidden.
      */
 
 
     /**
-     * @use CalEvent e = new CalEvent("A", "B", "C", s, e);
+     * @use CalEvent e = new CalEvent("A", "B", "C", s, e, true);
      * @pre s and e have the same date and s < e.
      * @post e is a new instance of type CalEvent. e has the name
      *
@@ -43,15 +51,12 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      * @param location Location of the event.
      * @param start Start date of the event.
      * @param end End date of the event.
+     * @param hidden true IFF the event should be hidden.
      */
-    public CalEvent(String name, String description, String location, Date start, Date end) {
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(start);
-        cal2.setTime(end);
-        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
-        if (!sameDay) {
+    public CalEvent(String name, String description, String location, Date start, Date end, Boolean hidden) {
+        Calendar calStart = Utils.dateToCalendar(start);
+        Calendar calEnd = Utils.dateToCalendar(end);
+        if (!Utils.isSameDay(calStart, calEnd)) {
             throw new
             IllegalArgumentException("start date and end date need to be on the same day.");
         }
@@ -65,7 +70,23 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
         this.location = location;
         this.start = start;
         this.end = end;
-
+        this.isLecture = Utils.isLecture(description);
+        this.hidden = hidden;
+    }
+    
+    /**
+     * @use CalEvent e = new CalEvent("A", "B", "C", s, e);
+     * @pre s and e have the same date and s < e.
+     * @post e is a new instance of type CalEvent. e has the name
+     *
+     * @param name Name of the event.
+     * @param description Description of the event.
+     * @param location Location of the event.
+     * @param start Start date of the event.
+     * @param end End date of the event.
+     */
+    public CalEvent(String name, String description, String location, Date start, Date end) {
+    	this(name, description, location, start, end, false);
     }
 
     /**
@@ -124,6 +145,26 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
     }
     
     /**
+     * @use Boolean b = e.isHidden();
+     * @pre e is an instance of CalEvent.
+     * @post b is true IFF e should be hidden.
+     * @return
+     */
+    public Boolean isHidden() {
+    	return this.hidden;
+    }
+    
+    /**
+     * @use e.setHidden(b);
+     * @pre e is an instance of CalEvent. b is an instance of Boolean.
+     * @post Sets the hidden property of e as b. 
+     * @return
+     */
+    public void setHidden(Boolean hidden) {
+    	this.hidden = hidden;
+    }
+    
+    /**
      * @use s = e.toString();
      * @pre Nothing
      * @post s is a string that represents this event
@@ -143,10 +184,8 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      * @return A string on the form "HH:MM - HH:MM" describing the duration of the event.
      */
     public String getDurationString(){
-        Calendar startCal = Calendar.getInstance();
-        Calendar endCal = Calendar.getInstance();
-        startCal.setTime(this.getStart());
-        endCal.setTime(this.getEnd());
+        Calendar startCal = Utils.dateToCalendar(this.getStart());
+        Calendar endCal = Utils.dateToCalendar(this.getEnd());
         return startCal.get(Calendar.HOUR_OF_DAY) + ":"
                 + String.format("%02d", startCal.get(Calendar.MINUTE))
                 + " - " + endCal.get(Calendar.HOUR_OF_DAY) + ":"
@@ -163,8 +202,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      */
     @SuppressLint("SimpleDateFormat")
     public String getDateString(){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(this.getStart());
+        Calendar cal = Utils.dateToCalendar(this.getStart());
         SimpleDateFormat sdf = new SimpleDateFormat("d. MMM yyyy");
         return sdf.format(cal.getTime());
     }
@@ -196,8 +234,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      *          as a parameter for date in FullCalendar
      */
     public String getFullCalendarStartDateString() {
-        Calendar startCal = Calendar.getInstance();
-        startCal.setTime(this.getStart());
+        Calendar startCal = Utils.dateToCalendar(this.getStart());
         return getFullCalendarDateString(startCal);
     }
 
@@ -208,8 +245,7 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
      *          as a parameter for date in FullCalendar
      */
     public String getFullCalendarEndDateString() {
-        Calendar endCal = Calendar.getInstance();
-        endCal.setTime(this.getEnd());
+        Calendar endCal = Utils.dateToCalendar(this.getEnd());
         return getFullCalendarDateString(endCal);
     }
 
@@ -230,15 +266,59 @@ public class CalEvent implements Serializable, Comparable<CalEvent> {
 
     /**
      * @use s = getColor();
+     * @param context
      * @return  s is a string representing a color that can be used
      *          as a parameter for backgroundColor in FullCalendar
      */
-    public String getColor() {
-        Dabbi myDabbi = new Dabbi();
-        return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
+    public String getColor(Context context) {
+    	if (this.hidden) {
+    		return Utils.hiddenColor;
+    	}
+    	else {
+    		Dabbi myDabbi = new Dabbi(context);
+            return Utils.colors[myDabbi.getColor(this.name)%Utils.colors.length];
+    	}
     }
     /**
-     * Compares the CalEvent to another CalEvent by their starting dates.
+     * @use s = getBuilding()
+     * @post s contains the name of the building where the event takes place
+     */
+    public String getBuilding()
+    {
+    	try{
+    		Log.d("DEBUG ",this.name+" has building "+this.location.split("\\\\, ")[1]);
+    		return this.location.split(", ")[1];
+    	}
+    	catch(Exception e)
+    	{
+    		Log.d("DEBUG", "could not get a building name");
+    		return "";
+    	}
+    }
+    /**
+     * Returns a link to google maps with the building where the event takes place selected
+     * @use s = getGoogleMapsLink()
+     * @post s contains a link to google maps with the building where the event takes place selected
+     */
+    public String getGoogleMapsLink()
+    {
+    	String building = getBuilding();
+    	if (building == "")
+    	{
+    		return "";
+    	}
+    	if(Utils.googleMapsLink == null)
+    	{
+    		Utils.fillGoogleMapsLinkMap();
+    	}
+    	if(Utils.googleMapsLink.containsKey(building))
+    	{
+    		return Utils.googleMapsLink.get(building);
+    	}
+    	return "";
+    }
+    
+     /** Compares the CalEvent to another CalEvent by their starting dates.
      * @use a = compareTo(b)
      * @post a is negative if b happens before this, 0 if they happen on the same time
      * and else its positive

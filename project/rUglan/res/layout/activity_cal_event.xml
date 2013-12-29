@@ -14,8 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name_label"
-        android:textStyle="bold"
-        android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="" />
 
     <TextView
@@ -36,13 +35,22 @@
         android:layout_marginTop="20dp"
         android:id="@+id/loc_header"
         android:text="@string/loc_header"
-        android:textStyle="bold"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/loc_label"
         android:text="" />
+    
+    <LinearLayout
+        android:id="@+id/building_location"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp">
+        </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +58,8 @@
         android:layout_marginTop="10dp"
         android:id="@+id/desc_header"
         android:text="@string/desc_header"
-        android:textStyle="bold"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
 
     <TextView
         android:layout_width="wrap_content"
