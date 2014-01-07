@@ -160,6 +160,10 @@ public class HomeActivity extends Activity {
                 Intent hideIntent = new Intent(this, HideActivity.class);
                 startActivityForResult(hideIntent, HIDEREQUEST);
                 return true;
+            case R.id.action_about:
+            	Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
