@@ -10,4 +10,7 @@
     <item android:id="@+id/action_hide"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/menu_hide"/>
+    <item android:id="@+id/action_about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/menu_about"/>
 </menu>

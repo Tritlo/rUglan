@@ -6,6 +6,7 @@
     <string name="menu_settings">Stillingar</string>
     <string name="menu_refresh">Endurhlaða</string>
     <string name="menu_hide">Fela...</string>
+    <string name="menu_about">Um appið</string>
     <string name="title_activity_cal_event">Tími</string>
     <string name="title_activity_settings">Stillingar</string>
     <string name="title_activity_geti_cal_url">Næ í dagatalsslóð</string>
@@ -20,6 +21,10 @@
     <string name="loadingCalendarView">Hleð stundatöflusýn.</string>
     <string name="last_updated_prefix">Síðast uppfært: </string>
 
+    <!-- AboutActivity -->
+    <string name="about_header">Um appið</string>
+    <string name="about_text">YOYOYO!!</string>
+    
     <!-- CalEventActivity -->
     <string name="desc_header">Lýsing</string>
     <string name="loc_header">Staðsetning</string>
@@ -31,6 +36,7 @@
     <string name="getiCalUrl_button">Ná í dagatalsslóð</string>
     <string name="successfullyGotiCalUrl">Það tókst að ná í dagatalsslóðina þína.</string>
     <string name="show_hidden">Sýna falda tíma</string>
+    
     <!-- HideActivity -->
     <string name="hide_activity_info">Hér getur þú valið hvaða tíma þú vilt sjá á stundatöflunni þinni.</string>
     <string name="no_cources_found">Engir tímar fundust.</string>
