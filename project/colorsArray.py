@@ -26,7 +26,7 @@ if __name__ == '__main__':
         golden_ratio_conjugate = 0.618033988749895
         h = 0
         s = 0.95
-        v = 0.95
+        v = 0.65
         javaArray = "public static String[] colors = new String[]{\n"
         for i in range(0, n):
                 rgb = hsvToRgb(h,s,v)
