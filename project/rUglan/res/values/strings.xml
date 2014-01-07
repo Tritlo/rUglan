@@ -23,7 +23,12 @@
 
     <!-- AboutActivity -->
     <string name="about_header">Um appið</string>
-    <string name="about_text">YOYOYO!!</string>
+    <string name="about_text">
+        Þetta app var þróað af Jóni Arnari Tómassyni, 
+        Matthíasi Páli Gissurarsyni og Sigurði Fannari Vilhelmssyni
+        í námskeiðinu Hugbúnaðarverkefni 1 við Háskóla Íslands 
+        haustið 2013.
+    </string>
     
     <!-- CalEventActivity -->
     <string name="desc_header">Lýsing</string>
