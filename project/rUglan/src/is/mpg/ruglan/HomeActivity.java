@@ -152,6 +152,10 @@ public class HomeActivity extends Activity {
             case R.id.action_refresh:
                 refresh();
                 return true;
+            case R.id.action_rss_menu:
+            	Intent rssMenuIntent = new Intent(this, RSSMenuActivity.class);
+                startActivity(rssMenuIntent);
+                return true;
             case R.id.action_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(settingsIntent, SETTINGSREQUEST);

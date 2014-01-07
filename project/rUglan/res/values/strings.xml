@@ -5,10 +5,12 @@
     <string name="app_name">rUglan</string>
     <string name="menu_settings">Stillingar</string>
     <string name="menu_refresh">Endurhlaða</string>
+    <string name="menu_rss_menu">Matseðill</string>
     <string name="menu_hide">Fela...</string>
     <string name="title_activity_cal_event">Tími</string>
     <string name="title_activity_settings">Stillingar</string>
     <string name="title_activity_geti_cal_url">Næ í dagatalsslóð</string>
+    <string name="title_activity_rss_menu">Matseðill Hámu</string>
     <string name="loading">Hleð</string>
     <string name="wait">Dokaðu við...</string>
     <string name="error">Villa</string>
@@ -23,7 +25,11 @@
     <!-- CalEventActivity -->
     <string name="desc_header">Lýsing</string>
     <string name="loc_header">Staðsetning</string>
-
+    
+    <!-- RSSMenuActivity -->
+    <string name="rss_menu_header">Matseðill Hámu</string>
+    <string name="rss_menu_error_msg">Ekki tókst að ná í matseðilinn.</string>
+    
     <!-- SettingsActivity -->
     <string name="iCalUrlSettingText">Dagatalsslóð:</string>
     <string name="iCalUrlRequired">Þú þarft að fylla út dagatalsslóð.</string>
