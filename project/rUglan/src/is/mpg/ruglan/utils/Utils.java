@@ -255,8 +255,8 @@ public class Utils {
             	className = event.isLecture ?  "lecture" : "tutorial";
             }
             javascriptEvents += "{"
-                + "title: '" + Utils.stripCourseNumberFromName(
-                						event.getName()) + "',"
+                + "title: '" + Utils.stripCourseNumberFromName(event.getName()) 
+                			 + "\\n" + event.getDescription() + "',"
                 + "start: " +event.getFullCalendarStartDateString()+","
                 + "end: " +event.getFullCalendarEndDateString() +","
                 + "allDay: false,"
