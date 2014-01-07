@@ -46,6 +46,7 @@ public class HomeActivity extends Activity {
         sContext = this;
         WebView wv = (WebView) findViewById(R.id.webView);
         wv.getSettings().setJavaScriptEnabled(true);
+        wv.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         wv.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 WebView wv = (WebView) findViewById(R.id.webView);

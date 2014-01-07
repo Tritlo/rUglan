@@ -8,7 +8,7 @@ $(document).ready(function() {
 		height: 850,
 		minTime: 7,
 		axisFormat: 'HH:mm',
-		timeFormat: 'HH:mm',
+		timeFormat: 'HH:mm { - HH:mm}',
 		allDaySlot: false,
 		weekends: false,
 		slotEventOverlap: false,
